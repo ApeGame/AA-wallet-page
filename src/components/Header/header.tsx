@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfo } from '@/utils/localStorage';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',
@@ -40,10 +41,10 @@ const ContentHeader = () => {
     <div style={headerStyle}>
       <Row>
         <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <p style={networkStyle}>APE</p>
+          <p style={networkStyle}>BAS</p>
         </Col>
         <Col span={16} style={titleStyle}>
-          rzh2000@163.com
+          {getUserInfo()}
         </Col>
         <Col span={4} style={moreStyle}>
           <LogoutOutlined onClick={loginOut} />

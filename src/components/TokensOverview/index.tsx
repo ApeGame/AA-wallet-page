@@ -68,7 +68,9 @@ const Comp = ({ ercInfo }: { ercInfo: Map<string, string> }) => {
                 navigateTo(`/tokenOverview?tokenAddress=${key}`);
               }}>
               <span style={typeStyle}>{key}</span>
-              <span style={{ color: '#545A60' }}>{ethers.formatEther(ercInfo[key])}</span>
+              <span style={{ color: '#545A60' }}>
+                {ethers.formatEther(ercInfo[key]).replace(/^(.*\..{4}).*$/, '$1')}
+              </span>
             </div>
           );
         })}

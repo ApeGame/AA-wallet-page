@@ -78,7 +78,7 @@ const Overview = () => {
 
   return (
     <div>
-      <div style={balanceStyle}>{ethers.formatEther(nativeAmount)} PEEL</div>
+      <div style={balanceStyle}>{ethers.formatEther(nativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
       <div style={functionsListStyle}>
         <div
           style={{ cursor: 'pointer' }}

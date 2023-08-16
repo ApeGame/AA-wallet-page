@@ -68,7 +68,7 @@ const View = () => {
       <div style={contentStyle}>
         <span>Send To</span>
         <Link to="/overview" style={{ marginLeft: '230px' }}>
-          Cancel
+          Back
         </Link>
       </div>
       <div style={contentStyle}>

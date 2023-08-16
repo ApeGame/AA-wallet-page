@@ -21,3 +21,11 @@ export const setJWTToken = (token: string) => {
 export const setAbstractAccount = (account: string) => {
   localStorage.abstractAccount = account;
 };
+
+export const getUserInfo = () => {
+  return localStorage.userinfo;
+};
+
+export const setUserInfo = (userInfo: string) => {
+  localStorage.userinfo = userInfo;
+};
