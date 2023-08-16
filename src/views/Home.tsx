@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Layout, theme } from 'antd';
+import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
-import MainMenu from '@/components/MainMenu';
-import MainHeader from '@/components/Header';
+import ContentHeader from '@/components/Header/header';
+import { FacebookProvider } from 'react-facebook';
 
-const { Header, Content, Footer, Sider } = Layout;
+const headerStyle: React.CSSProperties = {
+  height: 65,
+  backgroundColor: '#FFFFFF',
+  paddingInline: 15,
+};
+
+const contentStyle: React.CSSProperties = {
+  textAlign: 'center',
+  height: 635,
+  color: '#fff',
+  backgroundColor: '#',
+};
+
+const LayoutStyle: React.CSSProperties = {
+  marginTop: '200px',
+  maxWidth: '400px',
+};
 
 const View: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const { Header, Content } = Layout;
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      {/* left sider */}
-      <Sider width={'300px'} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="logo" />
-        <MainMenu></MainMenu>
-      </Sider>
-      {/* right content */}
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <MainHeader />
+    <FacebookProvider appId="662645895414897">
+      <Layout style={LayoutStyle}>
+        <Header style={headerStyle}>
+          <ContentHeader />
         </Header>
-        <Content style={{ margin: '16px 16px 0px', padding: 24, minHeight: 360, background: colorBgContainer }}>
-          <Outlet />
+        <Content style={contentStyle}>
+          <Outlet></Outlet>
         </Content>
-        <Footer style={{ textAlign: 'center', padding: 0, lineHeight: '48px' }}>CDBC</Footer>
       </Layout>
-    </Layout>
+    </FacebookProvider>
   );
 };
 
