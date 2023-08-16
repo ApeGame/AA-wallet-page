@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getRefreshToken, setRefreshToken, setJWTToken } from '@/utils/localStorage';
 import axios from 'axios';
 import { request, ResponseType } from '@/request/request';

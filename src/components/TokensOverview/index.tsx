@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { FireFilled } from '@ant-design/icons';
-import { Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';

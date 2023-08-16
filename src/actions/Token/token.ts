@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { request, ResponseType } from '@/request/request';
 import { ethers } from 'ethers';
 
