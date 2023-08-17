@@ -13,14 +13,14 @@ const headerStyle: React.CSSProperties = {
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 635,
+  height: 675,
   color: '#fff',
   backgroundColor: '#',
 };
 
 const LayoutStyle: React.CSSProperties = {
   marginTop: '200px',
-  maxWidth: '400px',
+  maxWidth: '470px',
 };
 
 const View: React.FC = () => {

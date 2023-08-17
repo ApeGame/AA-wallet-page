@@ -6,7 +6,7 @@ import { Menu } from 'antd';
 import TokensOverview from '@/components/TokensOverview';
 import { useNavigate } from 'react-router-dom';
 import { GetNativeToken } from '@/actions/Token/token';
-import { getAbstractAccount } from '@/utils/localStorage';
+import { getUserInfo } from '@/utils/localStorage';
 import { ethers } from 'ethers';
 
 const balanceStyle: React.CSSProperties = {
@@ -69,7 +69,7 @@ const Overview = () => {
       }
     }
     loadData();
-    console.log('AbstractAccount', getAbstractAccount());
+    console.log('AbstractAccount', getUserInfo());
   }, []);
 
   const onClick: MenuProps['onClick'] = (e) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'antd';
-import { LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, BlockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '@/utils/localStorage';
 
@@ -44,9 +44,16 @@ const ContentHeader = () => {
           <p style={networkStyle}>BAS</p>
         </Col>
         <Col span={16} style={titleStyle}>
-          {getUserInfo()}
+          {getUserInfo().username}
         </Col>
-        <Col span={4} style={moreStyle}>
+        <Col span={2} style={moreStyle}>
+          <BlockOutlined
+            onClick={() => {
+              navigateTo('/multisigWallet');
+            }}
+          />
+        </Col>
+        <Col span={2} style={moreStyle}>
           <LogoutOutlined onClick={loginOut} />
         </Col>
       </Row>

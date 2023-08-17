@@ -8,6 +8,7 @@ const Overview = lazy(() => import('@/views/Overviews/overviews'));
 const SendToken = lazy(() => import('@/views/SendToken/sendToken'));
 const TokenOverview = lazy(() => import('@/views/TokenOverviews/overviews'));
 const AddToken = lazy(() => import('@/views/AddToken/addToken'));
+const MultisigWallet = lazy(() => import('@/views/MultisigWallet/multisigWallet'));
 
 const withLoadingComponent = (comp: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{comp}</React.Suspense>
@@ -41,6 +42,10 @@ const routes = [
       {
         path: '/addToken',
         element: withLoadingComponent(<AddToken />),
+      },
+      {
+        path: '/multisigWallet',
+        element: withLoadingComponent(<MultisigWallet />),
       },
     ],
   },

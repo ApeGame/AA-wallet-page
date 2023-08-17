@@ -1,13 +1,11 @@
+import { UserInfo } from '@/model/user';
+
 export const getJWTToken = () => {
   return localStorage.token;
 };
 
 export const getRefreshToken = () => {
   return localStorage.refreshToken;
-};
-
-export const getAbstractAccount = () => {
-  return localStorage.abstractAccount;
 };
 
 export const setRefreshToken = (token: string) => {
@@ -18,14 +16,15 @@ export const setJWTToken = (token: string) => {
   localStorage.token = token;
 };
 
-export const setAbstractAccount = (account: string) => {
-  localStorage.abstractAccount = account;
+export const getUserInfo = (): UserInfo => {
+  if (localStorage.userProfile) {
+    const res = JSON.parse(localStorage.userProfile);
+    return res;
+  } else {
+    return {} as UserInfo;
+  }
 };
 
-export const getUserInfo = () => {
-  return localStorage.userinfo;
-};
-
-export const setUserInfo = (userInfo: string) => {
-  localStorage.userinfo = userInfo;
+export const setUserInfo = (userInfo: UserInfo) => {
+  localStorage.userProfile = JSON.stringify(userInfo);
 };

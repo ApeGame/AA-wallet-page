@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig } from 'axios';
 import { getJWTToken } from '@/utils/localStorage';
-import { refreshAccessToken } from '@/actions/Login/login';
+import { RefreshAccessToken } from '@/actions/Login/login';
 
 export interface ResponseType<T = any> {
   code: number;
@@ -45,7 +45,7 @@ instance.interceptors.response.use(
     console.log('error.response.status', error.response);
     if ((error.response.status === 403 || error.response.status === 401) && !originalRequest._retry) {
       originalRequest._retry = true;
-      await refreshAccessToken();
+      await RefreshAccessToken();
       const token = getJWTToken() ?? '';
       axios.defaults.headers.token = token;
       return instance(originalRequest);

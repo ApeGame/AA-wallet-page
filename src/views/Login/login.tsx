@@ -4,7 +4,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { RequestGoogleLogin, RequestFBLogin } from '@/actions/Login/login';
 import { useFacebook } from 'react-facebook';
 import { Button } from 'antd';
-import { setJWTToken, setRefreshToken, setAbstractAccount, setUserInfo } from '@/utils/localStorage';
+import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
@@ -24,8 +24,8 @@ const Login = () => {
     if (res.data.accessToken) {
       setJWTToken(res.data.accessToken);
       setRefreshToken(res.data.refreshToken);
-      setAbstractAccount(res.data.abstract_account);
-      setUserInfo(res.data.username);
+      // setAbstractAccount(res.data.abstract_account);
+      setUserInfo({ username: res.data.username, abstractAccount: res.data.abstract_account });
       navigateTo('/overview');
     }
   };
@@ -41,8 +41,8 @@ const Login = () => {
       if (res.code === 200) {
         setJWTToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
-        setAbstractAccount(res.data.abstract_account);
-        setUserInfo(res.data.username);
+        // setAbstractAccount(res.data.abstract_account);
+        setUserInfo({ username: res.data.username, abstractAccount: res.data.abstract_account });
         navigateTo('/overview');
       }
     }

@@ -3,7 +3,7 @@ import { getRefreshToken, setRefreshToken, setJWTToken } from '@/utils/localStor
 import axios from 'axios';
 import { request, ResponseType } from '@/request/request';
 
-export const refreshAccessToken = async () => {
+export const RefreshAccessToken = async () => {
   const token = getRefreshToken() ?? '';
   let res;
   await axios({
