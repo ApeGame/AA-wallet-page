@@ -79,6 +79,9 @@ const Overview = () => {
 
   return (
     <div>
+      <div style={{ color: '#000000', marginTop: '20px' }}>
+        <span>{getUserInfo().abstractAccount}</span>
+      </div>
       <div style={balanceStyle}>{ethers.formatEther(nativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
       <div style={functionsListStyle}>
         <div

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { request, ResponseType } from '@/request/request';
 import { ethers } from 'ethers';
+import { getSendTransactionType, getUserInfo } from '@/utils/localStorage';
 
 export const GetNativeToken = function (): Promise<ResponseType<any>> {
   return request<any>({
@@ -26,6 +27,7 @@ export const SendNativeToken = function (toAddress: string, value: string): Prom
     data: {
       to: toAddress,
       value: '0x' + ethers.parseEther(value).toString(16),
+      sender: getSendTransactionType() === '0' ? '' : getUserInfo().multipleAccount,
     },
   });
 };
@@ -38,6 +40,7 @@ export const SendErc20Token = function (toAddress: string, data: string): Promis
       to: toAddress,
       value: '0x0',
       data: data,
+      sender: getSendTransactionType() === '0' ? '' : getUserInfo().multipleAccount,
     },
   });
 };

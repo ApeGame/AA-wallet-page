@@ -25,7 +25,11 @@ const Login = () => {
       setJWTToken(res.data.accessToken);
       setRefreshToken(res.data.refreshToken);
       // setAbstractAccount(res.data.abstract_account);
-      setUserInfo({ username: res.data.username, abstractAccount: res.data.abstract_account });
+      setUserInfo({
+        username: res.data.username,
+        abstractAccount: res.data.abstract_account,
+        multipleAccount: res.data.multiple_account,
+      });
       navigateTo('/overview');
     }
   };
@@ -42,7 +46,11 @@ const Login = () => {
         setJWTToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         // setAbstractAccount(res.data.abstract_account);
-        setUserInfo({ username: res.data.username, abstractAccount: res.data.abstract_account });
+        setUserInfo({
+          username: res.data.username,
+          abstractAccount: res.data.abstract_account,
+          multipleAccount: res.data.multiple_account,
+        });
         navigateTo('/overview');
       }
     }

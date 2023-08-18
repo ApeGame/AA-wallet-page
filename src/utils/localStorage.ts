@@ -28,3 +28,15 @@ export const getUserInfo = (): UserInfo => {
 export const setUserInfo = (userInfo: UserInfo) => {
   localStorage.userProfile = JSON.stringify(userInfo);
 };
+
+export const getSendTransactionType = (): string => {
+  if (!localStorage.sendTransactionType) {
+    return '0';
+  } else {
+    return localStorage.sendTransactionType;
+  }
+};
+
+export const setSendTransactionType = (type: string) => {
+  localStorage.sendTransactionType = type;
+};

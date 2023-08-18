@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
 import { ethers } from 'ethers';
+import { getSendTransactionType } from '@/utils/localStorage';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
