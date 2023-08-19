@@ -76,7 +76,9 @@ const Overview = () => {
       // console.log('---data--', data);
       if (res.code === 200) {
         setGeneralNativeAmount(res.data.abstract_account.Native);
-        setMultisigNativeAmount(res.data.multiple_abstract_account.Native);
+        setMultisigNativeAmount(
+          res.data.multiple_abstract_account.Native === '' ? '0' : res.data.multiple_abstract_account.Native
+        );
         setGeneralErc20Info(res.data.abstract_account.Erc20);
         setMultisigErc20Info(res.data.multiple_abstract_account.Erc20);
       }
@@ -112,8 +114,8 @@ const Overview = () => {
       <div style={{ marginTop: 15 }}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
         <div style={{ marginTop: 40 }}>
-          <TokensOverview ercInfo={generalErc20Info} />
-          <TokensOverview ercInfo={multisigErc20Info} />
+          {generalErc20Info && <TokensOverview ercInfo={generalErc20Info} />}
+          {multisigErc20Info && <TokensOverview ercInfo={multisigErc20Info} />}
         </div>
         <div style={listStyle}>
           <Link to="/addToken">Import tokens</Link>
