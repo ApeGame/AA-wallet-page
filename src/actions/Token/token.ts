@@ -21,6 +21,7 @@ export const UpdateToken = function (tokenAddress: string): Promise<ResponseType
 };
 
 export const SendNativeToken = function (toAddress: string, value: string): Promise<ResponseType<any>> {
+  console.log(' getSendTransactionType()!!!!!', getSendTransactionType());
   return request<any>({
     url: `/aa/v1/token/wallet/user_operation`,
     method: 'post',
