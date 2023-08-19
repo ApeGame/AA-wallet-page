@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 
@@ -9,14 +8,6 @@ const contentStyle: React.CSSProperties = {
   justifyContent: 'center',
   color: '#000000',
   flexDirection: 'column',
-};
-
-const listStyle: React.CSSProperties = {
-  marginTop: '270px',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  fontSize: '15px',
 };
 
 const typeStyle: React.CSSProperties = {
@@ -72,9 +63,6 @@ const Comp = ({ ercInfo }: { ercInfo: Map<string, string> }) => {
             </div>
           );
         })}
-      </div>
-      <div style={listStyle}>
-        <Link to="/addToken">Import tokens</Link>
       </div>
     </div>
   );

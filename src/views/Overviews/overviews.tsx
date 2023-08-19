@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { GetNativeToken } from '@/actions/Token/token';
 import { getUserInfo } from '@/utils/localStorage';
 import { ethers } from 'ethers';
+import { Link } from 'react-router-dom';
 
 const balanceStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -37,6 +38,14 @@ const menuStyle: React.CSSProperties = {
   backgroundColor: 'transparent',
 };
 
+const listStyle: React.CSSProperties = {
+  marginTop: '10px',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  fontSize: '15px',
+};
+
 const Overview = () => {
   const navigateTo = useNavigate();
 
@@ -56,16 +65,20 @@ const Overview = () => {
   ];
 
   const [current, setCurrent] = React.useState('tokens');
-  const [nativeAmount, setNativeAmount] = React.useState('0');
-  const [erc20Info, setErc20Info] = React.useState({} as any);
+  const [generalNativeAmount, setGeneralNativeAmount] = React.useState('0');
+  const [multisigNativeAmount, setMultisigNativeAmount] = React.useState('0');
+  const [generalErc20Info, setGeneralErc20Info] = React.useState({} as any);
+  const [multisigErc20Info, setMultisigErc20Info] = React.useState({} as any);
 
   useEffect(() => {
     async function loadData() {
       const res = await GetNativeToken();
       // console.log('---data--', data);
       if (res.code === 200) {
-        setNativeAmount(res.data.Native);
-        setErc20Info(res.data.Erc20);
+        setGeneralNativeAmount(res.data.abstract_account.Native);
+        setMultisigNativeAmount(res.data.multiple_abstract_account.Native);
+        setGeneralErc20Info(res.data.abstract_account.Erc20);
+        setMultisigErc20Info(res.data.multiple_abstract_account.Erc20);
       }
     }
     loadData();
@@ -80,9 +93,12 @@ const Overview = () => {
   return (
     <div>
       <div style={{ color: '#000000', marginTop: '20px' }}>
-        <span>{getUserInfo().abstractAccount}</span>
+        <span>General: {getUserInfo().abstractAccount}</span>
+        <br></br>
+        <span>Multisig: {getUserInfo().multipleAccount}</span>
       </div>
-      <div style={balanceStyle}>{ethers.formatEther(nativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
+      <div style={balanceStyle}>{ethers.formatEther(generalNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
+      <div style={balanceStyle}>{ethers.formatEther(multisigNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
       <div style={functionsListStyle}>
         <div
           style={{ cursor: 'pointer' }}
@@ -96,7 +112,11 @@ const Overview = () => {
       <div style={{ marginTop: 15 }}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
         <div style={{ marginTop: 40 }}>
-          <TokensOverview ercInfo={erc20Info} />
+          <TokensOverview ercInfo={generalErc20Info} />
+          <TokensOverview ercInfo={multisigErc20Info} />
+        </div>
+        <div style={listStyle}>
+          <Link to="/addToken">Import tokens</Link>
         </div>
       </div>
     </div>

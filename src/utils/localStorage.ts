@@ -31,6 +31,7 @@ export const setUserInfo = (userInfo: UserInfo) => {
 
 export const getSendTransactionType = (): string => {
   if (!localStorage.sendTransactionType) {
+    localStorage.sendTransactionType = '0';
     return '0';
   } else {
     return localStorage.sendTransactionType;

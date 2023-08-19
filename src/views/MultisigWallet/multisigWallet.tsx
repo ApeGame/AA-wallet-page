@@ -14,7 +14,8 @@ import {
 } from '@/actions/MultisigWallet/multisigWallet';
 
 const listStyle: React.CSSProperties = {
-  marginTop: '160px',
+  marginTop: '10px',
+  marginBottom: '10px',
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
@@ -106,9 +107,9 @@ const MultisigWallet = () => {
 
   const recordColumns = [
     {
-      title: 'UserOperationData',
-      dataIndex: 'data',
-      key: 'data',
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: 'Status',
@@ -119,9 +120,9 @@ const MultisigWallet = () => {
 
   const needColumns = [
     {
-      title: 'UserOperationData',
-      dataIndex: 'data',
-      key: 'data',
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: 'Op',
@@ -146,6 +147,9 @@ const MultisigWallet = () => {
   return (
     <>
       <div style={{ color: '#000000', marginTop: '25px' }}>
+        <div style={listStyle}>
+          <Link to="/addMultisigWalletAccount">Add Account For Multisig Wallet</Link>
+        </div>
         <div>
           <span>owner(self) : {getUserInfo().abstractAccount}</span>
         </div>
@@ -160,9 +164,6 @@ const MultisigWallet = () => {
       <div style={{ marginTop: '5px', padding: '20px', color: '#000000' }}>
         <span>all txs:</span>
         <Table dataSource={multisigRecordList} columns={recordColumns} rowKey="id" pagination={false} size="small" />
-      </div>
-      <div style={listStyle}>
-        <Link to="/addMultisigWalletAccount">Add Account For Multisig Wallet</Link>
       </div>
     </>
   );
