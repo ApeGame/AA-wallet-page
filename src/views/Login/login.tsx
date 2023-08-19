@@ -4,7 +4,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { RequestGoogleLogin, RequestFBLogin } from '@/actions/Login/login';
 import { useFacebook } from 'react-facebook';
 import { Button } from 'antd';
-import { setJWTToken, setRefreshToken, setUserInfo, setSendTransactionType } from '@/utils/localStorage';
+import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
