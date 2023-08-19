@@ -54,7 +54,7 @@ export const UpdateNeedSignature = function (operation: string, id: string): Pro
   }
   return request<MultisigInfo>({
     url: url,
-    method: 'get',
+    method: 'post',
   });
 };
 

@@ -26,18 +26,18 @@ const MultisigWallet = () => {
   const [needMultisigRecordList, setNeedMultisigRecordList] = useState<MultisigRecord[]>([]);
   const [multisigRecordList, setMultisigRecordList] = useState<MultisigRecord[]>([]);
 
-  const GetStatus = (status: number) => {
-    if (status === 1) {
+  const GetStatus = (arg: { status: number }) => {
+    if (arg.status === 1) {
       return 'Auditing';
-    } else if (status === 2) {
+    } else if (arg.status === 2) {
       return 'Success';
-    } else if (status === 3) {
+    } else if (arg.status === 3) {
       return 'Fail';
-    } else if (status === 4) {
+    } else if (arg.status === 4) {
       return 'Cancel';
-    } else if (status === 5) {
+    } else if (arg.status === 5) {
       return 'Reject';
-    } else if (status === 6) {
+    } else if (arg.status === 6) {
       return 'Pending';
     } else {
       return 'Unknown';
@@ -104,7 +104,7 @@ const MultisigWallet = () => {
     },
   ];
 
-  const needColumns = [
+  const recordColumns = [
     {
       title: 'UserOperationData',
       dataIndex: 'data',
@@ -117,7 +117,7 @@ const MultisigWallet = () => {
     },
   ];
 
-  const recordColumns = [
+  const needColumns = [
     {
       title: 'UserOperationData',
       dataIndex: 'data',
