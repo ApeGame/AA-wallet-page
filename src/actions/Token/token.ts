@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { request, ResponseType } from '@/request/request';
 import { ethers } from 'ethers';
-import { getSendTransactionType, getUserInfo } from '@/utils/localStorage';
+import { getUserInfo } from '@/utils/localStorage';
 import { sendType } from '@/store/send';
 
 export const GetNativeToken = function (): Promise<ResponseType<any>> {

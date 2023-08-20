@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
-import { type } from 'os';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
