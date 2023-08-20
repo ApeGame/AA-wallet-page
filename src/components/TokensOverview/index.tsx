@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
+import { type } from 'os';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
@@ -19,7 +20,7 @@ const typeStyle: React.CSSProperties = {
   fontWeight: 'bold',
 };
 
-const Comp = ({ ercInfo }: { ercInfo: Map<string, string> }) => {
+const Comp = ({ ercInfo, type }: { ercInfo: Map<string, string>; type: string }) => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const Comp = ({ ercInfo }: { ercInfo: Map<string, string> }) => {
               }}>
               <span style={typeStyle}>{key}</span>
               <span style={{ color: '#545A60' }}>
-                {ethers.formatEther(ercInfo[key]).replace(/^(.*\..{4}).*$/, '$1')}
+                {ethers.formatEther(ercInfo[key]).replace(/^(.*\..{4}).*$/, '$1') + ' ' + type}
               </span>
             </div>
           );

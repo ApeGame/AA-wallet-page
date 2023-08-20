@@ -1,10 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Dropdown, Space, message } from 'antd';
+import { Col, Row, Dropdown, Space } from 'antd';
 import { LogoutOutlined, BlockOutlined, HomeOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { setSendTransactionType, getSendTransactionType } from '@/utils/localStorage';
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
+import { sendType } from '@/store/send';
+import { observer } from 'mobx-react';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',
@@ -34,7 +37,7 @@ const moreStyle: React.CSSProperties = {
 const ContentHeader = () => {
   const navigateTo = useNavigate();
 
-  const [sendTxType, setSendTxType] = useState('');
+  const [sendTxType, setSendTxType] = useState(sendType.sendType);
 
   useEffect(() => {
     if (getSendTransactionType() === '0') {
@@ -45,12 +48,14 @@ const ContentHeader = () => {
   }, []);
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
-    message.info(`Click on item ${key}`);
+    //  message.info(`Click on item ${key}`);
     setSendTransactionType(key);
     if (key === '0') {
       setSendTxType('General Transaction');
+      sendType.general();
     } else {
       setSendTxType('Multisig Transaction');
+      sendType.multisig();
     }
   };
 
@@ -111,4 +116,4 @@ const ContentHeader = () => {
   );
 };
 
-export default ContentHeader;
+export default observer(ContentHeader);

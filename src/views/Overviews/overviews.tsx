@@ -99,8 +99,12 @@ const Overview = () => {
         <br></br>
         <span>Multisig: {getUserInfo().multipleAccount}</span>
       </div>
-      <div style={balanceStyle}>{ethers.formatEther(generalNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
-      <div style={balanceStyle}>{ethers.formatEther(multisigNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} PEEL</div>
+      <div style={balanceStyle}>
+        {ethers.formatEther(generalNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} <span>(general)</span>
+      </div>
+      <div style={balanceStyle}>
+        {ethers.formatEther(multisigNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} <span>(multisig)</span>
+      </div>
       <div style={functionsListStyle}>
         <div
           style={{ cursor: 'pointer' }}
@@ -114,8 +118,8 @@ const Overview = () => {
       <div style={{ marginTop: 15 }}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
         <div style={{ marginTop: 40 }}>
-          {generalErc20Info && <TokensOverview ercInfo={generalErc20Info} />}
-          {multisigErc20Info && <TokensOverview ercInfo={multisigErc20Info} />}
+          {generalErc20Info && <TokensOverview ercInfo={generalErc20Info} type="general" />}
+          {multisigErc20Info && <TokensOverview ercInfo={multisigErc20Info} type="multisig" />}
         </div>
         <div style={listStyle}>
           <Link to="/addToken">Import tokens</Link>

@@ -2,6 +2,7 @@
 import { request, ResponseType } from '@/request/request';
 import { ethers } from 'ethers';
 import { getSendTransactionType, getUserInfo } from '@/utils/localStorage';
+import { sendType } from '@/store/send';
 
 export const GetNativeToken = function (): Promise<ResponseType<any>> {
   return request<any>({
@@ -21,19 +22,22 @@ export const UpdateToken = function (tokenAddress: string): Promise<ResponseType
 };
 
 export const SendNativeToken = function (toAddress: string, value: string): Promise<ResponseType<any>> {
-  console.log(' getSendTransactionType()!!!!!', getSendTransactionType());
+  console.log('sendType', sendType.sendType);
+  // return {} as any;
   return request<any>({
     url: `/aa/v1/token/wallet/user_operation`,
     method: 'post',
     data: {
       to: toAddress,
       value: '0x' + ethers.parseEther(value).toString(16),
-      sender: getSendTransactionType() === '0' ? '' : getUserInfo().multipleAccount,
+      sender: sendType.sendType === '0' ? '' : getUserInfo().multipleAccount,
     },
   });
 };
 
 export const SendErc20Token = function (toAddress: string, data: string): Promise<ResponseType<any>> {
+  console.log('sendType', sendType.sendType);
+  // return {} as any;
   return request<any>({
     url: `/aa/v1/token/wallet/user_operation`,
     method: 'post',
@@ -41,7 +45,7 @@ export const SendErc20Token = function (toAddress: string, data: string): Promis
       to: toAddress,
       value: '0x0',
       data: data,
-      sender: getSendTransactionType() === '0' ? '' : getUserInfo().multipleAccount,
+      sender: sendType.sendType === '0' ? '' : getUserInfo().multipleAccount,
     },
   });
 };

@@ -125,8 +125,8 @@ const MultisigWallet = () => {
       key: 'id',
     },
     {
-      title: 'Op',
-      key: 'op',
+      title: 'Operation',
+      key: 'operation',
       render: (_, record) => (
         <Dropdown menu={{ items, onClick }} trigger={['click']} placement="bottomLeft" arrow={{ pointAtCenter: true }}>
           {/* <DashOutlined style={{ cursor: 'pointer' }} /> */}
