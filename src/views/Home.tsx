@@ -13,13 +13,13 @@ const headerStyle: React.CSSProperties = {
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 675,
+  height: 875,
   color: '#fff',
   backgroundColor: '#',
 };
 
 const LayoutStyle: React.CSSProperties = {
-  marginTop: '200px',
+  marginTop: '150px',
   maxWidth: '470px',
 };
 
