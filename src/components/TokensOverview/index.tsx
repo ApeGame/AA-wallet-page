@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Col, Row } from 'antd';
 import { formatWeiToEth } from '@/utils/formatterEth';
-import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { AccountStore } from '@/store/account';
-import { GetAccountAsset } from '@/actions/Token/token';
 import { Link } from 'react-router-dom';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 

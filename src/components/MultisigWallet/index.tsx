@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Col, Row, Space } from 'antd';
-import { formatWeiToEth } from '@/utils/formatterEth';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
-import { AccountStore } from '@/store/account';
-import { GetAccountAsset } from '@/actions/Token/token';
-import { Link } from 'react-router-dom';
 import { MultisigInfo } from '@/model/multisig';
-import { GetMultisigHistoryList, GetStatus, GetMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { GetMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
 
 import '@/assets/styles/accountStyle/style.scss';
 
-const contentStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#000000',
-  marginTop: 20,
-};
-
 const Comp = () => {
-  const navigateTo = useNavigate();
-
   const [multisigAddressList, setMultisigAddressList] = useState<MultisigInfo[]>([]);
 
   const loadData = async () => {

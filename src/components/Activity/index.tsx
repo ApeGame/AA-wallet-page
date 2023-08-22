@@ -72,7 +72,7 @@ const Comp = () => {
   return (
     <>
       {contextHolder}
-      <div style={{ height: 400, overflowY: 'auto', marginTop: 30, color: '#000000' }}>
+      <div style={{ height: 410, overflowY: 'auto', marginTop: 10, color: '#000000' }}>
         <Row justify="space-around" align="middle">
           <Col span={12}>
             <Button
@@ -93,12 +93,22 @@ const Comp = () => {
             </Button>
           </Col>
         </Row>
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 10 }}>
           {activityType === 'all' &&
             multisigRecordList &&
             multisigRecordList.map((row, index) => (
-              <Space key={index} direction="vertical" size="large" style={{ display: 'flex', width: '100%' }}>
-                <Row justify="space-around" align="middle">
+              <Space
+                key={index}
+                direction="vertical"
+                size="small"
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  paddingTop: 30,
+                  paddingBottom: 30,
+                  borderBottom: '1px solid #D3D3D3',
+                }}>
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Sender : </span>
                   </Col>
@@ -106,7 +116,7 @@ const Comp = () => {
                     <CopyToClipLong address={row.sender || ''} />
                   </Col>
                 </Row>
-                <Row justify="space-around" align="middle">
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>User operation hash : </span>
                   </Col>
@@ -114,7 +124,7 @@ const Comp = () => {
                     <span>{truncateWalletAddrLong(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
-                <Row justify="space-around" align="middle">
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Status : </span>
                   </Col>
@@ -126,12 +136,22 @@ const Comp = () => {
             ))}
         </div>
 
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 10 }}>
           {activityType === 'signature' &&
             needMultisigRecordList &&
             needMultisigRecordList.map((row, index) => (
-              <Space key={index} direction="vertical" size="large" style={{ display: 'flex', width: '100%' }}>
-                <Row justify="space-around" align="middle">
+              <Space
+                key={index}
+                direction="vertical"
+                size="small"
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  paddingTop: 30,
+                  paddingBottom: 30,
+                  borderBottom: '1px solid #D3D3D3',
+                }}>
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Sender : </span>
                   </Col>
@@ -139,7 +159,7 @@ const Comp = () => {
                     <CopyToClipLong address={row.sender || ''} />
                   </Col>
                 </Row>
-                <Row justify="space-around" align="middle">
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>User operation hash : </span>
                   </Col>
@@ -147,7 +167,7 @@ const Comp = () => {
                     <span>{truncateWalletAddrLong(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
-                <Row justify="space-around" align="middle">
+                <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Operation : </span>
                   </Col>

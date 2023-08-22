@@ -119,7 +119,8 @@ const View = () => {
         </Button>
       </div>
       <div style={addressStyle}>
-        <div style={{ height: 400, marginTop: 10, overflowY: 'auto', width: '100%' }}>
+        <div style={{ height: 400, marginTop: 10, overflowY: 'auto', width: '100%', color: '#000000' }}>
+          <span>Your accounts:</span>
           {AccountStore.accountList.map((row, index) => (
             <div
               className={classNames(

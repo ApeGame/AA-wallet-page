@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { RequestGoogleLogin, RequestFBLogin } from '@/actions/Login/login';
 import { useFacebook } from 'react-facebook';
 import { Button } from 'antd';
 import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
+import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
+import { RecoverAccountByEmailDialog } from '@/components/Account/recoverAccountByEmail';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
@@ -16,6 +19,14 @@ const contentStyle: React.CSSProperties = {
 const Login = () => {
   const { isLoading, init } = useFacebook();
   const navigateTo = useNavigate();
+  const [setAccountEmailFlag, setSetAccountEmailFlag] = useState(false);
+  const handleSetAccountEmailClose = () => {
+    setSetAccountEmailFlag(false);
+  };
+  const [recoverAccountEmailFlag, setRecoverAccountEmailFlag] = useState(false);
+  const handleRecoverAccountEmailClose = () => {
+    setRecoverAccountEmailFlag(false);
+  };
 
   const success = async (response: any) => {
     console.log('response', response);
@@ -58,24 +69,49 @@ const Login = () => {
 
   return (
     <div>
-      <div style={contentStyle}>
-        <GoogleOAuthProvider clientId="31869352710-11g4q7holnvfpokbhrv9cu7a1qqq7ht5.apps.googleusercontent.com">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              success(credentialResponse);
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            size="large"
-          />
-        </GoogleOAuthProvider>
-      </div>
+      <div>
+        <div style={contentStyle}>
+          <GoogleOAuthProvider clientId="31869352710-11g4q7holnvfpokbhrv9cu7a1qqq7ht5.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                success(credentialResponse);
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+              size="large"
+            />
+          </GoogleOAuthProvider>
+        </div>
 
-      <div style={{ marginTop: '20px' }}>
-        <Button style={{ width: '198px', height: '38px' }} disabled={isLoading} onClick={handleClick}>
-          Continue by Facebook
-        </Button>
+        <div style={{ marginTop: '20px' }}>
+          <Button style={{ width: '198px', height: '38px' }} disabled={isLoading} onClick={handleClick}>
+            Continue with Facebook
+          </Button>
+        </div>
+
+        <AddAccountEmailDialog isOpen={setAccountEmailFlag} onClose={handleSetAccountEmailClose} />
+        <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
+
+        <div style={{ marginTop: '20px' }}>
+          <Button
+            type="link"
+            onClick={() => {
+              setSetAccountEmailFlag(true);
+            }}>
+            Set your account email
+          </Button>
+        </div>
+
+        <div style={{ marginTop: '20px' }}>
+          <Button
+            type="link"
+            onClick={() => {
+              setRecoverAccountEmailFlag(true);
+            }}>
+            Recover your account by email
+          </Button>
+        </div>
       </div>
     </div>
   );

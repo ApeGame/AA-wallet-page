@@ -42,7 +42,7 @@ const ContentHeader = () => {
   return (
     <div style={headerStyle}>
       <Row>
-        <Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <p style={networkStyle}>BAS</p>
         </Col>
         <Col span={14} style={titleStyle}>
@@ -53,13 +53,6 @@ const ContentHeader = () => {
           <HomeOutlined
             onClick={() => {
               navigateTo('/overview');
-            }}
-          />
-        </Col>
-        <Col span={2} style={moreStyle}>
-          <BlockOutlined
-            onClick={() => {
-              navigateTo('/multisigWallet');
             }}
           />
         </Col>

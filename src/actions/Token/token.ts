@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { request, ResponseType } from '@/request/request';
 import { ethers } from 'ethers';
-import { getUserInfo } from '@/utils/localStorage';
-import { sendType } from '@/store/send';
 import { AccountStore } from '@/store/account';
 
 export const GetAccountAsset = function (): Promise<ResponseType<any>> {

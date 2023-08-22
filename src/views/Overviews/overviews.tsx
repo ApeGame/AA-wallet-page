@@ -11,6 +11,7 @@ import TokensOverview from '@/components/TokensOverview';
 import { GetAccountAsset } from '@/actions/Token/token';
 import MultisigWallet from '@/components/MultisigWallet';
 import Activity from '@/components/Activity';
+import { formatWeiToEth } from '@/utils/formatterEth';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -38,6 +39,16 @@ const addressStyle: React.CSSProperties = {
   justifyContent: 'center',
   marginTop: '45px',
   color: '#0376C9',
+};
+
+const balanceStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '45px',
+  color: '#000000',
+  fontWeight: 'bold',
+  fontSize: 25,
 };
 
 const Overview = () => {
@@ -116,18 +127,23 @@ const Overview = () => {
   return (
     <div>
       {AccountStore.currentAccount && (
-        <div style={addressStyle}>
-          <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
-            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-              {AccountStore.currentAccount.address && (
-                <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
-              )}
-              <span style={{ color: '#000000' }}>
-                {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
-              </span>
-            </Space>
+        <>
+          <div style={addressStyle}>
+            <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
+              <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                {AccountStore.currentAccount.address && (
+                  <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+                )}
+                <span style={{ color: '#000000' }}>
+                  {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+                </span>
+              </Space>
+            </div>
           </div>
-        </div>
+          {AccountStore.currentAccount.nativeBalance && (
+            <div style={balanceStyle}>{formatWeiToEth(AccountStore.currentAccount.nativeBalance)} Peel</div>
+          )}
+        </>
       )}
 
       <div style={functionsListStyle}>
