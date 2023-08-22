@@ -1,0 +1,34 @@
+.accountContent {
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  color: #000000;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.accountContentSelect {
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  color: #000000;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-left: 3px solid #0376c9;
+}
+
+.accountContentSend {
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  color: #000000;
+  cursor: pointer;
+}
+
+.accountContentSelectSend {
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  color: #000000;
+  cursor: pointer;
+}

@@ -35,8 +35,8 @@ const View = () => {
     <div>
       {contextHolder}
       <div style={contentStyle}>
-        <span>Add Token</span>
-        <Link to="/overview" style={{ marginLeft: '230px' }}>
+        <span style={{ fontSize: 18 }}>Add Token</span>
+        <Link to="/overview" style={{ marginLeft: '230px', fontSize: 18 }}>
           Back
         </Link>
       </div>
@@ -52,7 +52,7 @@ const View = () => {
       </div>
 
       <div style={contentStyle}>
-        <Button type="primary" loading={isLoading} onClick={addToken}>
+        <Button type="primary" size="large" loading={isLoading} onClick={addToken}>
           Add
         </Button>
       </div>

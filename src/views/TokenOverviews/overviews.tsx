@@ -7,7 +7,7 @@ const balanceStyle: React.CSSProperties = {
   textAlign: 'center',
   fontWeight: 'bold',
   color: '#000000',
-  marginTop: '50px',
+  marginTop: '10px',
 };
 
 const functionsListStyle: React.CSSProperties = {
@@ -48,7 +48,11 @@ const Overview = () => {
         }}>
         <LeftOutlined />
       </div>
-      <div style={balanceStyle}>{search.get('tokenAddress')}</div>
+      <div style={{ marginTop: 50 }}>
+        {search.get('tokenAddress') && <div style={balanceStyle}>Token Address</div>}
+        <div style={balanceStyle}>{search.get('tokenAddress')}</div>
+      </div>
+
       <div style={functionsListStyle}>
         <div
           style={{ cursor: 'pointer' }}

@@ -1,42 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { request, ResponseType } from '@/request/request';
+import { MultisigRecord, MultisigInfo } from '@/model/multisig';
 
-export const CreateMultisigAddress = function (
-  abstractAccount: string,
-  threshold: number,
-  aaSigners: string[]
-): Promise<ResponseType<any>> {
+export const CreateMultisigAddress = function (threshold: number, aaSigners: string[]): Promise<ResponseType<any>> {
   return request<any>({
     url: `/aa/v1/token/wallet/multiple_address`,
     method: 'post',
     data: {
-      abstract_account: abstractAccount,
       threshold: threshold,
       aa_signers: aaSigners,
     },
   });
 };
 
-export interface MultisigInfo {
-  abstract_account: string;
-  threshold: number;
-  signer_aa_account: string[];
-}
-
-export const GetMultisigAddress = function (): Promise<ResponseType<MultisigInfo>> {
-  return request<MultisigInfo>({
+export const GetMultisigAddress = function (): Promise<ResponseType<MultisigInfo[]>> {
+  return request<MultisigInfo[]>({
     url: `/aa/v1/token/wallet/multiple_address`,
     method: 'get',
   });
 };
-
-export interface MultisigRecord {
-  id: string;
-  sender: string;
-  data: string;
-  user_operation_hash: string;
-  status: number;
-}
 
 export const GetNeedSignatureList = function (): Promise<ResponseType<MultisigRecord[]>> {
   return request<MultisigRecord[]>({
@@ -63,4 +44,22 @@ export const GetMultisigHistoryList = function (): Promise<ResponseType<Multisig
     url: `/aa/v1/token/wallet/multiple/user_operation`,
     method: 'get',
   });
+};
+
+export const GetStatus = (status: number) => {
+  if (status === 1) {
+    return 'Auditing';
+  } else if (status === 2) {
+    return 'Success';
+  } else if (status === 3) {
+    return 'Fail';
+  } else if (status === 4) {
+    return 'Cancel';
+  } else if (status === 5) {
+    return 'Reject';
+  } else if (status === 6) {
+    return 'Pending';
+  } else {
+    return 'Unknown';
+  }
 };

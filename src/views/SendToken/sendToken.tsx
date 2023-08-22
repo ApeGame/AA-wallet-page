@@ -1,11 +1,19 @@
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Col, Row, Space } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
 import { ethers } from 'ethers';
+import { observer } from 'mobx-react';
+import { AccountStore } from '@/store/account';
+import classNames from 'classnames';
+import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { formatWeiToEth } from '@/utils/formatterEth';
+
 // import { getSendTransactionType } from '@/utils/localStorage';
+
+import '@/assets/styles/accountStyle/style.scss';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
@@ -14,9 +22,16 @@ const contentStyle: React.CSSProperties = {
   height: '60px',
   width: '100%',
   color: '#000000',
-  marginTop: '20px',
+  marginTop: 15,
   paddingLeft: 15,
   paddingRight: 15,
+};
+
+const addressStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '30px',
 };
 
 const View = () => {
@@ -33,6 +48,11 @@ const View = () => {
   useEffect(() => {
     console.log('~', search.get('tokenAddress'));
   }, [search]);
+
+  const selectAccount = (address: string) => {
+    console.log('address', address);
+    setToAddress(address);
+  };
 
   const send = async () => {
     setIsLoading(true);
@@ -67,14 +87,15 @@ const View = () => {
     <div>
       {contextHolder}
       <div style={contentStyle}>
-        <span>Send To</span>
-        <Link to="/overview" style={{ marginLeft: '230px' }}>
+        <span style={{ fontSize: 18 }}>Send To</span>
+        <Link to="/overview" style={{ marginLeft: '230px', fontSize: 18 }}>
           Back
         </Link>
       </div>
       <div style={contentStyle}>
         <Input
           placeholder="Enter To Address"
+          value={toAddress}
           onChange={(e) => {
             if (e != null) {
               setToAddress(e.target.value);
@@ -93,12 +114,47 @@ const View = () => {
         />
       </div>
       <div style={contentStyle}>
-        <Button type="primary" loading={isLoading} onClick={send}>
+        <Button type="primary" size="large" loading={isLoading} onClick={send}>
           Send
         </Button>
+      </div>
+      <div style={addressStyle}>
+        <div style={{ height: 400, marginTop: 10, overflowY: 'auto', width: '100%' }}>
+          {AccountStore.accountList.map((row, index) => (
+            <div
+              className={classNames(
+                'accountContentSend',
+                row.address === AccountStore.currentAccount.address ? 'accountContentSelectSend' : 'accountContentSend'
+              )}
+              key={index}
+              style={{ padding: 10, marginTop: 30 }}
+              onClick={() => {
+                selectAccount(row.address);
+              }}>
+              <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+                <Row>
+                  <Col span={24}>
+                    <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                      {'Account ' + (index + 1) + ' '}
+                      {row.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+                    </span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={16}>
+                    <span>{truncateWalletAddrLong(row.address)}</span>
+                  </Col>
+                  <Col span={8}>
+                    <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)}</span>
+                  </Col>
+                </Row>
+              </Space>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default View;
+export default observer(View);

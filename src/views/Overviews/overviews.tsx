@@ -1,22 +1,16 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { MenuProps, Menu, Space } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AccountStore } from '@/store/account';
+import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
+import { observer } from 'mobx-react';
 import TokensOverview from '@/components/TokensOverview';
-import { useNavigate } from 'react-router-dom';
-import { GetNativeToken } from '@/actions/Token/token';
-import { getUserInfo } from '@/utils/localStorage';
-import { ethers } from 'ethers';
-import { Link } from 'react-router-dom';
-
-const balanceStyle: React.CSSProperties = {
-  textAlign: 'center',
-  fontSize: '30px',
-  fontWeight: 'bold',
-  color: '#000000',
-  marginTop: '50px',
-};
+import { GetAccountAsset } from '@/actions/Token/token';
+import MultisigWallet from '@/components/MultisigWallet';
+import Activity from '@/components/Activity';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -38,12 +32,12 @@ const menuStyle: React.CSSProperties = {
   backgroundColor: 'transparent',
 };
 
-const listStyle: React.CSSProperties = {
-  marginTop: '10px',
+const addressStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  flexDirection: 'column',
-  fontSize: '15px',
+  justifyContent: 'center',
+  marginTop: '45px',
+  color: '#0376C9',
 };
 
 const Overview = () => {
@@ -62,49 +56,80 @@ const Overview = () => {
       label: 'Activity',
       key: 'activity',
     },
+    {
+      label: 'Multisig Wallet',
+      key: 'multisig',
+    },
   ];
 
   const [current, setCurrent] = React.useState('tokens');
-  const [generalNativeAmount, setGeneralNativeAmount] = React.useState('0');
-  const [multisigNativeAmount, setMultisigNativeAmount] = React.useState('0');
-  const [generalErc20Info, setGeneralErc20Info] = React.useState({} as any);
-  const [multisigErc20Info, setMultisigErc20Info] = React.useState({} as any);
 
-  useEffect(() => {
-    async function loadData() {
-      const res = await GetNativeToken();
-      // console.log('---data--', data);
-      if (res.code === 200) {
-        setGeneralNativeAmount(res.data.abstract_account.Native);
-        setMultisigNativeAmount(
-          res.data.multiple_abstract_account.Native === '' ? '0' : res.data.multiple_abstract_account.Native
-        );
-        setGeneralErc20Info(res.data.abstract_account.Erc20);
-        setMultisigErc20Info(res.data.multiple_abstract_account.Erc20);
-      }
-    }
-    loadData();
-    console.log('AbstractAccount', getUserInfo());
-  }, []);
+  const location = useLocation();
 
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
   };
 
+  const loadData = async () => {
+    AccountStore.clearAccountList();
+    const res = await GetAccountAsset();
+    const addressSet = new Set();
+    if (res.code === 200) {
+      AccountStore.clearCurrentAccount();
+      if (res.data.abstract_account) {
+        AccountStore.pushAccount({
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+        });
+        AccountStore.setCurrentAccount({
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+        });
+      }
+      if (res.data.multiple_abstract_account) {
+        res.data.multiple_abstract_account.map((item) => {
+          if (!addressSet.has(item.Address)) {
+            AccountStore.pushAccount({
+              address: item.Address,
+              erc20AccountMap: item.Erc20,
+              nativeBalance: item.Native,
+              isMultisig: true,
+            });
+          }
+          addressSet.add(item.Address);
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    // load
+    console.log('overview load');
+    loadData();
+  }, [current]);
+
   return (
     <div>
-      <div style={{ color: '#000000', marginTop: '20px' }}>
-        <span>General: {getUserInfo().abstractAccount}</span>
-        <br></br>
-        <span>Multisig: {getUserInfo().multipleAccount}</span>
-      </div>
-      <div style={balanceStyle}>
-        {ethers.formatEther(generalNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} <span>(general)</span>
-      </div>
-      <div style={balanceStyle}>
-        {ethers.formatEther(multisigNativeAmount).replace(/^(.*\..{4}).*$/, '$1')} <span>(multisig)</span>
-      </div>
+      {AccountStore.currentAccount && (
+        <div style={addressStyle}>
+          <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
+            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+              {AccountStore.currentAccount.address && (
+                <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+              )}
+              <span style={{ color: '#000000' }}>
+                {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+              </span>
+            </Space>
+          </div>
+        </div>
+      )}
+
       <div style={functionsListStyle}>
         <div
           style={{ cursor: 'pointer' }}
@@ -117,16 +142,13 @@ const Overview = () => {
       </div>
       <div style={{ marginTop: 15 }}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
-        <div style={{ marginTop: 40 }}>
-          {generalErc20Info && <TokensOverview ercInfo={generalErc20Info} type="general" />}
-          {multisigErc20Info && <TokensOverview ercInfo={multisigErc20Info} type="multisig" />}
-        </div>
-        <div style={listStyle}>
-          <Link to="/addToken">Import tokens</Link>
-        </div>
+
+        {current === 'tokens' && <TokensOverview />}
+        {current === 'multisig' && <MultisigWallet />}
+        {current === 'activity' && <Activity />}
       </div>
     </div>
   );
 };
 
-export default Overview;
+export default observer(Overview);
