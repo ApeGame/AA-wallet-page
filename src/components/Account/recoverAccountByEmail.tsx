@@ -1,18 +1,53 @@
 import { useState } from 'react';
 import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { RecoverLogin } from '@/actions/Login/login';
+import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
+import { GetCode } from '@/actions/Login/login';
 
 import '@/assets/styles/accountStyle/style.scss';
 
 export const RecoverAccountByEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([]);
   const [emailAddress, setEmailAddress] = useState('');
   const [code, setCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSendLoading, setIsSendLoading] = useState(false);
 
   const navigateTo = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const recover = async () => {
+    setIsLoading(true);
+    const res = await RecoverLogin(emailAddress, code);
+    console.log('recover', res);
+    if (res.data.accessToken) {
+      setJWTToken(res.data.accessToken);
+      setRefreshToken(res.data.refreshToken);
+      // setAbstractAccount(res.data.abstract_account);
+      setUserInfo({
+        username: res.data.username,
+        abstractAccount: res.data.abstract_account,
+        multipleAccount: res.data.multiple_account,
+      });
+      navigateTo('/recover_bind');
+    } else {
+      messageApi.error('recover fail');
+    }
+    setIsLoading(false);
+  };
+
+  const sendCode = async () => {
+    setIsSendLoading(true);
+    const res = await GetCode(emailAddress);
+    console.log('sendCode', res);
+    if (res.code === 200) {
+      messageApi.success('send code to your email');
+    } else {
+      messageApi.error('send code to your email fail');
+    }
+    setIsSendLoading(false);
+  };
 
   return (
     <>
@@ -38,7 +73,14 @@ export const RecoverAccountByEmailDialog = ({ isOpen, onClose }: { isOpen: boole
                       }
                     }}
                   />
-                  <Button type="primary">Send email</Button>
+                  <Button
+                    type="primary"
+                    loading={isSendLoading}
+                    onClick={() => {
+                      sendCode();
+                    }}>
+                    Send Code
+                  </Button>
                 </Space.Compact>
               </Col>
             </Row>
@@ -57,7 +99,13 @@ export const RecoverAccountByEmailDialog = ({ isOpen, onClose }: { isOpen: boole
             </Row>
 
             <Row justify="space-around" align="middle">
-              <Button type="primary" size={'large'} loading={isLoading}>
+              <Button
+                type="primary"
+                size={'large'}
+                loading={isLoading}
+                onClick={() => {
+                  recover();
+                }}>
                 Submit
               </Button>
             </Row>

@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState } from 'react';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
 import { Button, Modal, Col, Row, Space } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
@@ -8,6 +8,9 @@ import { formatWeiToEth } from '@/utils/formatterEth';
 import classNames from 'classnames';
 import { AddAccountDialog } from './addAccount';
 import { observer } from 'mobx-react';
+import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
+import UpdateAccountNameDialog from './updateAccountName';
+import { getUserRecoverEmail } from '@/utils/localStorage';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -15,9 +18,13 @@ const AccountListDialog = () => {
   const [open, setOpen] = useState(false);
 
   const [addAccountFlag, setAddAccountFlag] = React.useState(false);
-
   const handleAddAccountClose = () => {
     setAddAccountFlag(false);
+  };
+
+  const [setAccountEmailFlag, setSetAccountEmailFlag] = useState(false);
+  const handleSetAccountEmailClose = () => {
+    setSetAccountEmailFlag(false);
   };
 
   const showModal = () => {
@@ -33,6 +40,8 @@ const AccountListDialog = () => {
             erc20AccountMap: item.erc20AccountMap,
             nativeBalance: item.nativeBalance,
             isMultisig: item.isMultisig,
+            isUpdate: false,
+            name: item.name,
           });
         }
       });
@@ -50,47 +59,13 @@ const AccountListDialog = () => {
     setOpen(false);
   };
 
-  // const loadData = async () => {
-  //   AccountStore.clearAccountList();
-  //   AccountStore.clearCurrentAccount();
-  //   const res = await GetAccountAsset();
-  //   const addressSet = new Set();
-  //   if (res.code === 200) {
-  //     if (res.data.abstract_account) {
-  //       AccountStore.pushAccount({
-  //         address: res.data.abstract_account.Address,
-  //         erc20AccountMap: res.data.abstract_account.Erc20,
-  //         nativeBalance: res.data.abstract_account.Native,
-  //         isMultisig: false,
-  //       });
-
-  //       AccountStore.setCurrentAccount({
-  //         address: res.data.abstract_account.Address,
-  //         erc20AccountMap: res.data.abstract_account.Erc20,
-  //         nativeBalance: res.data.abstract_account.Native,
-  //         isMultisig: false,
-  //       });
-  //     }
-  //     if (res.data.multiple_abstract_account) {
-  //       res.data.multiple_abstract_account.map((item) => {
-  //         if (!addressSet.has(item.Address)) {
-  //           AccountStore.pushAccount({
-  //             address: item.Address,
-  //             erc20AccountMap: item.Erc20,
-  //             nativeBalance: item.Native,
-  //             isMultisig: true,
-  //           });
-  //         }
-  //         addressSet.add(item.Address);
-  //       });
-  //     }
-  //   }
-  // };
-
   // useEffect(() => {
-  //   console.log('loadData!!!!');
+  //   async function loadData() {
+  //     const res = await GetUser();
+  //     console.log('GetUser res', res);
+  //   }
   //   loadData();
-  // }, [addAccountFlag]);
+  // }, []);
 
   return (
     <>
@@ -100,7 +75,7 @@ const AccountListDialog = () => {
             <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#000000' }}>
               {AccountStore.accountList.map((row, index) => (
                 <span key={index}>
-                  {row.address === AccountStore.currentAccount.address && 'Account ' + (index + 1)}
+                  {row.address === AccountStore.currentAccount.address && (row.name ? row.name : 'Account')}
                 </span>
               ))}
               &nbsp; &nbsp;
@@ -120,38 +95,74 @@ const AccountListDialog = () => {
         footer={[]}>
         <div style={{ height: 330, marginTop: 20, overflowY: 'auto' }}>
           {AccountStore.accountList.map((row, index) => (
-            <div
-              className={classNames(
-                'accountContent',
-                row.address === AccountStore.currentAccount.address ? 'accountContentSelect' : 'accountContent'
-              )}
-              key={index}
-              style={{ padding: 10 }}
-              onClick={() => {
-                selectAccount(row.address);
-              }}>
-              <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                <Row>
-                  <Col span={24}>
-                    <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                      {'Account ' + (index + 1) + ' '}
-                      {row.isMultisig ? '(Multisig)' : '(Abstract)'}
-                    </span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={18}>
-                    <span>{truncateWalletAddrLong(row.address)}</span>
-                  </Col>
-                  <Col span={6}>
-                    <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)}</span>
-                  </Col>
-                </Row>
-              </Space>
+            <div key={index}>
+              <UpdateAccountNameDialog
+                isOpen={row.isUpdate}
+                address={row.address}
+                onClose={() => {
+                  console.log('close');
+                  AccountStore.updateAccountNameFlagByAddress(row.address, false);
+                }}
+              />
+              <div
+                className={classNames(
+                  'accountContent',
+                  row.address === AccountStore.currentAccount.address ? 'accountContentSelect' : 'accountContent'
+                )}
+                onClick={() => {
+                  selectAccount(row.address);
+                }}
+                style={{ padding: 10 }}>
+                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                  <Row>
+                    <Col span={24}>
+                      <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                        {row.name ? row.name : 'Account'}
+                        {row.isMultisig ? '(Multisig)' : '(Abstract)'}
+                      </span>
+
+                      {row.isMultisig && (
+                        <span
+                          style={{ marginLeft: 10 }}
+                          onClick={(e) => {
+                            console.log('edit name');
+                            e.stopPropagation();
+                            AccountStore.updateAccountNameFlagByAddress(row.address, true);
+                          }}>
+                          <EditOutlined />
+                        </span>
+                      )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={18}>
+                      <span>{truncateWalletAddrLong(row.address)}</span>
+                    </Col>
+                    <Col span={6}>
+                      <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)}</span>
+                    </Col>
+                  </Row>
+                </Space>
+              </div>
             </div>
           ))}
         </div>
         <div style={{ height: 100, marginTop: 10, overflowY: 'auto' }}>
+          {!getUserRecoverEmail() ? (
+            <span>
+              <Button
+                type="link"
+                onClick={() => {
+                  setSetAccountEmailFlag(true);
+                }}>
+                <PlusOutlined style={{ color: '#1677ff' }} />
+                Bind recover email
+              </Button>
+              <AddAccountEmailDialog isOpen={setAccountEmailFlag} onClose={handleSetAccountEmailClose} />
+            </span>
+          ) : (
+            <span>Recovery email has been added : {getUserRecoverEmail()}</span>
+          )}
           <span>
             <Button
               type="link"

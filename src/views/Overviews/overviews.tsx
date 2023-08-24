@@ -12,6 +12,8 @@ import { GetAccountAsset } from '@/actions/Token/token';
 import MultisigWallet from '@/components/MultisigWallet';
 import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
+import { GetUser } from '@/actions/User/user';
+import { setUserRecoverEmail } from '@/utils/localStorage';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -75,8 +77,6 @@ const Overview = () => {
 
   const [current, setCurrent] = React.useState('tokens');
 
-  const location = useLocation();
-
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
@@ -87,41 +87,58 @@ const Overview = () => {
     const res = await GetAccountAsset();
     const addressSet = new Set();
     if (res.code === 200) {
-      AccountStore.clearCurrentAccount();
+      console.log('currentAccount', AccountStore.currentAccount.address);
+      // AccountStore.clearCurrentAccount();
       if (res.data.abstract_account) {
         AccountStore.pushAccount({
           address: res.data.abstract_account.Address,
           erc20AccountMap: res.data.abstract_account.Erc20,
           nativeBalance: res.data.abstract_account.Native,
           isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
         });
-        AccountStore.setCurrentAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-        });
+        if (!AccountStore.currentAccount.address) {
+          AccountStore.setCurrentAccount({
+            address: res.data.abstract_account.Address,
+            erc20AccountMap: res.data.abstract_account.Erc20,
+            nativeBalance: res.data.abstract_account.Native,
+            isMultisig: false,
+            isUpdate: false,
+            name: res.data.abstract_account.Name,
+          });
+        }
       }
       if (res.data.multiple_abstract_account) {
         res.data.multiple_abstract_account.map((item) => {
-          if (!addressSet.has(item.Address)) {
-            AccountStore.pushAccount({
-              address: item.Address,
-              erc20AccountMap: item.Erc20,
-              nativeBalance: item.Native,
-              isMultisig: true,
-            });
-          }
+          // if (!addressSet.has(item.Address)) {
+          AccountStore.pushAccount({
+            address: item.Address,
+            erc20AccountMap: item.Erc20,
+            nativeBalance: item.Native,
+            isMultisig: true,
+            isUpdate: false,
+            name: item.Name,
+          });
+          // }
           addressSet.add(item.Address);
         });
       }
     }
+    const userRes = await GetUser();
+    console.log('GetUser res', userRes);
+    if (userRes.code === 200) {
+      console.log('res.data.recover_email', userRes.data.recover_email);
+      setUserRecoverEmail(userRes.data.recover_email);
+    }
   };
 
   useEffect(() => {
-    // load
     console.log('overview load');
     loadData();
+    // if (!AccountStore.currentAccount) {
+    //   AccountStore.setCurrentAccount(AccountStore.getAbstractAccount());
+    // }
   }, [current]);
 
   return (

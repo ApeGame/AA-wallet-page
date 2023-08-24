@@ -32,6 +32,35 @@ export const RefreshAccessToken = async () => {
   );
 };
 
+export const RecoverLogin = async (email: string, code: string): Promise<ResponseType<any>> => {
+  return request<any>({
+    url: `/aa/v1/recover/login`,
+    method: 'post',
+    data: {
+      email_address: email,
+      verify_code: code,
+    },
+  });
+};
+
+export const GetCode = function (address: string): Promise<ResponseType<any>> {
+  return request<any>({
+    url: `/aa/v1/email/${address}/code`,
+    method: 'get',
+  });
+};
+
+export const BindRecoverEmail = function (email: string, code: string): Promise<ResponseType<any>> {
+  return request<any>({
+    url: `/aa/v1/token/user/email`,
+    method: 'post',
+    data: {
+      email_address: email,
+      verify_code: code,
+    },
+  });
+};
+
 export const RequestGoogleLogin = function (credential: string): Promise<ResponseType<any>> {
   const data = new FormData();
   data.append('credential', credential);
@@ -47,6 +76,26 @@ export const RequestFBLogin = function (credential: string): Promise<ResponseTyp
   data.append('credential', credential);
   return request<any>({
     url: `/aa/v1/facebook/login`,
+    method: 'post',
+    data: data,
+  });
+};
+
+export const BindGoogleLogin = function (credential: string): Promise<ResponseType<any>> {
+  const data = new FormData();
+  data.append('credential', credential);
+  return request<any>({
+    url: `/aa/v1/token/user/google`,
+    method: 'post',
+    data: data,
+  });
+};
+
+export const BindFBLogin = function (credential: string): Promise<ResponseType<any>> {
+  const data = new FormData();
+  data.append('credential', credential);
+  return request<any>({
+    url: `/aa/v1/token/user/facebook`,
     method: 'post',
     data: data,
   });

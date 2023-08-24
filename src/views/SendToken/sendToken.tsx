@@ -10,6 +10,7 @@ import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { formatWeiToEth } from '@/utils/formatterEth';
+import SendApproveDialog from '@/components/TokensOverview/sendApprove';
 
 // import { getSendTransactionType } from '@/utils/localStorage';
 
@@ -36,14 +37,17 @@ const addressStyle: React.CSSProperties = {
 
 const View = () => {
   const [toAddress, setToAddress] = useState('');
-
   const [toAmount, setToAmount] = useState('');
-
   const [search] = useSearchParams();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [messageApi, contextHolder] = message.useMessage();
+  const [paymasterAddress, setPaymasterAddress] = useState('');
+  const [erc20Address, setErc20Address] = useState('');
+
+  const [sendApproveFlag, setSendApproveFlag] = useState(false);
+  const handleSendApproveFlagClose = () => {
+    setSendApproveFlag(false);
+  };
 
   useEffect(() => {
     console.log('~', search.get('tokenAddress'));
@@ -61,6 +65,10 @@ const View = () => {
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
+      } else if (sendRes.code === 428) {
+        setSendApproveFlag(true);
+        setPaymasterAddress(sendRes.data.PaymasterAddress);
+        setErc20Address(sendRes.data.Erc20ContractAddress);
       } else {
         messageApi.error('Fail');
       }
@@ -76,6 +84,10 @@ const View = () => {
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
+      } else if (sendRes.code === 428) {
+        setSendApproveFlag(true);
+        setPaymasterAddress(sendRes.data.PaymasterAddress);
+        setErc20Address(sendRes.data.Erc20ContractAddress);
       } else {
         messageApi.error('Fail');
       }
@@ -86,6 +98,12 @@ const View = () => {
   return (
     <div>
       {contextHolder}
+      <SendApproveDialog
+        isOpen={sendApproveFlag}
+        onClose={handleSendApproveFlagClose}
+        paymentAddress={paymasterAddress}
+        erc20Address={erc20Address}
+      />
       <div style={contentStyle}>
         <span style={{ fontSize: 18 }}>Send To</span>
         <Link to="/overview" style={{ marginLeft: '230px', fontSize: 18 }}>
@@ -136,8 +154,8 @@ const View = () => {
                 <Row>
                   <Col span={24}>
                     <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                      {'Account ' + (index + 1) + ' '}
-                      {row.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+                      {row.name ? row.name : 'Account'}
+                      {row.isMultisig ? '(Multisig)' : '(Abstract)'}
                     </span>
                   </Col>
                 </Row>

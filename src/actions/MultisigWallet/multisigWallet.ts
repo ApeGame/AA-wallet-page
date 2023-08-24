@@ -1,13 +1,28 @@
 import { request, ResponseType } from '@/request/request';
 import { MultisigRecord, MultisigInfo } from '@/model/multisig';
 
-export const CreateMultisigAddress = function (threshold: number, aaSigners: string[]): Promise<ResponseType<any>> {
+export const CreateMultisigAddress = function (
+  name: string,
+  threshold: number,
+  aaSigners: string[]
+): Promise<ResponseType<any>> {
   return request<any>({
     url: `/aa/v1/token/wallet/multiple_address`,
     method: 'post',
     data: {
+      name: name,
       threshold: threshold,
       aa_signers: aaSigners,
+    },
+  });
+};
+
+export const UpdateMultisigAddressName = function (name: string, address: string): Promise<ResponseType<any>> {
+  return request<any>({
+    url: `/aa/v1/token/wallet/multiple_address/${address}`,
+    method: 'post',
+    data: {
+      name: name,
     },
   });
 };

@@ -3,4 +3,6 @@ export interface AccountInfo {
   erc20AccountMap: Map<string, string>;
   nativeBalance: string;
   isMultisig: boolean;
+  isUpdate: boolean;
+  name: string;
 }

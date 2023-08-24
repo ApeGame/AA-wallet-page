@@ -34,6 +34,7 @@ const Comp = () => {
       {multisigAddressList &&
         multisigAddressList.map((row, index) => (
           <Space
+            key={index}
             direction="vertical"
             size="large"
             style={{
@@ -43,14 +44,13 @@ const Comp = () => {
               paddingBottom: 30,
               borderBottom: '1px solid #D3D3D3',
             }}
-            key={index}
             className="accountContentSend">
             <Row justify="space-around" align="middle">
               <Col span={10}>
                 <span>Wallet Address : </span>
               </Col>
               <Col span={14}>
-                <CopyToClipLong address={row.abstract_account || ''} />
+                <CopyToClipLong key={index} address={row.abstract_account || ''} />
               </Col>
             </Row>
             <Row justify="space-around" align="middle">
@@ -66,7 +66,7 @@ const Comp = () => {
               <Col span={14} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Space direction="vertical" size="small" style={{ display: 'flex', width: '100%' }}>
                   {row.signer_aa_account &&
-                    row.signer_aa_account.map((item) => <CopyToClipLong address={item || ''} />)}
+                    row.signer_aa_account.map((item) => <CopyToClipLong key={index} address={item || ''} />)}
                 </Space>
               </Col>
             </Row>

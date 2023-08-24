@@ -40,6 +40,37 @@ class Account {
     }
     return {} as AccountInfo;
   }
+
+  getAbstractAccount(): AccountInfo {
+    if (this.accountList) {
+      this.accountList.map((item) => {
+        if (!item.isMultisig) {
+          return item;
+        }
+      });
+    }
+    return {} as AccountInfo;
+  }
+
+  updateAccountNameFlagByAddress(address: string, flag: boolean) {
+    if (this.accountList) {
+      this.accountList.map((item) => {
+        if (item.address === address) {
+          item.isUpdate = flag;
+        }
+      });
+    }
+  }
+
+  updateAccountNameByAddress(address: string, name: string) {
+    if (this.accountList) {
+      this.accountList.map((item) => {
+        if (item.address === address) {
+          item.name = name;
+        }
+      });
+    }
+  }
 }
 
 export const AccountStore = new Account();

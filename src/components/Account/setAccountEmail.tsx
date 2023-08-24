@@ -1,25 +1,51 @@
 import { useState } from 'react';
 import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
+import { BindRecoverEmail, GetCode } from '@/actions/Login/login';
 import { useNavigate } from 'react-router-dom';
 
 import '@/assets/styles/accountStyle/style.scss';
 
 export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([]);
   const [emailAddress, setEmailAddress] = useState('');
   const [code, setCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isSendLoading, setIsSendLoading] = useState(false);
   const navigateTo = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const sendCode = async () => {
+    setIsSendLoading(true);
+    const res = await GetCode(emailAddress);
+    console.log('sendCode', res);
+    if (res.code === 200) {
+      messageApi.success('send code to your email');
+      navigateTo('/overview');
+      window.location.reload();
+    } else {
+      messageApi.error('send code to your email fail');
+    }
+    setIsSendLoading(false);
+  };
+
+  const bindEmail = async () => {
+    setIsLoading(true);
+    const res = await BindRecoverEmail(emailAddress, code);
+    console.log('BindRecoverEmail', res);
+    if (res.code === 200) {
+      messageApi.success('bind email success');
+    } else {
+      messageApi.error('bind email fail');
+    }
+    setIsLoading(false);
+  };
 
   return (
     <>
       {contextHolder}
       <Modal
         centered
-        title="Please add email for account "
+        title="Bind email for account "
         open={isOpen}
         onOk={onClose}
         onCancel={onClose}
@@ -38,7 +64,14 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
                       }
                     }}
                   />
-                  <Button type="primary">Send email</Button>
+                  <Button
+                    type="primary"
+                    loading={isSendLoading}
+                    onClick={() => {
+                      sendCode();
+                    }}>
+                    Send code
+                  </Button>
                 </Space.Compact>
               </Col>
             </Row>
@@ -57,7 +90,13 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
             </Row>
 
             <Row justify="space-around" align="middle">
-              <Button type="primary" size={'large'} loading={isLoading}>
+              <Button
+                type="primary"
+                size={'large'}
+                loading={isLoading}
+                onClick={() => {
+                  bindEmail();
+                }}>
                 Submit
               </Button>
             </Row>

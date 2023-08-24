@@ -6,7 +6,6 @@ import { RequestGoogleLogin, RequestFBLogin } from '@/actions/Login/login';
 import { useFacebook } from 'react-facebook';
 import { Button } from 'antd';
 import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
-import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
 import { RecoverAccountByEmailDialog } from '@/components/Account/recoverAccountByEmail';
 
 const contentStyle: React.CSSProperties = {
@@ -19,10 +18,6 @@ const contentStyle: React.CSSProperties = {
 const Login = () => {
   const { isLoading, init } = useFacebook();
   const navigateTo = useNavigate();
-  const [setAccountEmailFlag, setSetAccountEmailFlag] = useState(false);
-  const handleSetAccountEmailClose = () => {
-    setSetAccountEmailFlag(false);
-  };
   const [recoverAccountEmailFlag, setRecoverAccountEmailFlag] = useState(false);
   const handleRecoverAccountEmailClose = () => {
     setRecoverAccountEmailFlag(false);
@@ -90,18 +85,7 @@ const Login = () => {
           </Button>
         </div>
 
-        <AddAccountEmailDialog isOpen={setAccountEmailFlag} onClose={handleSetAccountEmailClose} />
         <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
-
-        <div style={{ marginTop: '20px' }}>
-          <Button
-            type="link"
-            onClick={() => {
-              setSetAccountEmailFlag(true);
-            }}>
-            Set your account email
-          </Button>
-        </div>
 
         <div style={{ marginTop: '20px' }}>
           <Button

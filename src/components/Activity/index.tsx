@@ -54,8 +54,10 @@ const Comp = () => {
     console.log('UpdateNeedSignature', res);
     if (res.code === 200) {
       messageApi.success('Complete');
+      loadData();
     } else {
       messageApi.error('Fail');
+      loadData();
     }
   };
 
@@ -64,8 +66,10 @@ const Comp = () => {
     console.log('UpdateNeedSignature reject', res);
     if (res.code === 200) {
       messageApi.success('Complete');
+      loadData();
     } else {
       messageApi.error('Fail');
+      loadData();
     }
   };
 
@@ -121,7 +125,7 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{truncateWalletAddrLong(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && truncateWalletAddrLong(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">
@@ -164,7 +168,7 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{truncateWalletAddrLong(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && truncateWalletAddrLong(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">

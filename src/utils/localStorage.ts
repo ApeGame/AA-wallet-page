@@ -29,6 +29,14 @@ export const setUserInfo = (userInfo: UserInfo) => {
   localStorage.userProfile = JSON.stringify(userInfo);
 };
 
+export const setUserRecoverEmail = (recover_email: string) => {
+  localStorage.recoverEmail = recover_email;
+};
+
+export const getUserRecoverEmail = () => {
+  return localStorage.recoverEmail;
+};
+
 export const getSendTransactionType = (): string => {
   if (!localStorage.sendTransactionType) {
     localStorage.sendTransactionType = '0';
