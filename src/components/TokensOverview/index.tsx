@@ -16,10 +16,10 @@ const contentStyle: React.CSSProperties = {
   justifyContent: 'center',
   color: '#000000',
   flexDirection: 'column',
+  marginTop: 15,
 };
 
 const listStyle: React.CSSProperties = {
-  marginTop: '30px',
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
@@ -29,77 +29,50 @@ const listStyle: React.CSSProperties = {
 const Comp = () => {
   const navigateTo = useNavigate();
 
-  // const loadData = async () => {
-  //   AccountStore.clearAccountList();
-  //   const res = await GetAccountAsset();
-  //   const addressSet = new Set();
-  //   if (res.code === 200) {
-  //     if (res.data.abstract_account) {
-  //       AccountStore.pushAccount({
-  //         address: res.data.abstract_account.Address,
-  //         erc20AccountMap: res.data.abstract_account.Erc20,
-  //         nativeBalance: res.data.abstract_account.Native,
-  //         isMultisig: false,
-  //       });
-
-  //       AccountStore.setCurrentAccount({
-  //         address: res.data.abstract_account.Address,
-  //         erc20AccountMap: res.data.abstract_account.Erc20,
-  //         nativeBalance: res.data.abstract_account.Native,
-  //         isMultisig: false,
-  //       });
-  //     }
-  //     if (res.data.multiple_abstract_account) {
-  //       res.data.multiple_abstract_account.map((item) => {
-  //         if (!addressSet.has(item.Address)) {
-  //           AccountStore.pushAccount({
-  //             address: item.Address,
-  //             erc20AccountMap: item.Erc20,
-  //             nativeBalance: item.Native,
-  //             isMultisig: true,
-  //           });
-  //         }
-  //         addressSet.add(item.Address);
-  //       });
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // load
-  //   loadData();
-  // }, []);
-
   return (
     <div>
       <div style={contentStyle}>
-        {AccountStore.currentAccount.erc20AccountMap &&
-          Object.keys(AccountStore.currentAccount.erc20AccountMap).map((key, index) => {
-            return (
-              <div
-                key={index}
-                style={{ marginTop: 15 }}
-                className="accountContentSend"
-                onClick={() => {
-                  navigateTo(`/tokenOverview?tokenAddress=${key}`);
-                }}>
-                {/* {key} {AccountStore.currentAccount.erc20AccountMap[key]} */}
-
-                <Row justify="space-around" align="middle" style={{ height: 100, width: 400 }}>
-                  <Col span={14} style={{ fontWeight: 'bold', fontSize: 16 }}>
-                    <MehOutlined style={{ color: '#627EEA' }} />
-                    <span style={{ marginLeft: 4 }}>{truncateWalletAddrLong(key)}</span>
-                    {/* <CopyToClipLong address={key || ''} /> */}
-                  </Col>
-                  <Col span={10}>
-                    <span style={{ textAlign: 'right', fontSize: 16 }}>
-                      {formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key])} MT
-                    </span>
-                  </Col>
-                </Row>
-              </div>
-            );
-          })}
+        <div style={{ height: 340, overflowY: 'auto' }}>
+          {AccountStore.currentAccount.erc20AccountMap &&
+            Object.keys(AccountStore.currentAccount.erc20AccountMap).map((key, index) => {
+              return (
+                <div
+                  key={index}
+                  className="accountContentSend"
+                  onClick={() => {
+                    navigateTo(`/tokenOverview?tokenAddress=${key}`);
+                  }}>
+                  <Row style={{ height: 80, width: 385 }}>
+                    <Col span={14} style={{ fontWeight: 'bold', fontSize: 16, padding: 10 }}>
+                      <span
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 16,
+                        }}>
+                        <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} />
+                        <span style={{ marginLeft: 10 }}>My Token</span>
+                      </span>
+                      <br />
+                      <span style={{ fontSize: 17 }}>{truncateWalletAddrLong(key)}</span>
+                    </Col>
+                    <Col
+                      span={10}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row-reverse',
+                        fontSize: 15,
+                        marginTop: 12,
+                        padding: 5,
+                      }}>
+                      <span>{formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key])} MT</span>
+                    </Col>
+                  </Row>
+                </div>
+              );
+            })}
+        </div>
 
         <div style={listStyle}>
           <Link to="/addToken">Import tokens</Link>
