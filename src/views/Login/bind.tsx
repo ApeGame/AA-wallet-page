@@ -26,6 +26,7 @@ const BindAccount = () => {
     if (res.code === 200) {
       messageApi.success('bind google account success');
       navigateTo('/overview');
+      window.location.reload();
     } else {
       messageApi.error('bind google account fail');
     }
@@ -42,6 +43,7 @@ const BindAccount = () => {
       if (res.code === 200) {
         messageApi.success('bind facebook account success');
         navigateTo('/overview');
+        window.location.reload();
       } else {
         messageApi.error('bind facebook account fail');
       }

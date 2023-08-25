@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, Row, Space, message } from 'antd';
 import { observer } from 'mobx-react';
 import { SendApproveRequest } from '@/actions/Token/token';
+import { useNavigate } from 'react-router-dom';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -18,6 +19,7 @@ const SendApproveDialog = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const navigateTo = useNavigate();
 
   const sendApprove = async () => {
     setIsLoading(true);
@@ -36,6 +38,8 @@ const SendApproveDialog = ({
     console.log('sendRes', sendRes);
     if (sendRes.code === 200) {
       messageApi.success('Complete, please move to Signature Activity to check this approve request');
+      navigateTo('/overview');
+      location.reload();
     } else {
       messageApi.error('Fail');
     }
@@ -47,7 +51,7 @@ const SendApproveDialog = ({
       {contextHolder}
       <Modal
         centered
-        title="Send Erc20 Approve Request"
+        title="Send Approve Token Request"
         open={isOpen}
         onOk={onClose}
         onCancel={onClose}

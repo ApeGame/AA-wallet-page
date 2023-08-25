@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import SendApproveDialog from '@/components/TokensOverview/sendApprove';
+import { useNavigate } from 'react-router-dom';
 
 // import { getSendTransactionType } from '@/utils/localStorage';
 
@@ -49,6 +50,8 @@ const View = () => {
     setSendApproveFlag(false);
   };
 
+  const navigateTo = useNavigate();
+
   useEffect(() => {
     console.log('~', search.get('tokenAddress'));
   }, [search]);
@@ -65,6 +68,8 @@ const View = () => {
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
+        navigateTo('/overview');
+        window.location.reload();
       } else if (sendRes.code === 428) {
         setSendApproveFlag(true);
         setPaymasterAddress(sendRes.data.PaymasterAddress);
@@ -84,6 +89,8 @@ const View = () => {
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
+        navigateTo('/overview');
+        window.location.reload();
       } else if (sendRes.code === 428) {
         setSendApproveFlag(true);
         setPaymasterAddress(sendRes.data.PaymasterAddress);

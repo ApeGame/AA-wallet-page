@@ -77,6 +77,7 @@ const ContentHeader = () => {
           <HomeOutlined
             onClick={() => {
               navigateTo('/overview');
+              window.location.reload();
             }}
           />
         </Col>

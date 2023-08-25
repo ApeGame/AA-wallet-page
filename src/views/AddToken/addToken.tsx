@@ -2,6 +2,7 @@ import { Input, Button, message } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UpdateToken } from '@/actions/Token/token';
+import { useNavigate } from 'react-router-dom';
 
 const contentStyle: React.CSSProperties = {
   display: 'flex',
@@ -19,12 +20,15 @@ const View = () => {
   const [tokenAddress, setTokenAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const navigateTo = useNavigate();
 
   const addToken = async () => {
     setIsLoading(true);
     const addRes = await UpdateToken(tokenAddress.trim());
     if (addRes.code === 200) {
       messageApi.success('Complete');
+      navigateTo('/overview');
+      location.reload();
     } else {
       messageApi.error('Fail');
     }

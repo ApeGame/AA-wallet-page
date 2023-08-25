@@ -20,8 +20,6 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
     console.log('sendCode', res);
     if (res.code === 200) {
       messageApi.success('send code to your email');
-      navigateTo('/overview');
-      window.location.reload();
     } else {
       messageApi.error('send code to your email fail');
     }
@@ -34,6 +32,8 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
     console.log('BindRecoverEmail', res);
     if (res.code === 200) {
       messageApi.success('bind email success');
+      navigateTo('/overview');
+      window.location.reload();
     } else {
       messageApi.error('bind email fail');
     }
