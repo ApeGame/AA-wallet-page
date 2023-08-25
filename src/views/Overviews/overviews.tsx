@@ -14,7 +14,7 @@ import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { GetUser } from '@/actions/User/user';
 import { setUserRecoverEmail } from '@/utils/localStorage';
-import { useInterval } from '@/hooks/useInterval';
+// import { useInterval } from '@/hooks/useInterval';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -84,12 +84,12 @@ const Overview = () => {
     setCurrent(e.key);
   };
 
-  useInterval(async () => {
-    setTimeout(async () => {
-      console.log('overview useInterval load');
-      loadData();
-    }, 3 * 1000);
-  }, 4000);
+  // useInterval(async () => {
+  //   setTimeout(async () => {
+  //     console.log('overview useInterval load');
+  //     loadData();
+  //   }, 3 * 1000);
+  // }, 4000);
 
   const loadData = async () => {
     // account
