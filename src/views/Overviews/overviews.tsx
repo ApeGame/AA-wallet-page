@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { MenuProps, Menu, Space } from 'antd';
+import { MenuProps, Menu, Space, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { AccountStore } from '@/store/account';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
@@ -13,7 +13,7 @@ import MultisigWallet from '@/components/MultisigWallet';
 import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { GetUser } from '@/actions/User/user';
-import { setUserRecoverEmail } from '@/utils/localStorage';
+import { setUserRecoverEmail, getUserRecoverEmail } from '@/utils/localStorage';
 import { useInterval } from '@/hooks/useInterval';
 
 const functionsListStyle: React.CSSProperties = {
@@ -58,6 +58,8 @@ const balanceStyle: React.CSSProperties = {
 const Overview = () => {
   const navigateTo = useNavigate();
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const items: MenuProps['items'] = [
     {
       label: 'Tokens',
@@ -90,6 +92,14 @@ const Overview = () => {
       loadData();
     }, 5 * 1000);
   }, 5000);
+
+  useInterval(async () => {
+    setTimeout(async () => {
+      if (!getUserRecoverEmail()) {
+        messageApi.warning('please add your recover email, click your account to check it');
+      }
+    }, 10 * 1000);
+  }, 10 * 1000);
 
   const loadData = async () => {
     // account
@@ -153,6 +163,7 @@ const Overview = () => {
 
   return (
     <div>
+      {contextHolder}
       {AccountStore.currentAccount && (
         <>
           <div style={addressStyle}>
