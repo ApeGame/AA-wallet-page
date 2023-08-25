@@ -14,7 +14,7 @@ import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { GetUser } from '@/actions/User/user';
 import { setUserRecoverEmail } from '@/utils/localStorage';
-// import { useInterval } from '@/hooks/useInterval';
+import { useInterval } from '@/hooks/useInterval';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -84,20 +84,20 @@ const Overview = () => {
     setCurrent(e.key);
   };
 
-  // useInterval(async () => {
-  //   setTimeout(async () => {
-  //     console.log('overview useInterval load');
-  //     loadData();
-  //   }, 3 * 1000);
-  // }, 4000);
+  useInterval(async () => {
+    setTimeout(async () => {
+      console.log('overview useInterval load');
+      loadData();
+    }, 5 * 1000);
+  }, 5000);
 
   const loadData = async () => {
     // account
-    AccountStore.clearAccountList();
     const res = await GetAccountAsset();
     const addressSet = new Set();
     if (res.code === 200) {
       console.log('currentAccount', AccountStore.currentAccount.address);
+      AccountStore.clearAccountList();
       // AccountStore.clearCurrentAccount();
       if (res.data.abstract_account) {
         AccountStore.pushAccount({
