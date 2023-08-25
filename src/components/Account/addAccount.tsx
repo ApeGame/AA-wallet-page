@@ -22,8 +22,11 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
     if (addRes.code === 200) {
       messageApi.success('Success');
       navigateTo('/overview');
+      location.reload();
+    } else if (addRes.code === 400) {
+      messageApi.error(addRes.data);
     } else {
-      messageApi.error('Fail');
+      messageApi.error('fail');
     }
     setIsLoading(false);
   };

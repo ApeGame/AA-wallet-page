@@ -47,7 +47,7 @@ const SendApproveDialog = ({
       {contextHolder}
       <Modal
         centered
-        title="Send Approve Request"
+        title="Send Erc20 Approve Request"
         open={isOpen}
         onOk={onClose}
         onCancel={onClose}

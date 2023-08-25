@@ -76,6 +76,7 @@ const Comp = () => {
 
   const moveToScan = (hash: string) => {
     return <a href={`${import.meta.env.VITE_SCAN_URL}/${hash}`}>{truncateWalletAddrLong(hash)}</a>;
+    //return <a href={`${import.meta.env.VITE_SCAN_URL}}`}>{truncateWalletAddrLong(hash)}</a>;
   };
 
   return (

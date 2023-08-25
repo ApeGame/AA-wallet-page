@@ -63,6 +63,7 @@ export const SendApproveRequest = function (toAddress: string, data: string): Pr
       value: '0x0',
       data: data,
       sender: AccountStore.currentAccount.isMultisig ? AccountStore.currentAccount.address : '',
+      paymaster: CreatePaymasterRequest(),
     },
   });
 };

@@ -152,8 +152,8 @@ const View = () => {
               }}>
               <Space direction="vertical" size="large" style={{ display: 'flex' }}>
                 <Row>
-                  <Col span={24}>
-                    <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                  <Col span={24} style={{ display: 'flex', flexDirection: 'row' }}>
+                    <span style={{ fontSize: '15px', fontWeight: 'bold', marginLeft: 45 }}>
                       {row.name ? row.name : 'Account'}
                       {row.isMultisig ? '(Multisig)' : '(Abstract)'}
                     </span>
