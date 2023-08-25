@@ -47,6 +47,12 @@ const Comp = () => {
             className="accountContentSend">
             <Row justify="space-around" align="middle">
               <Col span={10}>
+                <span>Wallet Name : </span>
+              </Col>
+              <Col span={14}>{row.name}</Col>
+            </Row>
+            <Row justify="space-around" align="middle">
+              <Col span={10}>
                 <span>Wallet Address : </span>
               </Col>
               <Col span={14}>

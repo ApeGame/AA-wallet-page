@@ -7,6 +7,7 @@ export interface MultisigRecord {
 }
 
 export interface MultisigInfo {
+  name: string;
   abstract_account: string;
   threshold: number;
   signer_aa_account: string[];
