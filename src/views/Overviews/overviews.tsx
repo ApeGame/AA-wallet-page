@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { MenuProps, Menu, Space } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AccountStore } from '@/store/account';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { observer } from 'mobx-react';

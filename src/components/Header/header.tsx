@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React from 'react';
 import { Col, Row } from 'antd';
-import { LogoutOutlined, BlockOutlined, HomeOutlined } from '@ant-design/icons';
+import { LogoutOutlined, HomeOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import AccountListDialog from '../Account/accountList';
 import { getJWTToken } from '@/utils/localStorage';

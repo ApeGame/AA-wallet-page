@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
-import { UpdateMultisigAddressName } from '@/actions/MultisigWallet/multisigWallet';
+import { Button, Modal, Row, Space, message } from 'antd';
 import { observer } from 'mobx-react';
-import { AccountStore } from '@/store/account';
-import { ethers } from 'ethers';
 import { SendApproveRequest } from '@/actions/Token/token';
 
 import '@/assets/styles/accountStyle/style.scss';

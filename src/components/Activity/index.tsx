@@ -4,6 +4,7 @@ import { Col, Row, Space, Button, message } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { MultisigRecord } from '@/model/multisig';
+import { ReloadOutlined } from '@ant-design/icons';
 import {
   GetMultisigHistoryList,
   GetStatus,
@@ -78,7 +79,7 @@ const Comp = () => {
       {contextHolder}
       <div style={{ height: 410, overflowY: 'auto', marginTop: 10, color: '#000000' }}>
         <Row justify="space-around" align="middle">
-          <Col span={12}>
+          <Col span={10}>
             <Button
               type="link"
               onClick={() => {
@@ -87,7 +88,7 @@ const Comp = () => {
               All Activity
             </Button>
           </Col>
-          <Col span={12}>
+          <Col span={10}>
             <Button
               type="link"
               onClick={() => {
@@ -95,6 +96,13 @@ const Comp = () => {
               }}>
               Signature Activity
             </Button>
+          </Col>
+          <Col span={4}>
+            <ReloadOutlined
+              onClick={() => {
+                loadData();
+              }}
+            />
           </Col>
         </Row>
         <div style={{ marginTop: 10 }}>
