@@ -6,6 +6,7 @@ import { formatWeiToEth } from '@/utils/formatterEth';
 import { AccountStore } from '@/store/account';
 import { Link } from 'react-router-dom';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { MehOutlined } from '@ant-design/icons';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -85,13 +86,14 @@ const Comp = () => {
                 {/* {key} {AccountStore.currentAccount.erc20AccountMap[key]} */}
 
                 <Row justify="space-around" align="middle" style={{ height: 100, width: 400 }}>
-                  <Col span={16} style={{ fontWeight: 'bold', fontSize: 17 }}>
-                    <span>{truncateWalletAddrLong(key)}</span>
+                  <Col span={14} style={{ fontWeight: 'bold', fontSize: 16 }}>
+                    <MehOutlined style={{ color: '#627EEA' }} />
+                    <span style={{ marginLeft: 4 }}>{truncateWalletAddrLong(key)}</span>
                     {/* <CopyToClipLong address={key || ''} /> */}
                   </Col>
-                  <Col span={8}>
-                    <span style={{ textAlign: 'right', fontSize: 18 }}>
-                      {formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key])}
+                  <Col span={10}>
+                    <span style={{ textAlign: 'right', fontSize: 16 }}>
+                      {formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key])} MT
                     </span>
                   </Col>
                 </Row>

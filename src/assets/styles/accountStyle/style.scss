@@ -32,3 +32,25 @@
   color: #000000;
   cursor: pointer;
 }
+
+.networkItem {
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: #d4d4d4;
+  }
+  color: #000000;
+  cursor: pointer;
+}
+
+.networkItemSelect {
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: #e6f0fa;
+  }
+  color: #000000;
+  cursor: pointer;
+  border-left: 3px solid #0376c9;
+  background-color: #e6f0fa;
+}

@@ -74,6 +74,10 @@ const Comp = () => {
     }
   };
 
+  const moveToScan = (hash: string) => {
+    return <a href={`${import.meta.env.VITE_SCAN_URL}/${hash}`}>{truncateWalletAddrLong(hash)}</a>;
+  };
+
   return (
     <>
       {contextHolder}
@@ -133,7 +137,7 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{row.user_operation_hash && truncateWalletAddrLong(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && moveToScan(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">
@@ -176,7 +180,7 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{row.user_operation_hash && truncateWalletAddrLong(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && moveToScan(row.user_operation_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">

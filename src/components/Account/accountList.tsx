@@ -135,11 +135,11 @@ const AccountListDialog = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col span={18}>
+                    <Col span={15}>
                       <span>{truncateWalletAddrLong(row.address)}</span>
                     </Col>
-                    <Col span={6}>
-                      <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)}</span>
+                    <Col span={9}>
+                      <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)} Peel</span>
                     </Col>
                   </Row>
                 </Space>

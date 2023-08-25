@@ -27,6 +27,7 @@ const functionsListStyle: React.CSSProperties = {
 
 const iconButtonStyle: React.CSSProperties = {
   fontSize: '25px',
+  color: '#FFFFFF',
 };
 
 const menuStyle: React.CSSProperties = {
@@ -83,6 +84,7 @@ const Overview = () => {
   };
 
   const loadData = async () => {
+    // account
     AccountStore.clearAccountList();
     const res = await GetAccountAsset();
     const addressSet = new Set();
@@ -164,13 +166,25 @@ const Overview = () => {
       )}
 
       <div style={functionsListStyle}>
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            navigateTo(`/sendToken`);
-          }}>
-          <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          <p style={{ marginTop: 5 }}>Send</p>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              cursor: 'pointer',
+              width: 40,
+              height: 40,
+              borderRadius: '50%',
+              backgroundColor: '#0376c9',
+            }}
+            onClick={() => {
+              navigateTo(`/sendToken`);
+            }}>
+            <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+          </div>
+          <p style={{ marginTop: 2 }}>Send</p>
         </div>
       </div>
       <div style={{ marginTop: 15 }}>
