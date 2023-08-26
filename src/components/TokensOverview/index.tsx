@@ -51,7 +51,7 @@ const Comp = () => {
                           fontSize: 16,
                         }}>
                         <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} />
-                        <span style={{ marginLeft: 10 }}>My Token</span>
+                        <span style={{ marginLeft: 10 }}>{AccountStore.currentAccount.erc20AccountMap[key].name}</span>
                       </span>
                       <br />
                       {/* <span style={{ fontSize: 17 }}>{truncateWalletAddrLong(key)}</span> */}
@@ -65,7 +65,11 @@ const Comp = () => {
                         marginTop: 12,
                         padding: 5,
                       }}>
-                      <span>{formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key])} MT</span>
+                      <span>
+                        {formatWeiToEth(AccountStore.currentAccount.erc20AccountMap[key].balance) +
+                          ' ' +
+                          AccountStore.currentAccount.erc20AccountMap[key].symbol}
+                      </span>
                     </Col>
                   </Row>
                 </div>

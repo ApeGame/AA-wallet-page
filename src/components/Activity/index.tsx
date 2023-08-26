@@ -75,12 +75,17 @@ const Comp = () => {
   };
 
   const moveToUserOperationScan = (hash: string) => {
-    return <a href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>{truncateWalletAddrLong(hash)}</a>;
+    return (
+      <a target="_blank" href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>
+        {truncateWalletAddrLong(hash)}
+      </a>
+    );
   };
 
   const moveToBlockScan = (hash: string) => {
     return (
       <a
+        target="_blank"
         href={`${
           import.meta.env.VITE_BLOCK_SCAN_URL
         }/tx/${'0x60607206816f13e472ea00d24d978997732eca59af3acac3f34b7de551736e2b'}`}>
