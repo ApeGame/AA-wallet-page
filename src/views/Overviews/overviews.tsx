@@ -15,6 +15,7 @@ import { formatWeiToEth } from '@/utils/formatterEth';
 import { GetUser } from '@/actions/User/user';
 import { setUserRecoverEmail, getUserRecoverEmail } from '@/utils/localStorage';
 import { useInterval } from '@/hooks/useInterval';
+import { getCurrentAddress } from '@/utils/localStorage';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -104,9 +105,8 @@ const Overview = () => {
   const loadData = async () => {
     // account
     const res = await GetAccountAsset();
-    const addressSet = new Set();
+    // const addressSet = new Set();
     if (res.code === 200) {
-      console.log('currentAccount', AccountStore.currentAccount.address);
       AccountStore.clearAccountList();
       // AccountStore.clearCurrentAccount();
       if (res.data.abstract_account) {
@@ -118,16 +118,6 @@ const Overview = () => {
           isUpdate: false,
           name: res.data.abstract_account.Name,
         });
-        if (!AccountStore.currentAccount.address) {
-          AccountStore.setCurrentAccount({
-            address: res.data.abstract_account.Address,
-            erc20AccountMap: res.data.abstract_account.Erc20,
-            nativeBalance: res.data.abstract_account.Native,
-            isMultisig: false,
-            isUpdate: false,
-            name: res.data.abstract_account.Name,
-          });
-        }
       }
       if (res.data.multiple_abstract_account) {
         res.data.multiple_abstract_account.map((item) => {
@@ -141,7 +131,25 @@ const Overview = () => {
             name: item.Name,
           });
           // }
-          addressSet.add(item.Address);
+          // addressSet.add(item.Address);
+        });
+      }
+
+      if (getCurrentAddress()) {
+        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
+        console.log('currentWalletAddress', currentWalletAddress.address);
+        console.log('getCurrentAddress', getCurrentAddress());
+        if (currentWalletAddress) {
+          AccountStore.setCurrentAccount(currentWalletAddress);
+        }
+      } else {
+        AccountStore.setCurrentAccount({
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
         });
       }
     }

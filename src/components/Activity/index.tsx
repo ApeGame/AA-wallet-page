@@ -74,9 +74,19 @@ const Comp = () => {
     }
   };
 
-  const moveToScan = (hash: string) => {
-    return <a href={`${import.meta.env.VITE_SCAN_URL}/${hash}`}>{truncateWalletAddrLong(hash)}</a>;
-    //return <a href={`${import.meta.env.VITE_SCAN_URL}}`}>{truncateWalletAddrLong(hash)}</a>;
+  const moveToUserOperationScan = (hash: string) => {
+    return <a href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>{truncateWalletAddrLong(hash)}</a>;
+  };
+
+  const moveToBlockScan = (hash: string) => {
+    return (
+      <a
+        href={`${
+          import.meta.env.VITE_BLOCK_SCAN_URL
+        }/tx/${'0x60607206816f13e472ea00d24d978997732eca59af3acac3f34b7de551736e2b'}`}>
+        {truncateWalletAddrLong(hash)}
+      </a>
+    );
   };
 
   return (
@@ -138,7 +148,15 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{row.user_operation_hash && moveToScan(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+                  </Col>
+                </Row>
+                <Row justify="space-between" align="bottom">
+                  <Col span={10}>
+                    <span>Transaction hash : </span>
+                  </Col>
+                  <Col span={14}>
+                    <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">
@@ -181,7 +199,15 @@ const Comp = () => {
                     <span>User operation hash : </span>
                   </Col>
                   <Col span={14}>
-                    <span>{row.user_operation_hash && moveToScan(row.user_operation_hash)}</span>
+                    <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+                  </Col>
+                </Row>
+                <Row justify="space-between" align="bottom">
+                  <Col span={10}>
+                    <span>Transaction hash : </span>
+                  </Col>
+                  <Col span={14}>
+                    <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
                   </Col>
                 </Row>
                 <Row justify="space-between" align="bottom">

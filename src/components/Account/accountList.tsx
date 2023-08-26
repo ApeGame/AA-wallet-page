@@ -10,7 +10,7 @@ import { AddAccountDialog } from './addAccount';
 import { observer } from 'mobx-react';
 import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
 import UpdateAccountNameDialog from './updateAccountName';
-import { getUserRecoverEmail } from '@/utils/localStorage';
+import { getUserRecoverEmail, setCurrentAddress } from '@/utils/localStorage';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -46,6 +46,7 @@ const AccountListDialog = () => {
         }
       });
     }
+    setCurrentAddress(address);
     setOpen(false);
   };
 

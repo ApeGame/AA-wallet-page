@@ -32,22 +32,26 @@ class Account {
 
   getAccountByAddress(address: string): AccountInfo {
     if (this.accountList) {
-      this.accountList.map((item) => {
-        if (item.address === address) {
-          return item;
+      for (let i = 0; i < this.accountList.length; i++) {
+        if (this.accountList[i].address === address) {
+          return this.accountList[i];
         }
-      });
+      }
+    } else {
+      return {} as AccountInfo;
     }
     return {} as AccountInfo;
   }
 
   getAbstractAccount(): AccountInfo {
     if (this.accountList) {
-      this.accountList.map((item) => {
-        if (!item.isMultisig) {
-          return item;
+      for (let i = 0; i < this.accountList.length; i++) {
+        if (this.accountList[i].isMultisig) {
+          return this.accountList[i];
         }
-      });
+      }
+    } else {
+      return {} as AccountInfo;
     }
     return {} as AccountInfo;
   }

@@ -37,6 +37,14 @@ export const getUserRecoverEmail = () => {
   return localStorage.recoverEmail;
 };
 
+export const setCurrentAddress = (address: string) => {
+  localStorage.currentAddress = address;
+};
+
+export const getCurrentAddress = () => {
+  return localStorage.currentAddress;
+};
+
 export const getSendTransactionType = (): string => {
   if (!localStorage.sendTransactionType) {
     localStorage.sendTransactionType = '0';

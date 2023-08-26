@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Button, Modal, Col, Row, Space, message } from 'antd';
-import { CrownFilled, BankFilled, SmileFilled } from '@ant-design/icons';
 import { observer } from 'mobx-react';
+import ethIcon from '@/assets/img/eth.svg';
+import bscIcon from '@/assets/img/binance.svg';
+import lineaIcon from '@/assets/img/linea.svg';
+import baseIcon from '@/assets/img/base.svg';
+import zkevmIcon from '@/assets/img/zkevm.svg';
+import coqIcon from '@/assets/img/ankr.svg';
+import apeIcon from '@/assets/img/ape.svg';
 import '@/assets/styles/accountStyle/style.scss';
 
 const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -23,19 +29,43 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             <Row justify="space-around" align="middle">
               <Col span={24}>
                 <div className="networkItemSelect" style={{ height: 60, fontSize: 15, padding: 10 }}>
-                  <CrownFilled style={{ fontSize: 20 }} />
-                  <span style={{ marginLeft: 10 }}>BAS Testnet</span>
+                  <img style={{ height: 40, width: 40 }} src={apeIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>APE</span>
                 </div>
               </Col>
               <Col span={24}>
                 <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
-                  <BankFilled style={{ fontSize: 20, color: '#B0C4DE' }} />
-                  <span style={{ marginLeft: 10 }}>Ethereum Testnet</span>
+                  <img style={{ height: 40, width: 40 }} src={ethIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Ethereum</span>
                 </div>
               </Col>
               <Col span={24}>
                 <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
-                  <SmileFilled style={{ fontSize: 20, color: '#B0C4DE' }} />
+                  <img style={{ height: 40, width: 40 }} src={bscIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Binance</span>
+                </div>
+              </Col>
+              <Col span={24}>
+                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
+                  <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Line</span>
+                </div>
+              </Col>
+              <Col span={24}>
+                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
+                  <img style={{ height: 40, width: 40 }} src={baseIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Base</span>
+                </div>
+              </Col>
+              <Col span={24}>
+                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
+                  <img style={{ height: 40, width: 40 }} src={zkevmIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Zkevm</span>
+                </div>
+              </Col>
+              <Col span={24}>
+                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
+                  <img style={{ height: 40, width: 40 }} src={coqIcon} alt="" />
                   <span style={{ marginLeft: 10 }}>Coq Testnet</span>
                 </div>
               </Col>
