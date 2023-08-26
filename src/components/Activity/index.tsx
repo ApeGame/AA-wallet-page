@@ -143,22 +143,26 @@ const Comp = () => {
                     <CopyToClipLong address={row.sender || ''} />
                   </Col>
                 </Row>
-                <Row justify="space-between" align="bottom">
-                  <Col span={10}>
-                    <span>User operation hash : </span>
-                  </Col>
-                  <Col span={14}>
-                    <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                  </Col>
-                </Row>
-                <Row justify="space-between" align="bottom">
-                  <Col span={10}>
-                    <span>Transaction hash : </span>
-                  </Col>
-                  <Col span={14}>
-                    <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
-                  </Col>
-                </Row>
+                {row.user_operation_hash && (
+                  <Row justify="space-between" align="bottom">
+                    <Col span={10}>
+                      <span>User operation hash : </span>
+                    </Col>
+                    <Col span={14}>
+                      <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+                    </Col>
+                  </Row>
+                )}
+                {row.tx_hash && (
+                  <Row justify="space-between" align="bottom">
+                    <Col span={10}>
+                      <span>Transaction hash : </span>
+                    </Col>
+                    <Col span={14}>
+                      <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
+                    </Col>
+                  </Row>
+                )}
                 <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Status : </span>
@@ -194,22 +198,26 @@ const Comp = () => {
                     <CopyToClipLong address={row.sender || ''} />
                   </Col>
                 </Row>
-                <Row justify="space-between" align="bottom">
-                  <Col span={10}>
-                    <span>User operation hash : </span>
-                  </Col>
-                  <Col span={14}>
-                    <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                  </Col>
-                </Row>
-                <Row justify="space-between" align="bottom">
-                  <Col span={10}>
-                    <span>Transaction hash : </span>
-                  </Col>
-                  <Col span={14}>
-                    <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
-                  </Col>
-                </Row>
+                {row.user_operation_hash && (
+                  <Row justify="space-between" align="bottom">
+                    <Col span={10}>
+                      <span>User operation hash : </span>
+                    </Col>
+                    <Col span={14}>
+                      <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+                    </Col>
+                  </Row>
+                )}
+                {row.tx_hash && (
+                  <Row justify="space-between" align="bottom">
+                    <Col span={10}>
+                      <span>Transaction hash : </span>
+                    </Col>
+                    <Col span={14}>
+                      <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
+                    </Col>
+                  </Row>
+                )}
                 <Row justify="space-between" align="bottom">
                   <Col span={10}>
                     <span>Operation : </span>

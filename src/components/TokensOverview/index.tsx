@@ -5,7 +5,6 @@ import { Col, Row } from 'antd';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { AccountStore } from '@/store/account';
 import { Link } from 'react-router-dom';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { MehOutlined } from '@ant-design/icons';
 
 import '@/assets/styles/accountStyle/style.scss';
@@ -42,7 +41,7 @@ const Comp = () => {
                   onClick={() => {
                     navigateTo(`/tokenOverview?tokenAddress=${key}`);
                   }}>
-                  <Row style={{ height: 80, width: 385 }}>
+                  <Row style={{ height: 45, width: 385 }}>
                     <Col span={14} style={{ fontWeight: 'bold', fontSize: 16, padding: 10 }}>
                       <span
                         style={{
@@ -55,7 +54,7 @@ const Comp = () => {
                         <span style={{ marginLeft: 10 }}>My Token</span>
                       </span>
                       <br />
-                      <span style={{ fontSize: 17 }}>{truncateWalletAddrLong(key)}</span>
+                      {/* <span style={{ fontSize: 17 }}>{truncateWalletAddrLong(key)}</span> */}
                     </Col>
                     <Col
                       span={10}

@@ -72,7 +72,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             </Row>
           </Space>
         </div>
-        <Row justify="space-around" align="middle">
+        <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
           <Button
             type="primary"
             size={'large'}

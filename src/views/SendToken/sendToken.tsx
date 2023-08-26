@@ -68,8 +68,6 @@ const View = () => {
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
-        navigateTo('/overview');
-        window.location.reload();
       } else if (sendRes.code === 428) {
         setSendApproveFlag(true);
         setPaymasterAddress(sendRes.data.PaymasterAddress);
@@ -90,7 +88,6 @@ const View = () => {
       if (sendRes.code === 200) {
         messageApi.success('Complete');
         navigateTo('/overview');
-        window.location.reload();
       } else if (sendRes.code === 428) {
         setSendApproveFlag(true);
         setPaymasterAddress(sendRes.data.PaymasterAddress);

@@ -139,7 +139,7 @@ const Overview = () => {
         const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
         console.log('currentWalletAddress', currentWalletAddress.address);
         console.log('getCurrentAddress', getCurrentAddress());
-        if (currentWalletAddress) {
+        if (currentWalletAddress.address) {
           AccountStore.setCurrentAccount(currentWalletAddress);
         }
       } else {
