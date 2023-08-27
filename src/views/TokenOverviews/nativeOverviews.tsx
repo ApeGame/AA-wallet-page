@@ -153,13 +153,10 @@ const Overview = () => {
         ) : (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               color: '#000000',
-              marginTop: 30,
               height: 400,
               overflowY: 'auto',
+              marginTop: 15,
             }}>
             {recordList &&
               recordList.map((row, index) => (
@@ -170,8 +167,8 @@ const Overview = () => {
                   style={{
                     display: 'flex',
                     width: '100%',
-                    paddingTop: 30,
-                    paddingBottom: 30,
+                    paddingTop: 10,
+                    paddingBottom: 10,
                     borderBottom: '1px solid #D3D3D3',
                   }}>
                   <Row justify="space-between" align="bottom">

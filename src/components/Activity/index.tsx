@@ -47,8 +47,9 @@ const Comp = () => {
 
   useEffect(() => {
     // load
+    console.log('load user operation');
     loadData();
-  }, []);
+  }, [activityType]);
 
   const approveSig = async (id: string) => {
     const res = await UpdateNeedSignature('', id);
@@ -128,6 +129,7 @@ const Comp = () => {
           </Col>
         </Row>
         <div style={{ marginTop: 10 }}>
+          {activityType === 'all' && multisigRecordList.length === 0 && <span>No date</span>}
           {activityType === 'all' &&
             multisigRecordList &&
             multisigRecordList.map((row, index) => (
@@ -183,6 +185,7 @@ const Comp = () => {
         </div>
 
         <div style={{ marginTop: 10 }}>
+          {activityType === 'signature' && needMultisigRecordList.length === 0 && <span>No signature date</span>}
           {activityType === 'signature' &&
             needMultisigRecordList &&
             needMultisigRecordList.map((row, index) => (

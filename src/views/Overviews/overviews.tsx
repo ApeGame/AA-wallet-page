@@ -92,7 +92,7 @@ const Overview = () => {
       console.log('overview useInterval load');
       loadData();
     }, 5 * 1000);
-  }, 5000);
+  }, 15 * 1000);
 
   useInterval(async () => {
     setTimeout(async () => {
