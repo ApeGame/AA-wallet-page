@@ -65,11 +65,7 @@ const Overview = () => {
 
   const moveToBlockScan = (hash: string) => {
     return (
-      <a
-        target="_blank"
-        href={`${
-          import.meta.env.VITE_BLOCK_SCAN_URL
-        }/tx/${'0x60607206816f13e472ea00d24d978997732eca59af3acac3f34b7de551736e2b'}`}>
+      <a target="_blank" href={`${import.meta.env.VITE_BLOCK_SCAN_URL}/tx/${hash}`}>
         {truncateWalletAddrLong(hash)}
       </a>
     );
