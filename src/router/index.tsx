@@ -7,6 +7,7 @@ const Login = lazy(() => import('@/views/Login/login'));
 const Overview = lazy(() => import('@/views/Overviews/overviews'));
 const SendToken = lazy(() => import('@/views/SendToken/sendToken'));
 const TokenOverview = lazy(() => import('@/views/TokenOverviews/overviews'));
+const NativeTokenOverview = lazy(() => import('@/views/TokenOverviews/nativeOverviews'));
 const AddToken = lazy(() => import('@/views/AddToken/addToken'));
 const MultisigWallet = lazy(() => import('@/views/MultisigWallet/multisigWallet'));
 const RecoverBind = lazy(() => import('@/views/Login/bind'));
@@ -39,6 +40,10 @@ const routes = [
       {
         path: '/tokenOverview',
         element: withLoadingComponent(<TokenOverview />),
+      },
+      {
+        path: '/nativeTokenOverview',
+        element: withLoadingComponent(<NativeTokenOverview />),
       },
       {
         path: '/addToken',

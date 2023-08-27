@@ -29,6 +29,12 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             <Row justify="space-around" align="middle">
               <Col span={24}>
                 <div className="networkItemSelect" style={{ height: 60, fontSize: 15, padding: 10 }}>
+                  <img style={{ height: 40, width: 40 }} src={coqIcon} alt="" />
+                  <span style={{ marginLeft: 10 }}>Coq Testnet</span>
+                </div>
+              </Col>
+              <Col span={24}>
+                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
                   <img style={{ height: 40, width: 40 }} src={apeIcon} alt="" />
                   <span style={{ marginLeft: 10 }}>APE</span>
                 </div>
@@ -63,16 +69,10 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                   <span style={{ marginLeft: 10 }}>Zkevm</span>
                 </div>
               </Col>
-              <Col span={24}>
-                <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
-                  <img style={{ height: 40, width: 40 }} src={coqIcon} alt="" />
-                  <span style={{ marginLeft: 10 }}>Coq Testnet</span>
-                </div>
-              </Col>
             </Row>
           </Space>
         </div>
-        <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
+        {/* <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
           <Button
             type="primary"
             size={'large'}
@@ -82,7 +82,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             }}>
             Add a network
           </Button>
-        </Row>
+        </Row> */}
       </Modal>
     </>
   );

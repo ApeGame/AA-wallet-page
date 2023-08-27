@@ -32,6 +32,40 @@ const Comp = () => {
     <div>
       <div style={contentStyle}>
         <div style={{ height: 340, overflowY: 'auto' }}>
+          {AccountStore.currentAccount.nativeBalance && (
+            <div
+              className="accountContentSend"
+              onClick={() => {
+                navigateTo(`/nativeTokenOverview`);
+              }}>
+              <Row style={{ height: 45, width: 385 }}>
+                <Col span={14} style={{ fontWeight: 'bold', fontSize: 16, padding: 10 }}>
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 16,
+                    }}>
+                    <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} />
+                    <span style={{ marginLeft: 10 }}>Peel</span>
+                  </span>
+                  <br />
+                </Col>
+                <Col
+                  span={10}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row-reverse',
+                    fontSize: 15,
+                    marginTop: 12,
+                    padding: 5,
+                  }}>
+                  <span>{formatWeiToEth(AccountStore.currentAccount.nativeBalance) + ' Peel'}</span>
+                </Col>
+              </Row>
+            </div>
+          )}
           {AccountStore.currentAccount.erc20AccountMap &&
             Object.keys(AccountStore.currentAccount.erc20AccountMap).map((key, index) => {
               return (

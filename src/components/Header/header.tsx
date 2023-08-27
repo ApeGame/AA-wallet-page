@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useEffect } from 'react';
 import { Col, Row } from 'antd';
-import { LogoutOutlined, HomeOutlined } from '@ant-design/icons';
+import { LogoutOutlined, HomeOutlined, DownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import AccountListDialog from '../Account/accountList';
 import { getJWTToken } from '@/utils/localStorage';
@@ -60,13 +60,13 @@ const ContentHeader = () => {
               alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: '#E6F0FA',
-              borderRadius: '15px',
-              fontSize: '0.1px',
-              fontWeight: 'bold',
-              width: 100,
               height: 35,
+              width: 100,
+              borderRadius: '15px',
             }}>
-            BAS
+            <div style={{ padding: 5 }}>
+              <span style={{ fontSize: '0.1px', fontWeight: 'bold' }}>C</span> &nbsp; <DownOutlined />
+            </div>
           </div>
         </Col>
         <Col span={14} style={titleStyle}>
