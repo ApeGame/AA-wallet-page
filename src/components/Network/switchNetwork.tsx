@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Button, Modal, Col, Row, Space, message } from 'antd';
+import { Modal, Col, Row, Space } from 'antd';
 import { observer } from 'mobx-react';
 import ethIcon from '@/assets/img/eth.svg';
 import bscIcon from '@/assets/img/binance.svg';
@@ -11,18 +10,11 @@ import apeIcon from '@/assets/img/ape.svg';
 import '@/assets/styles/accountStyle/style.scss';
 
 const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const addNetwork = async () => {
-    setIsLoading(true);
-    messageApi.success('success');
-    setIsLoading(false);
-  };
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [messageApi, contextHolder] = message.useMessage();
 
   return (
     <>
-      {contextHolder}
       <Modal centered title="Select a network" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
         <div style={{ height: 300, marginTop: 50, overflowY: 'auto' }}>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
