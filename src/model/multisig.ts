@@ -3,7 +3,7 @@ export interface MultisigRecord {
   sender: string;
   data: string;
   user_operation_hash: string;
-  tx_hash: string;
+  transaction_hash: string;
   status: number;
 }
 

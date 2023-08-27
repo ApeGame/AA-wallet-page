@@ -7,6 +7,7 @@ import { Col, Row, Space, Divider } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetStatus } from '@/actions/MultisigWallet/multisigWallet';
+import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -37,6 +38,15 @@ const Overview = () => {
 
   const loadData = async () => {
     setRecordList([]);
+    const multisigRecordListRes = await GetMultisigHistoryListErc('0x0000000000000000000000000000000000000000');
+    if (multisigRecordListRes.code === 200 && multisigRecordListRes.data) {
+      console.log('multisigRecordListRes.data', multisigRecordListRes.data);
+      setRecordList(
+        multisigRecordListRes.data.map((item) => {
+          return item;
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -182,13 +192,13 @@ const Overview = () => {
                       </Col>
                     </Row>
                   )}
-                  {row.tx_hash && (
+                  {row.transaction_hash && (
                     <Row justify="space-between" align="bottom">
                       <Col span={10}>
                         <span>Transaction hash : </span>
                       </Col>
                       <Col span={14}>
-                        <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
+                        <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
                       </Col>
                     </Row>
                   )}

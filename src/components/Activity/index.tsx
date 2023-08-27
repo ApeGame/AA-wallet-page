@@ -56,6 +56,7 @@ const Comp = () => {
     if (res.code === 200) {
       messageApi.success('Complete');
       loadData();
+      setActivityType('all');
     } else {
       messageApi.error('Fail');
       loadData();
@@ -68,6 +69,7 @@ const Comp = () => {
     if (res.code === 200) {
       messageApi.success('Complete');
       loadData();
+      setActivityType('all');
     } else {
       messageApi.error('Fail');
       loadData();
@@ -158,13 +160,13 @@ const Comp = () => {
                     </Col>
                   </Row>
                 )}
-                {row.tx_hash && (
+                {row.transaction_hash && (
                   <Row justify="space-between" align="bottom">
                     <Col span={10}>
                       <span>Transaction hash : </span>
                     </Col>
                     <Col span={14}>
-                      <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
+                      <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
                     </Col>
                   </Row>
                 )}
@@ -213,13 +215,13 @@ const Comp = () => {
                     </Col>
                   </Row>
                 )}
-                {row.tx_hash && (
+                {row.transaction_hash && (
                   <Row justify="space-between" align="bottom">
                     <Col span={10}>
                       <span>Transaction hash : </span>
                     </Col>
                     <Col span={14}>
-                      <span>{row.tx_hash && moveToBlockScan(row.tx_hash)}</span>
+                      <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
                     </Col>
                   </Row>
                 )}

@@ -46,7 +46,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
               <Col span={24}>
                 <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
                   <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />
-                  <span style={{ marginLeft: 10 }}>Line</span>
+                  <span style={{ marginLeft: 10 }}>Linea</span>
                 </div>
               </Col>
               <Col span={24}>
@@ -64,17 +64,9 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
             </Row>
           </Space>
         </div>
-        {/* <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
-          <Button
-            type="primary"
-            size={'large'}
-            loading={isLoading}
-            onClick={() => {
-              addNetwork();
-            }}>
-            Add a network
-          </Button>
-        </Row> */}
+        <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
+          <span>More networks coming soon...</span>
+        </Row>
       </Modal>
     </>
   );

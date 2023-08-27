@@ -61,6 +61,13 @@ export const GetMultisigHistoryList = function (): Promise<ResponseType<Multisig
   });
 };
 
+export const GetMultisigHistoryListErc = function (erc20Address: string): Promise<ResponseType<MultisigRecord[]>> {
+  return request<MultisigRecord[]>({
+    url: `/aa/v1/token/wallet/multiple/user_operation?erc20=${erc20Address}`,
+    method: 'get',
+  });
+};
+
 export const GetStatus = (status: number) => {
   if (status === 1) {
     return 'Auditing';
