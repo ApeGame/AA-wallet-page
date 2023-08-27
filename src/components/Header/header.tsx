@@ -65,7 +65,7 @@ const ContentHeader = () => {
               borderRadius: '15px',
             }}>
             <div style={{ padding: 5 }}>
-              <span style={{ fontSize: '0.1px', fontWeight: 'bold' }}>C</span> &nbsp; <DownOutlined />
+              <span style={{ fontWeight: 'bold', color: '#000000' }}>C</span> &nbsp; <DownOutlined />
             </div>
           </div>
         </Col>
