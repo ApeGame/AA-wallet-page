@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { MultisigRecord } from '@/model/multisig';
 import { Col, Row, Space, Divider } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+// import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetStatus } from '@/actions/MultisigWallet/multisigWallet';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
+import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -55,22 +56,6 @@ const Overview = () => {
     // load
     loadData();
   }, []);
-
-  const moveToUserOperationScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
-
-  const moveToBlockScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_BLOCK_SCAN_URL}/tx/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
 
   useEffect(() => {
     console.log('!!!', search.get('tokenAddress'));

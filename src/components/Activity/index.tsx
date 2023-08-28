@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Col, Row, Space, Button, message } from 'antd';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+// import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { MultisigRecord } from '@/model/multisig';
 import { ReloadOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import {
   GetNeedSignatureList,
   UpdateNeedSignature,
 } from '@/actions/MultisigWallet/multisigWallet';
+import { moveToBlockScan, moveToUserOperationScan } from '../TokensOverview/moveScan';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -77,22 +78,6 @@ const Comp = () => {
     }
   };
 
-  const moveToUserOperationScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
-
-  const moveToBlockScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_BLOCK_SCAN_URL}/tx/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
-
   return (
     <>
       {contextHolder}
@@ -113,7 +98,7 @@ const Comp = () => {
               onClick={() => {
                 setActivityType('signature');
               }}>
-              Waiting Activity
+              Signature Activity
             </Button>
           </Col>
           <Col span={4}>
@@ -202,6 +187,14 @@ const Comp = () => {
                   </Col>
                   <Col span={14}>
                     <CopyToClipLong address={row.sender || ''} />
+                  </Col>
+                </Row>
+                <Row justify="space-between" align="bottom">
+                  <Col span={10}>
+                    <span>Status : </span>
+                  </Col>
+                  <Col span={12}>
+                    <span>{GetStatus(row.status)} </span>
                   </Col>
                 </Row>
                 {row.user_operation_hash && (

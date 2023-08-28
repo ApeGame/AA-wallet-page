@@ -9,6 +9,7 @@ import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetStatus } from '@/actions/MultisigWallet/multisigWallet';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
+import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -55,22 +56,6 @@ const Overview = () => {
     // load
     loadData();
   }, []);
-
-  const moveToUserOperationScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_SCAN_URL}/user_operation/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
-
-  const moveToBlockScan = (hash: string) => {
-    return (
-      <a target="_blank" href={`${import.meta.env.VITE_BLOCK_SCAN_URL}/tx/${hash}`}>
-        {truncateWalletAddrLong(hash)}
-      </a>
-    );
-  };
 
   useEffect(() => {
     console.log('!!!', search.get('tokenAddress'));
