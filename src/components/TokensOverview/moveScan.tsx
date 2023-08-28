@@ -23,7 +23,7 @@ export const moveToUserOperationScan = (hash: string) => {
     url = import.meta.env.VITE_SCAN_URL;
   }
   return (
-    <a target="_blank" href={`${url}/tx/${hash}`}>
+    <a target="_blank" href={`${url}/user_operation/${hash}`}>
       {truncateWalletAddrLong(hash)}
     </a>
   );

@@ -15,6 +15,8 @@ import { moveToBlockScan, moveToUserOperationScan } from '../TokensOverview/move
 
 import '@/assets/styles/accountStyle/style.scss';
 
+const rowStyle: React.CSSProperties = { textAlign: 'left', paddingLeft: 25 };
+
 const Comp = () => {
   const [activityType, setActivityType] = useState('all');
   const [multisigRecordList, setMultisigRecordList] = useState<MultisigRecord[]>([]);
@@ -125,7 +127,7 @@ const Comp = () => {
                   paddingBottom: 30,
                   borderBottom: '1px solid #D3D3D3',
                 }}>
-                <Row justify="space-between" align="bottom">
+                <Row style={rowStyle}>
                   <Col span={10}>
                     <span>Sender : </span>
                   </Col>
@@ -134,7 +136,7 @@ const Comp = () => {
                   </Col>
                 </Row>
                 {row.user_operation_hash && (
-                  <Row justify="space-between" align="bottom">
+                  <Row style={rowStyle}>
                     <Col span={10}>
                       <span>User operation hash : </span>
                     </Col>
@@ -144,7 +146,7 @@ const Comp = () => {
                   </Row>
                 )}
                 {row.transaction_hash && (
-                  <Row justify="space-between" align="bottom">
+                  <Row style={rowStyle}>
                     <Col span={10}>
                       <span>Transaction hash : </span>
                     </Col>
@@ -153,7 +155,7 @@ const Comp = () => {
                     </Col>
                   </Row>
                 )}
-                <Row justify="space-between" align="bottom">
+                <Row style={rowStyle}>
                   <Col span={10}>
                     <span>Status : </span>
                   </Col>
@@ -181,7 +183,7 @@ const Comp = () => {
                   paddingBottom: 30,
                   borderBottom: '1px solid #D3D3D3',
                 }}>
-                <Row justify="space-between" align="bottom">
+                <Row style={rowStyle}>
                   <Col span={10}>
                     <span>Sender : </span>
                   </Col>
@@ -189,7 +191,7 @@ const Comp = () => {
                     <CopyToClipLong address={row.sender || ''} />
                   </Col>
                 </Row>
-                <Row justify="space-between" align="bottom">
+                <Row style={rowStyle}>
                   <Col span={10}>
                     <span>Status : </span>
                   </Col>
@@ -198,7 +200,7 @@ const Comp = () => {
                   </Col>
                 </Row>
                 {row.user_operation_hash && (
-                  <Row justify="space-between" align="bottom">
+                  <Row style={rowStyle}>
                     <Col span={10}>
                       <span>User operation hash : </span>
                     </Col>
@@ -208,7 +210,7 @@ const Comp = () => {
                   </Row>
                 )}
                 {row.transaction_hash && (
-                  <Row justify="space-between" align="bottom">
+                  <Row style={rowStyle}>
                     <Col span={10}>
                       <span>Transaction hash : </span>
                     </Col>
@@ -217,8 +219,8 @@ const Comp = () => {
                     </Col>
                   </Row>
                 )}
-                {row.status !== 7 && (
-                  <Row justify="space-between" align="bottom">
+                {row.status === 1 && (
+                  <Row style={rowStyle}>
                     <Col span={10}>
                       <span>Operation : </span>
                     </Col>

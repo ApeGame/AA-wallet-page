@@ -82,7 +82,7 @@ export const GetStatus = (status: number) => {
   } else if (status === 6) {
     return 'Pending';
   } else if (status === 7) {
-    return 'Pass';
+    return 'Approved';
   } else {
     return 'Unknown';
   }

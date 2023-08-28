@@ -82,7 +82,7 @@ const SwitchPaymasterDialog = ({
         onCancel={onClose}
         width={390}
         footer={[]}>
-        <div style={{ height: 330, marginTop: 20, overflowY: 'auto' }}>
+        <div style={{ height: 230, marginTop: 20, overflowY: 'auto' }}>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row justify="space-around" align="middle">
               {paymasterList.map((row, index) => (

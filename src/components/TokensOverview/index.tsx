@@ -57,7 +57,10 @@ const Comp = () => {
                         borderRadius: '50%',
                         background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
                       }}>
-                      <span>C</span>
+                      <span>
+                        {AccountStore.getCurrentNetworkWithStorage().symbol &&
+                          AccountStore.getCurrentNetworkWithStorage().symbol[0]}
+                      </span>
                     </div>
 
                     <span style={{ marginLeft: 10 }}>{AccountStore.getCurrentNetworkWithStorage().symbol}</span>
