@@ -1,10 +1,20 @@
 import { makeAutoObservable } from 'mobx';
 import { AccountInfo } from '@/model/account';
+import { NetworkInfo } from '@/model/network';
+import { getCurrentNetwork, setCurrentNetworkName } from '@/utils/localStorage';
 
 class Account {
   accountList: AccountInfo[] = [];
 
   currentAccount: AccountInfo = {} as AccountInfo;
+
+  currentNetwork: NetworkInfo = {} as NetworkInfo;
+
+  networkList: NetworkInfo[] = [
+    { name: 'Coq Testnet', symbol: 'COQ' },
+    { name: 'Base', symbol: 'ETH' },
+    { name: 'Linea', symbol: 'ETH' },
+  ];
 
   constructor() {
     makeAutoObservable(this);
@@ -74,6 +84,56 @@ class Account {
         }
       });
     }
+  }
+
+  pushNetwork(network: NetworkInfo) {
+    this.networkList.push(network);
+  }
+
+  setCurrentNetwork(network: NetworkInfo) {
+    this.currentNetwork = network;
+  }
+
+  getCurrentNetworkWithStorage(): NetworkInfo {
+    if (getCurrentNetwork()) {
+      if (this.getNetworkByName(getCurrentNetwork()).name) {
+        return {
+          name: this.getNetworkByName(getCurrentNetwork()).name,
+          symbol: this.getNetworkByName(getCurrentNetwork()).symbol,
+        };
+      } else {
+        setCurrentNetworkName('Coq Testnet');
+        return { name: 'Coq Testnet', symbol: 'COQ' };
+      }
+    } else {
+      setCurrentNetworkName('Coq Testnet');
+      return { name: 'Coq Testnet', symbol: 'COQ' };
+    }
+  }
+
+  getCurrentNetworkSymbol(): string {
+    return this.getCurrentNetworkWithStorage().symbol;
+  }
+
+  clearNetworkList() {
+    this.networkList.length = 0;
+  }
+
+  clearCurrentNetwork() {
+    this.currentNetwork = {} as NetworkInfo;
+  }
+
+  getNetworkByName(name: string): NetworkInfo {
+    if (this.networkList) {
+      for (let i = 0; i < this.networkList.length; i++) {
+        if (this.networkList[i].name === name) {
+          return this.networkList[i];
+        }
+      }
+    } else {
+      return {} as NetworkInfo;
+    }
+    return {} as NetworkInfo;
   }
 }
 

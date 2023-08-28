@@ -5,7 +5,6 @@ import { Col, Row } from 'antd';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { AccountStore } from '@/store/account';
 import { Link } from 'react-router-dom';
-import { MehOutlined } from '@ant-design/icons';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -38,7 +37,7 @@ const Comp = () => {
               onClick={() => {
                 navigateTo(`/nativeTokenOverview`);
               }}>
-              <Row style={{ height: 45, width: 385 }}>
+              <Row style={{ height: 55, width: 385 }}>
                 <Col span={14} style={{ fontWeight: 'bold', fontSize: 16, padding: 10 }}>
                   <span
                     style={{
@@ -47,10 +46,22 @@ const Comp = () => {
                       fontWeight: 'bold',
                       fontSize: 16,
                     }}>
-                    <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} />
-                    <span style={{ marginLeft: 10 }}>Peel</span>
+                    {/* <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} /> */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: 35,
+                        height: 35,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
+                      }}>
+                      <span>C</span>
+                    </div>
+
+                    <span style={{ marginLeft: 10 }}>{AccountStore.getCurrentNetworkWithStorage().symbol}</span>
                   </span>
-                  <br />
                 </Col>
                 <Col
                   span={10}
@@ -61,7 +72,11 @@ const Comp = () => {
                     marginTop: 12,
                     padding: 5,
                   }}>
-                  <span>{formatWeiToEth(AccountStore.currentAccount.nativeBalance) + ' Peel'}</span>
+                  <span>
+                    {formatWeiToEth(AccountStore.currentAccount.nativeBalance) +
+                      ' ' +
+                      AccountStore.getCurrentNetworkWithStorage().symbol}
+                  </span>
                 </Col>
               </Row>
             </div>
@@ -75,7 +90,7 @@ const Comp = () => {
                   onClick={() => {
                     navigateTo(`/tokenOverview?tokenAddress=${key}`);
                   }}>
-                  <Row style={{ height: 45, width: 385 }}>
+                  <Row style={{ height: 55, width: 385 }}>
                     <Col span={14} style={{ fontWeight: 'bold', fontSize: 16, padding: 10 }}>
                       <span
                         style={{
@@ -84,10 +99,24 @@ const Comp = () => {
                           fontWeight: 'bold',
                           fontSize: 16,
                         }}>
-                        <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} />
+                        {/* <MehOutlined style={{ color: '#627EEA', fontWeight: 'bold', fontSize: 25 }} /> */}
+                        {AccountStore.currentAccount.erc20AccountMap[key].name && (
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              width: 35,
+                              height: 35,
+                              borderRadius: '50%',
+                              background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
+                            }}>
+                            <span>{AccountStore.currentAccount.erc20AccountMap[key].name[0]}</span>
+                          </div>
+                        )}
                         <span style={{ marginLeft: 10 }}>{AccountStore.currentAccount.erc20AccountMap[key].name}</span>
                       </span>
-                      <br />
+
                       {/* <span style={{ fontSize: 17 }}>{truncateWalletAddrLong(key)}</span> */}
                     </Col>
                     <Col
@@ -96,7 +125,7 @@ const Comp = () => {
                         display: 'flex',
                         flexDirection: 'row-reverse',
                         fontSize: 15,
-                        marginTop: 12,
+                        marginTop: 15,
                         padding: 5,
                       }}>
                       <span>

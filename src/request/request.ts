@@ -2,6 +2,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getJWTToken } from '@/utils/localStorage';
 import { RefreshAccessToken } from '@/actions/Login/login';
+import { getCurrentNetwork } from '@/utils/localStorage';
 
 export interface ResponseType<T = any> {
   code: number;
@@ -58,6 +59,18 @@ instance.interceptors.response.use(
     }
   }
 );
+
+export const UrlByNetwork = (): string => {
+  if (getCurrentNetwork() === 'Coq Testnet') {
+    return '';
+  } else if (getCurrentNetwork() === 'Base') {
+    return '/base';
+  } else if (getCurrentNetwork() === 'Linea') {
+    return '/linea';
+  } else {
+    return '';
+  }
+};
 
 export const request = async <T = any>(config: AxiosRequestConfig): Promise<ResponseType<T>> => {
   try {

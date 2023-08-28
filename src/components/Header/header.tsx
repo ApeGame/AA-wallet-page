@@ -7,6 +7,8 @@ import AccountListDialog from '../Account/accountList';
 import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
+import { removeUserInfo } from '@/utils/localStorage';
+import { AccountStore } from '@/store/account';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',
@@ -38,7 +40,7 @@ const ContentHeader = () => {
   };
 
   const loginOut = () => {
-    localStorage.clear();
+    removeUserInfo();
     navigateTo('/login');
   };
 
@@ -65,7 +67,12 @@ const ContentHeader = () => {
               borderRadius: '15px',
             }}>
             <div style={{ padding: 5 }}>
-              <span style={{ fontWeight: 'bold', color: '#000000' }}>C</span> &nbsp; <DownOutlined />
+              <span style={{ fontWeight: 'bold', color: '#000000' }}>
+                {AccountStore.getCurrentNetworkWithStorage().name
+                  ? AccountStore.getCurrentNetworkWithStorage().name[0]
+                  : ''}
+              </span>{' '}
+              &nbsp; <DownOutlined />
             </div>
           </div>
         </Col>

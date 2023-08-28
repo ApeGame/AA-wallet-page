@@ -54,6 +54,18 @@ export const getSendTransactionType = (): string => {
   }
 };
 
-export const setSendTransactionType = (type: string) => {
-  localStorage.sendTransactionType = type;
+export const removeUserInfo = () => {
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('token');
+  localStorage.removeItem('userProfile');
+  localStorage.removeItem('recoverEmail');
+  localStorage.removeItem('currentAddress');
+};
+
+export const setCurrentNetworkName = (networkName: string) => {
+  localStorage.currentNetwork = networkName;
+};
+
+export const getCurrentNetwork = () => {
+  return localStorage.currentNetwork;
 };

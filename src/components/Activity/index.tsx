@@ -100,7 +100,7 @@ const Comp = () => {
         <Row justify="space-around" align="middle">
           <Col span={10}>
             <Button
-              type="link"
+              type={activityType === 'all' ? 'text' : 'link'}
               onClick={() => {
                 setActivityType('all');
               }}>
@@ -109,11 +109,11 @@ const Comp = () => {
           </Col>
           <Col span={10}>
             <Button
-              type="link"
+              type={activityType === 'signature' ? 'text' : 'link'}
               onClick={() => {
                 setActivityType('signature');
               }}>
-              Signature Activity
+              Waiting Activity
             </Button>
           </Col>
           <Col span={4}>

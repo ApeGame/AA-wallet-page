@@ -1,17 +1,18 @@
-import { Input, Button, message, Col, Row, Space } from 'antd';
+import { Input, Button, Col, Row, Space } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
-import { ethers } from 'ethers';
+// import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
+// import { ethers } from 'ethers';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { formatWeiToEth } from '@/utils/formatterEth';
-import SendApproveDialog from '@/components/TokensOverview/sendApprove';
-import { useNavigate } from 'react-router-dom';
+// import SendApproveDialog from '@/components/TokensOverview/sendApprove';
+// import { useNavigate } from 'react-router-dom';
+import SwitchPaymasterDialog from '@/components/TokensOverview/switchPaymaster';
 
 // import { getSendTransactionType } from '@/utils/localStorage';
 
@@ -41,16 +42,21 @@ const View = () => {
   const [toAmount, setToAmount] = useState('');
   const [search] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
-  const [paymasterAddress, setPaymasterAddress] = useState('');
-  const [erc20Address, setErc20Address] = useState('');
+  // const [messageApi, contextHolder] = message.useMessage();
+  // const [paymasterAddress, setPaymasterAddress] = useState('');
+  // const [erc20Address, setErc20Address] = useState('');
 
-  const [sendApproveFlag, setSendApproveFlag] = useState(false);
-  const handleSendApproveFlagClose = () => {
-    setSendApproveFlag(false);
+  // const [sendApproveFlag, setSendApproveFlag] = useState(false);
+  // const handleSendApproveFlagClose = () => {
+  //   setSendApproveFlag(false);
+  // };
+
+  const [switchPaymentFlag, setSwitchPaymentFlag] = useState(false);
+  const handleSwitchPaymentFlagClose = () => {
+    setSwitchPaymentFlag(false);
   };
 
-  const navigateTo = useNavigate();
+  // const navigateTo = useNavigate();
 
   useEffect(() => {
     console.log('~', search.get('tokenAddress'));
@@ -61,52 +67,64 @@ const View = () => {
     setToAddress(address);
   };
 
-  const send = async () => {
+  // const send = async () => {
+  //   setIsLoading(true);
+  //   if (!search.get('tokenAddress')) {
+  //     const sendRes = await SendNativeToken(toAddress, toAmount.trim());
+  //     console.log('sendRes', sendRes);
+  //     if (sendRes.code === 200) {
+  //       messageApi.success('Complete');
+  //     } else if (sendRes.code === 428) {
+  //       setSendApproveFlag(true);
+  //       setPaymasterAddress(sendRes.data.PaymasterAddress);
+  //       setErc20Address(sendRes.data.Erc20ContractAddress);
+  //     } else {
+  //       messageApi.error('Fail');
+  //     }
+  //   } else {
+  //     const data =
+  //       '0xa9059cbb000000000000000000000000' +
+  //       toAddress.trim().slice(2) +
+  //       '0'.repeat(64 - ethers.parseEther(toAmount).toString(16).length) +
+  //       ethers.parseEther(toAmount).toString(16);
+  //     console.log('data', data);
+  //     console.log('data1Length', data.length);
+  //     const sendRes = await SendErc20Token(search.get('tokenAddress') as string, data);
+  //     console.log('sendRes', sendRes);
+  //     if (sendRes.code === 200) {
+  //       messageApi.success('Complete');
+  //       navigateTo('/overview');
+  //     } else if (sendRes.code === 428) {
+  //       setSendApproveFlag(true);
+  //       setPaymasterAddress(sendRes.data.PaymasterAddress);
+  //       setErc20Address(sendRes.data.Erc20ContractAddress);
+  //     } else {
+  //       messageApi.error('Fail');
+  //     }
+  //   }
+  //   setIsLoading(false);
+  // };
+
+  const payment = () => {
     setIsLoading(true);
-    if (!search.get('tokenAddress')) {
-      const sendRes = await SendNativeToken(toAddress, toAmount.trim());
-      console.log('sendRes', sendRes);
-      if (sendRes.code === 200) {
-        messageApi.success('Complete');
-      } else if (sendRes.code === 428) {
-        setSendApproveFlag(true);
-        setPaymasterAddress(sendRes.data.PaymasterAddress);
-        setErc20Address(sendRes.data.Erc20ContractAddress);
-      } else {
-        messageApi.error('Fail');
-      }
-    } else {
-      const data =
-        '0xa9059cbb000000000000000000000000' +
-        toAddress.trim().slice(2) +
-        '0'.repeat(64 - ethers.parseEther(toAmount).toString(16).length) +
-        ethers.parseEther(toAmount).toString(16);
-      console.log('data', data);
-      console.log('data1Length', data.length);
-      const sendRes = await SendErc20Token(search.get('tokenAddress') as string, data);
-      console.log('sendRes', sendRes);
-      if (sendRes.code === 200) {
-        messageApi.success('Complete');
-        navigateTo('/overview');
-      } else if (sendRes.code === 428) {
-        setSendApproveFlag(true);
-        setPaymasterAddress(sendRes.data.PaymasterAddress);
-        setErc20Address(sendRes.data.Erc20ContractAddress);
-      } else {
-        messageApi.error('Fail');
-      }
-    }
+    setSwitchPaymentFlag(true);
     setIsLoading(false);
   };
 
   return (
     <div>
-      {contextHolder}
-      <SendApproveDialog
+      {/* <SendApproveDialog
         isOpen={sendApproveFlag}
         onClose={handleSendApproveFlagClose}
         paymentAddress={paymasterAddress}
         erc20Address={erc20Address}
+      /> */}
+      <SwitchPaymasterDialog
+        isOpen={switchPaymentFlag}
+        onClose={handleSwitchPaymentFlagClose}
+        toAmount={toAmount}
+        toAddress={toAddress}
+        erc20Address={search.get('tokenAddress') || ''}
       />
       <div style={contentStyle}>
         <span style={{ fontSize: 18 }}>Send To</span>
@@ -136,7 +154,7 @@ const View = () => {
         />
       </div>
       <div style={contentStyle}>
-        <Button type="primary" size="large" loading={isLoading} onClick={send}>
+        <Button type="primary" size="large" loading={isLoading} onClick={payment}>
           Send
         </Button>
       </div>
@@ -168,7 +186,9 @@ const View = () => {
                     <span>{truncateWalletAddrLong(row.address)}</span>
                   </Col>
                   <Col span={8}>
-                    <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)}</span>
+                    <span style={{ textAlign: 'right' }}>
+                      {formatWeiToEth(row.nativeBalance)} {' ' + AccountStore.getCurrentNetworkWithStorage().symbol}
+                    </span>
                   </Col>
                 </Row>
               </Space>

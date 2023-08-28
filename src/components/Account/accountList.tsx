@@ -140,7 +140,9 @@ const AccountListDialog = () => {
                       <span>{truncateWalletAddrLong(row.address)}</span>
                     </Col>
                     <Col span={9}>
-                      <span style={{ textAlign: 'right' }}>{formatWeiToEth(row.nativeBalance)} Peel</span>
+                      <span style={{ textAlign: 'right' }}>
+                        {formatWeiToEth(row.nativeBalance)} {AccountStore.getCurrentNetworkSymbol()}
+                      </span>
                     </Col>
                   </Row>
                 </Space>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ArrowRightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';

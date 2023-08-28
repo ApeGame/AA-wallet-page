@@ -187,7 +187,9 @@ const Overview = () => {
             </div>
           </div>
           {AccountStore.currentAccount.nativeBalance && (
-            <div style={balanceStyle}>{formatWeiToEth(AccountStore.currentAccount.nativeBalance)} Peel</div>
+            <div style={balanceStyle}>
+              {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + AccountStore.getCurrentNetworkSymbol()}
+            </div>
           )}
         </>
       )}

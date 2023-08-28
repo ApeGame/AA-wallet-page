@@ -8,6 +8,8 @@ import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetStatus } from '@/actions/MultisigWallet/multisigWallet';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
+import { observer } from 'mobx-react';
+import { AccountStore } from '@/store/account';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -92,7 +94,7 @@ const Overview = () => {
               <Col span={10}>
                 <span>Name :</span>
               </Col>
-              <Col span={14}>Peel</Col>
+              <Col span={14}>{AccountStore.getCurrentNetworkWithStorage().symbol}</Col>
             </Row>
             <Row style={{ width: '100%' }} justify="space-around" align="middle">
               <Col span={10}>
@@ -212,4 +214,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default observer(Overview);
