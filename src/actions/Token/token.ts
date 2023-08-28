@@ -35,7 +35,7 @@ export const SendNativeToken = function (
       to: toAddress,
       value: '0x' + ethers.parseEther(value).toString(16),
       sender: AccountStore.currentAccount.isMultisig ? AccountStore.currentAccount.address : '',
-      paymaster: paymentType === 0 ? '' : CreatePaymasterRequest(),
+      paymaster: paymentType === 0 ? undefined : CreatePaymasterRequest(),
     },
   });
 };
@@ -55,7 +55,7 @@ export const SendErc20Token = function (
       value: '0x0',
       data: data,
       sender: AccountStore.currentAccount.isMultisig ? AccountStore.currentAccount.address : '',
-      paymaster: paymentType === 0 ? '' : CreatePaymasterRequest(),
+      paymaster: paymentType === 0 ? undefined : CreatePaymasterRequest(),
     },
   });
 };

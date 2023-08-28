@@ -69,3 +69,7 @@ export const setCurrentNetworkName = (networkName: string) => {
 export const getCurrentNetwork = () => {
   return localStorage.currentNetwork;
 };
+
+export const removeCurrentAddress = () => {
+  localStorage.removeItem('currentAddress');
+};

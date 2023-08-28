@@ -118,6 +118,14 @@ const Overview = () => {
           isUpdate: false,
           name: res.data.abstract_account.Name,
         });
+        console.log('pushAccount_abstract_account', {
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
+        });
       }
       if (res.data.multiple_abstract_account) {
         res.data.multiple_abstract_account.map((item) => {

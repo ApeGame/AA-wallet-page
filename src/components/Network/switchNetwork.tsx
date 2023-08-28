@@ -12,7 +12,7 @@ import '@/assets/styles/accountStyle/style.scss';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { setCurrentNetworkName } from '@/utils/localStorage';
-import { getCurrentNetwork } from '@/utils/localStorage';
+import { getCurrentNetwork, removeCurrentAddress } from '@/utils/localStorage';
 
 const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   // const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +34,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                   onClick={() => {
                     AccountStore.setCurrentNetwork({ name: 'Coq Testnet', symbol: 'COQ' });
                     setCurrentNetworkName('Coq Testnet');
+                    removeCurrentAddress();
                     location.reload();
                   }}>
                   <img style={{ height: 40, width: 40 }} src={coqIcon} alt="" />
@@ -50,6 +51,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                   onClick={() => {
                     AccountStore.setCurrentNetwork({ name: 'Linea', symbol: 'ETH' });
                     setCurrentNetworkName('Linea');
+                    removeCurrentAddress();
                     location.reload();
                   }}>
                   <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />
@@ -66,6 +68,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                   onClick={() => {
                     AccountStore.setCurrentNetwork({ name: 'Base', symbol: 'ETH' });
                     setCurrentNetworkName('Base');
+                    removeCurrentAddress();
                     location.reload();
                   }}>
                   <img style={{ height: 40, width: 40 }} src={baseIcon} alt="" />
