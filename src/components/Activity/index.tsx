@@ -217,29 +217,31 @@ const Comp = () => {
                     </Col>
                   </Row>
                 )}
-                <Row justify="space-between" align="bottom">
-                  <Col span={10}>
-                    <span>Operation : </span>
-                  </Col>
-                  <Col span={12}>
-                    <Button
-                      size="small"
-                      type="primary"
-                      onClick={() => {
-                        approveSig(row.id);
-                      }}>
-                      Approve
-                    </Button>
-                    &nbsp;
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        rejectSig('id');
-                      }}>
-                      Refuse
-                    </Button>
-                  </Col>
-                </Row>
+                {row.status !== 7 && (
+                  <Row justify="space-between" align="bottom">
+                    <Col span={10}>
+                      <span>Operation : </span>
+                    </Col>
+                    <Col span={12}>
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => {
+                          approveSig(row.id);
+                        }}>
+                        Approve
+                      </Button>
+                      &nbsp;
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          rejectSig('id');
+                        }}>
+                        Refuse
+                      </Button>
+                    </Col>
+                  </Row>
+                )}
               </Space>
             ))}
         </div>
