@@ -1,5 +1,5 @@
 import { request, ResponseType, UrlByNetwork } from '@/request/request';
-import { MultisigRecord, MultisigInfo } from '@/model/multisig';
+import { ActivityRecord, MultisigInfo } from '@/model/multisig';
 
 export const CreateMultisigAddress = function (
   name: string,
@@ -34,8 +34,8 @@ export const GetMultisigAddress = function (): Promise<ResponseType<MultisigInfo
   });
 };
 
-export const GetNeedSignatureList = function (): Promise<ResponseType<MultisigRecord[]>> {
-  return request<MultisigRecord[]>({
+export const GetNeedSignatureList = function (): Promise<ResponseType<ActivityRecord[]>> {
+  return request<ActivityRecord[]>({
     url: `/aa${UrlByNetwork()}/v1/token/wallet/signature`,
     method: 'get',
   });
@@ -54,15 +54,15 @@ export const UpdateNeedSignature = function (operation: string, id: string): Pro
   });
 };
 
-export const GetMultisigHistoryList = function (): Promise<ResponseType<MultisigRecord[]>> {
-  return request<MultisigRecord[]>({
+export const GetMultisigHistoryList = function (): Promise<ResponseType<ActivityRecord[]>> {
+  return request<ActivityRecord[]>({
     url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple/user_operation`,
     method: 'get',
   });
 };
 
-export const GetMultisigHistoryListErc = function (erc20Address: string): Promise<ResponseType<MultisigRecord[]>> {
-  return request<MultisigRecord[]>({
+export const GetMultisigHistoryListErc = function (erc20Address: string): Promise<ResponseType<ActivityRecord[]>> {
+  return request<ActivityRecord[]>({
     url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple/user_operation?erc20=${erc20Address}`,
     method: 'get',
   });

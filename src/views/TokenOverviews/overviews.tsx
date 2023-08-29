@@ -3,7 +3,7 @@ import { ArrowRightOutlined, LeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { MultisigRecord } from '@/model/multisig';
+import { ActivityRecord } from '@/model/multisig';
 import { Col, Row, Space, Divider } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
@@ -36,7 +36,7 @@ const Overview = () => {
 
   const [search] = useSearchParams();
 
-  const [recordList, setRecordList] = useState<MultisigRecord[]>([]);
+  const [recordList, setRecordList] = useState<ActivityRecord[]>([]);
 
   const loadData = async () => {
     setRecordList([]);

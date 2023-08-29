@@ -1,4 +1,4 @@
-export interface MultisigRecord {
+export interface ActivityRecord {
   id: string;
   sender: string;
   data: string;

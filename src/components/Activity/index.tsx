@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Col, Row, Space, Button, message } from 'antd';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
-import { MultisigRecord } from '@/model/multisig';
+import { ActivityRecord } from '@/model/multisig';
 import { ReloadOutlined } from '@ant-design/icons';
 import {
   GetMultisigHistoryList,
@@ -12,6 +12,7 @@ import {
   UpdateNeedSignature,
 } from '@/actions/MultisigWallet/multisigWallet';
 import { moveToBlockScan, moveToUserOperationScan } from '../TokensOverview/moveScan';
+import { Activity, SignatureActivity } from './activity';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -19,8 +20,8 @@ const rowStyle: React.CSSProperties = { textAlign: 'left', paddingLeft: 25 };
 
 const Comp = () => {
   const [activityType, setActivityType] = useState('all');
-  const [multisigRecordList, setMultisigRecordList] = useState<MultisigRecord[]>([]);
-  const [needMultisigRecordList, setNeedMultisigRecordList] = useState<MultisigRecord[]>([]);
+  const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
+  const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
 
   const loadData = async () => {
@@ -111,59 +112,60 @@ const Comp = () => {
             />
           </Col>
         </Row>
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column' }}>
           {activityType === 'all' && multisigRecordList.length === 0 && <span>No date</span>}
           {activityType === 'all' &&
             multisigRecordList &&
             multisigRecordList.map((row, index) => (
-              <Space
-                key={index}
-                direction="vertical"
-                size="small"
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  paddingTop: 30,
-                  paddingBottom: 30,
-                  borderBottom: '1px solid #D3D3D3',
-                }}>
-                <Row style={rowStyle}>
-                  <Col span={10}>
-                    <span>Sender : </span>
-                  </Col>
-                  <Col span={14}>
-                    <CopyToClipLong address={row.sender || ''} />
-                  </Col>
-                </Row>
-                {row.user_operation_hash && (
-                  <Row style={rowStyle}>
-                    <Col span={10}>
-                      <span>User operation hash : </span>
-                    </Col>
-                    <Col span={14}>
-                      <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                    </Col>
-                  </Row>
-                )}
-                {row.transaction_hash && (
-                  <Row style={rowStyle}>
-                    <Col span={10}>
-                      <span>Transaction hash : </span>
-                    </Col>
-                    <Col span={14}>
-                      <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-                    </Col>
-                  </Row>
-                )}
-                <Row style={rowStyle}>
-                  <Col span={10}>
-                    <span>Status : </span>
-                  </Col>
-                  <Col span={12}>
-                    <span>{GetStatus(row.status)} </span>
-                  </Col>
-                </Row>
-              </Space>
+              <Activity activityRecord={row} key={index} />
+              // <Space
+              //   key={index}
+              //   direction="vertical"
+              //   size="small"
+              //   style={{
+              //     display: 'flex',
+              //     width: '100%',
+              //     paddingTop: 30,
+              //     paddingBottom: 30,
+              //     borderBottom: '1px solid #D3D3D3',
+              //   }}>
+              //   <Row style={rowStyle}>
+              //     <Col span={10}>
+              //       <span>Sender : </span>
+              //     </Col>
+              //     <Col span={14}>
+              //       <CopyToClipLong address={row.sender || ''} />
+              //     </Col>
+              //   </Row>
+              //   {row.user_operation_hash && (
+              //     <Row style={rowStyle}>
+              //       <Col span={10}>
+              //         <span>User operation hash : </span>
+              //       </Col>
+              //       <Col span={14}>
+              //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+              //       </Col>
+              //     </Row>
+              //   )}
+              //   {row.transaction_hash && (
+              //     <Row style={rowStyle}>
+              //       <Col span={10}>
+              //         <span>Transaction hash : </span>
+              //       </Col>
+              //       <Col span={14}>
+              //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
+              //       </Col>
+              //     </Row>
+              //   )}
+              //   <Row style={rowStyle}>
+              //     <Col span={10}>
+              //       <span>Status : </span>
+              //     </Col>
+              //     <Col span={12}>
+              //       <span>{GetStatus(row.status)} </span>
+              //     </Col>
+              //   </Row>
+              // </Space>
             ))}
         </div>
 
@@ -172,79 +174,85 @@ const Comp = () => {
           {activityType === 'signature' &&
             needMultisigRecordList &&
             needMultisigRecordList.map((row, index) => (
-              <Space
+              <SignatureActivity
                 key={index}
-                direction="vertical"
-                size="small"
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  paddingTop: 30,
-                  paddingBottom: 30,
-                  borderBottom: '1px solid #D3D3D3',
-                }}>
-                <Row style={rowStyle}>
-                  <Col span={10}>
-                    <span>Sender : </span>
-                  </Col>
-                  <Col span={14}>
-                    <CopyToClipLong address={row.sender || ''} />
-                  </Col>
-                </Row>
-                <Row style={rowStyle}>
-                  <Col span={10}>
-                    <span>Status : </span>
-                  </Col>
-                  <Col span={12}>
-                    <span>{GetStatus(row.status)} </span>
-                  </Col>
-                </Row>
-                {row.user_operation_hash && (
-                  <Row style={rowStyle}>
-                    <Col span={10}>
-                      <span>User operation hash : </span>
-                    </Col>
-                    <Col span={14}>
-                      <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                    </Col>
-                  </Row>
-                )}
-                {row.transaction_hash && (
-                  <Row style={rowStyle}>
-                    <Col span={10}>
-                      <span>Transaction hash : </span>
-                    </Col>
-                    <Col span={14}>
-                      <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-                    </Col>
-                  </Row>
-                )}
-                {row.status === 1 && (
-                  <Row style={rowStyle}>
-                    <Col span={10}>
-                      <span>Operation : </span>
-                    </Col>
-                    <Col span={12}>
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => {
-                          approveSig(row.id);
-                        }}>
-                        Approve
-                      </Button>
-                      &nbsp;
-                      <Button
-                        size="small"
-                        onClick={() => {
-                          rejectSig('id');
-                        }}>
-                        Refuse
-                      </Button>
-                    </Col>
-                  </Row>
-                )}
-              </Space>
+                activityRecord={row}
+                loadData={loadData}
+                setActivityType={setActivityType}
+              />
+              // <Space
+              //   key={index}
+              //   direction="vertical"
+              //   size="small"
+              //   style={{
+              //     display: 'flex',
+              //     width: '100%',
+              //     paddingTop: 30,
+              //     paddingBottom: 30,
+              //     borderBottom: '1px solid #D3D3D3',
+              //   }}>
+              //   <Row style={rowStyle}>
+              //     <Col span={10}>
+              //       <span>Sender : </span>
+              //     </Col>
+              //     <Col span={14}>
+              //       <CopyToClipLong address={row.sender || ''} />
+              //     </Col>
+              //   </Row>
+              //   <Row style={rowStyle}>
+              //     <Col span={10}>
+              //       <span>Status : </span>
+              //     </Col>
+              //     <Col span={12}>
+              //       <span>{GetStatus(row.status)} </span>
+              //     </Col>
+              //   </Row>
+              //   {row.user_operation_hash && (
+              //     <Row style={rowStyle}>
+              //       <Col span={10}>
+              //         <span>User operation hash : </span>
+              //       </Col>
+              //       <Col span={14}>
+              //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+              //       </Col>
+              //     </Row>
+              //   )}
+              //   {row.transaction_hash && (
+              //     <Row style={rowStyle}>
+              //       <Col span={10}>
+              //         <span>Transaction hash : </span>
+              //       </Col>
+              //       <Col span={14}>
+              //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
+              //       </Col>
+              //     </Row>
+              //   )}
+              //   {row.status === 1 && (
+              //     <Row style={rowStyle}>
+              //       <Col span={10}>
+              //         <span>Operation : </span>
+              //       </Col>
+              //       <Col span={12}>
+              //         <Button
+              //           size="small"
+              //           type="primary"
+              //           onClick={() => {
+              //             approveSig(row.id);
+              //           }}>
+              //           Approve
+              //         </Button>
+              //         &nbsp;
+              //         <Button
+              //           size="small"
+              //           onClick={() => {
+              //             rejectSig('id');
+              //           }}>
+              //           Refuse
+              //         </Button>
+              //       </Col>
+              //     </Row>
+              //   )}
+              // </Space>
             ))}
         </div>
       </div>

@@ -21,15 +21,15 @@ export const getBlockChainExplorerAddress = (chainId: BlockchainNetworkId) => Bl
 export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: string) => {
   return (
     <a target="_blank" href={`${getBlockChainExplorerAddress(chainId)}/tx/${txhash}`}>
-      {truncateWalletAddrLong(txhash)}
+      View on block explorer
     </a>
   );
 };
 
 export const getUserOperationScanLink = (chainId: BlockchainNetworkId, hash: string) => {
   return (
-    <a target="_blank" href={`${userOperationScan}/user_operation/${hash}??chainId=${chainId}`}>
-      {truncateWalletAddrLong(hash)}
+    <a target="_blank" href={`${userOperationScan}/user_operation/${hash}?chainId=${chainId}`}>
+      View on user operation explorer
     </a>
   );
 };

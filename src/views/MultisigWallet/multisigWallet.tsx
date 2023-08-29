@@ -12,7 +12,7 @@ import {
   UpdateNeedSignature,
   GetStatus,
 } from '@/actions/MultisigWallet/multisigWallet';
-import { MultisigRecord } from '@/model/multisig';
+import { ActivityRecord } from '@/model/multisig';
 
 const listStyle: React.CSSProperties = {
   marginTop: '10px',
@@ -25,8 +25,8 @@ const listStyle: React.CSSProperties = {
 
 const MultisigWallet = () => {
   const [abstractAddressList, setAbstractAddressList] = useState<string[]>([]);
-  const [needMultisigRecordList, setNeedMultisigRecordList] = useState<MultisigRecord[]>([]);
-  const [multisigRecordList, setMultisigRecordList] = useState<MultisigRecord[]>([]);
+  const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
+  const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
 
   useEffect(() => {
     console.log('useEffect');
