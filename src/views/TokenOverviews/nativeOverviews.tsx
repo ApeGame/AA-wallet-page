@@ -11,6 +11,7 @@ import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWall
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
+import { Activity } from '@/components/Activity/activity';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -126,9 +127,9 @@ const Overview = () => {
 
       <Divider />
 
-      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000000' }}>
+      {/* <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000000' }}>
         Transactions:
-      </span>
+      </span> */}
 
       <div style={{ color: '#000000' }}>
         {recordList.length === 0 ? (
@@ -143,54 +144,55 @@ const Overview = () => {
             }}>
             {recordList &&
               recordList.map((row, index) => (
-                <Space
-                  key={index}
-                  direction="vertical"
-                  size="small"
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    borderBottom: '1px solid #D3D3D3',
-                  }}>
-                  <Row justify="space-between" align="bottom">
-                    <Col span={10}>
-                      <span>Sender : </span>
-                    </Col>
-                    <Col span={14}>
-                      <CopyToClipLong address={row.sender || ''} />
-                    </Col>
-                  </Row>
-                  {row.user_operation_hash && (
-                    <Row justify="space-between" align="bottom">
-                      <Col span={10}>
-                        <span>User operation hash : </span>
-                      </Col>
-                      <Col span={14}>
-                        <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                      </Col>
-                    </Row>
-                  )}
-                  {row.transaction_hash && (
-                    <Row justify="space-between" align="bottom">
-                      <Col span={10}>
-                        <span>Transaction hash : </span>
-                      </Col>
-                      <Col span={14}>
-                        <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-                      </Col>
-                    </Row>
-                  )}
-                  <Row justify="space-between" align="bottom">
-                    <Col span={10}>
-                      <span>Status : </span>
-                    </Col>
-                    <Col span={12}>
-                      <span>{GetStatus(row.status)} </span>
-                    </Col>
-                  </Row>
-                </Space>
+                <Activity activityRecord={row} key={index} />
+                // <Space
+                //   key={index}
+                //   direction="vertical"
+                //   size="small"
+                //   style={{
+                //     display: 'flex',
+                //     width: '100%',
+                //     paddingTop: 10,
+                //     paddingBottom: 10,
+                //     borderBottom: '1px solid #D3D3D3',
+                //   }}>
+                //   <Row justify="space-between" align="bottom">
+                //     <Col span={10}>
+                //       <span>Sender : </span>
+                //     </Col>
+                //     <Col span={14}>
+                //       <CopyToClipLong address={row.sender || ''} />
+                //     </Col>
+                //   </Row>
+                //   {row.user_operation_hash && (
+                //     <Row justify="space-between" align="bottom">
+                //       <Col span={10}>
+                //         <span>User operation hash : </span>
+                //       </Col>
+                //       <Col span={14}>
+                //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
+                //       </Col>
+                //     </Row>
+                //   )}
+                //   {row.transaction_hash && (
+                //     <Row justify="space-between" align="bottom">
+                //       <Col span={10}>
+                //         <span>Transaction hash : </span>
+                //       </Col>
+                //       <Col span={14}>
+                //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
+                //       </Col>
+                //     </Row>
+                //   )}
+                //   <Row justify="space-between" align="bottom">
+                //     <Col span={10}>
+                //       <span>Status : </span>
+                //     </Col>
+                //     <Col span={12}>
+                //       <span>{GetStatus(row.status)} </span>
+                //     </Col>
+                //   </Row>
+                // </Space>
               ))}
           </div>
         )}

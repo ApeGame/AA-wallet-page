@@ -27,8 +27,8 @@ export const Activity = ({ activityRecord }: { activityRecord: ActivityRecord })
         <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
-              width: 37,
-              height: 37,
+              width: 47,
+              height: 47,
               borderRadius: '50%',
               background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
             }}></div>
@@ -95,8 +95,8 @@ export const SignatureActivity = ({
         <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
-              width: 37,
-              height: 37,
+              width: 47,
+              height: 47,
               borderRadius: '50%',
               background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
             }}></div>
