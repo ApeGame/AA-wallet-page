@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
 import { Col, Row, Button, message } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { CheckActivity } from './checkActivity';
 import { GetStatus } from './status';
-import {
-  GetMultisigHistoryList,
-  GetNeedSignatureList,
-  UpdateNeedSignature,
-} from '@/actions/MultisigWallet/multisigWallet';
+import { UpdateNeedSignature } from '@/actions/MultisigWallet/multisigWallet';
 
 export const Activity = ({ activityRecord }: { activityRecord: ActivityRecord }) => {
   const [checkFlag, setCheckFlag] = useState(false);

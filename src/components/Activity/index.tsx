@@ -1,28 +1,18 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { Col, Row, Space, Button, message } from 'antd';
+import { Col, Row, Button } from 'antd';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { ActivityRecord } from '@/model/multisig';
 import { ReloadOutlined } from '@ant-design/icons';
-import {
-  GetMultisigHistoryList,
-  GetStatus,
-  GetNeedSignatureList,
-  UpdateNeedSignature,
-} from '@/actions/MultisigWallet/multisigWallet';
-import { moveToBlockScan, moveToUserOperationScan } from '../TokensOverview/moveScan';
+import { GetMultisigHistoryList, GetNeedSignatureList } from '@/actions/MultisigWallet/multisigWallet';
 import { Activity, SignatureActivity } from './activity';
 
 import '@/assets/styles/accountStyle/style.scss';
-
-const rowStyle: React.CSSProperties = { textAlign: 'left', paddingLeft: 25 };
 
 const Comp = () => {
   const [activityType, setActivityType] = useState('all');
   const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
   const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
-  const [messageApi, contextHolder] = message.useMessage();
 
   const loadData = async () => {
     setMultisigRecordList([]);
@@ -55,35 +45,8 @@ const Comp = () => {
     loadData();
   }, [activityType]);
 
-  const approveSig = async (id: string) => {
-    const res = await UpdateNeedSignature('', id);
-    console.log('UpdateNeedSignature', res);
-    if (res.code === 200) {
-      messageApi.success('Complete');
-      loadData();
-      setActivityType('all');
-    } else {
-      messageApi.error('Fail');
-      loadData();
-    }
-  };
-
-  const rejectSig = async (id: string) => {
-    const res = await UpdateNeedSignature('reject', id);
-    console.log('UpdateNeedSignature reject', res);
-    if (res.code === 200) {
-      messageApi.success('Complete');
-      loadData();
-      setActivityType('all');
-    } else {
-      messageApi.error('Fail');
-      loadData();
-    }
-  };
-
   return (
     <>
-      {contextHolder}
       <div style={{ height: 410, overflowY: 'auto', marginTop: 10, color: '#000000' }}>
         <Row justify="space-around" align="middle">
           <Col span={10}>

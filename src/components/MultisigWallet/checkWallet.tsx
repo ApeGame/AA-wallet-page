@@ -1,9 +1,5 @@
-import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
-import { observer } from 'mobx-react';
-import { ActivityRecord } from '@/model/multisig';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { Modal, Col, Row, Space } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
-import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
 import { MultisigInfo } from '@/model/multisig';
 
 import '@/assets/styles/accountStyle/style.scss';

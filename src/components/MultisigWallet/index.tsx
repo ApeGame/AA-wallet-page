@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { Col, Row, Space } from 'antd';
-import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { MultisigInfo } from '@/model/multisig';
 import { GetMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
 import { WalletInfo } from './wallet';

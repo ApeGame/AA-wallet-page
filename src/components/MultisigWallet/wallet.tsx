@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { ActivityRecord } from '@/model/multisig';
-import { Col, Row, Button, message } from 'antd';
+import { useState } from 'react';
+import { Col, Row } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { MultisigInfo } from '@/model/multisig';
 import { CheckWallet } from './checkWallet';

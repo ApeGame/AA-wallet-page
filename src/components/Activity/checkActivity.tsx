@@ -1,8 +1,6 @@
-import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
-import { observer } from 'mobx-react';
+import { Modal, Col, Row, Space } from 'antd';
 import { ActivityRecord } from '@/model/multisig';
 import { GetStatus } from './status';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
 

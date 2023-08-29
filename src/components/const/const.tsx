@@ -1,5 +1,3 @@
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-
 export enum BlockchainNetworkId {
   ankrTest = 12077,
   baseTestnet = 84531,

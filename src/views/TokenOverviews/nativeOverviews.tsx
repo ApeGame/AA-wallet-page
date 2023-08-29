@@ -4,13 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
 import { Col, Row, Space, Divider } from 'antd';
-import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
-// import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-import { GetStatus } from '@/actions/MultisigWallet/multisigWallet';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
-import { moveToBlockScan, moveToUserOperationScan } from '@/components/TokensOverview/moveScan';
 import { Activity } from '@/components/Activity/activity';
 
 const functionsListStyle: React.CSSProperties = {
