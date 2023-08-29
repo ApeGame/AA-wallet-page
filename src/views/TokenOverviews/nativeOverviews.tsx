@@ -3,11 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Col, Row, Space, Divider } from 'antd';
+import { Space, Divider } from 'antd';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import { Activity } from '@/components/Activity/activity';
+import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
+import { formatWeiToEth } from '@/utils/formatterEth';
+import { GetAccountAsset } from '@/actions/Token/token';
+import { getCurrentAddress } from '@/utils/localStorage';
+import { GetUser } from '@/actions/User/user';
+import { setUserRecoverEmail } from '@/utils/localStorage';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -29,12 +35,97 @@ const backStyle: React.CSSProperties = {
   color: '#000000',
 };
 
+const addressStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '30px',
+  color: '#0376C9',
+};
+
+const balanceStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '30px',
+  color: '#000000',
+  fontWeight: 'bold',
+  fontSize: 25,
+};
+
 const Overview = () => {
   const navigateTo = useNavigate();
 
   const [search] = useSearchParams();
 
   const [recordList, setRecordList] = useState<ActivityRecord[]>([]);
+
+  const loadAccountData = async () => {
+    // account
+    const res = await GetAccountAsset();
+    // const addressSet = new Set();
+    if (res.code === 200) {
+      AccountStore.clearAccountList();
+      // AccountStore.clearCurrentAccount();
+      if (res.data.abstract_account) {
+        AccountStore.pushAccount({
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
+        });
+        console.log('pushAccount_abstract_account', {
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
+        });
+      }
+      if (res.data.multiple_abstract_account) {
+        res.data.multiple_abstract_account.map((item) => {
+          // if (!addressSet.has(item.Address)) {
+          AccountStore.pushAccount({
+            address: item.Address,
+            erc20AccountMap: item.Erc20,
+            nativeBalance: item.Native,
+            isMultisig: true,
+            isUpdate: false,
+            name: item.Name,
+          });
+          // }
+          // addressSet.add(item.Address);
+        });
+      }
+
+      if (getCurrentAddress()) {
+        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
+        console.log('currentWalletAddress', currentWalletAddress.address);
+        console.log('getCurrentAddress', getCurrentAddress());
+        if (currentWalletAddress.address) {
+          AccountStore.setCurrentAccount(currentWalletAddress);
+        }
+      } else {
+        AccountStore.setCurrentAccount({
+          address: res.data.abstract_account.Address,
+          erc20AccountMap: res.data.abstract_account.Erc20,
+          nativeBalance: res.data.abstract_account.Native,
+          isMultisig: false,
+          isUpdate: false,
+          name: res.data.abstract_account.Name,
+        });
+      }
+    }
+    const userRes = await GetUser();
+    console.log('GetUser res', userRes);
+    if (userRes.code === 200) {
+      console.log('res.data.recover_email', userRes.data.recover_email);
+      setUserRecoverEmail(userRes.data.recover_email);
+    }
+  };
 
   const loadData = async () => {
     setRecordList([]);
@@ -52,6 +143,7 @@ const Overview = () => {
   useEffect(() => {
     // load
     loadData();
+    loadAccountData();
   }, []);
 
   useEffect(() => {
@@ -67,24 +159,32 @@ const Overview = () => {
         }}>
         <LeftOutlined />
       </div>
-      <div style={{ marginTop: 50 }}>
+      <div style={{ marginTop: 30 }}>
         {/* {search.get('tokenAddress') && <div style={balanceStyle}>Token Address</div>}
         <div style={balanceStyle}>{search.get('tokenAddress')}</div> */}
-        <div style={{ color: '#000000', marginTop: 10 }}>
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            <Row style={{ width: '100%' }} justify="space-around" align="middle">
-              <Col span={10}>
-                <span>Name :</span>
-              </Col>
-              <Col span={14}>{AccountStore.getCurrentNetworkWithStorage().symbol}</Col>
-            </Row>
-            <Row style={{ width: '100%' }} justify="space-around" align="middle">
-              <Col span={10}>
-                <span>Decimals :</span>
-              </Col>
-              <Col span={14}>18</Col>
-            </Row>
-          </Space>
+        <div style={{ color: '#000000' }}>
+          {AccountStore.currentAccount && (
+            <>
+              <div style={addressStyle}>
+                <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
+                  <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                    {AccountStore.currentAccount.address && (
+                      <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+                    )}
+                    <span style={{ color: '#000000' }}>
+                      {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+                    </span>
+                  </Space>
+                </div>
+              </div>
+              {AccountStore.currentAccount.nativeBalance && (
+                <div style={balanceStyle}>
+                  {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
+                  {' ' + AccountStore.getCurrentNetworkSymbol()}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
 

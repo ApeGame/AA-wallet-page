@@ -25,6 +25,14 @@
   cursor: pointer;
 }
 
+.tokenSelect {
+  &:hover {
+    background-color: #dcdcdc;
+  }
+  color: #000000;
+  cursor: pointer;
+}
+
 .accountContentSelectSend {
   &:hover {
     background-color: #d4d4d4;
