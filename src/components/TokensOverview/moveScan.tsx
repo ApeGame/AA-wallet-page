@@ -1,30 +1,22 @@
 import { getCurrentNetwork } from '@/utils/localStorage';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { BlockchainNetworkId, getTransactionScanLink, getUserOperationScanLink } from '@/components/const/const';
 
 export const moveToBlockScan = (hash: string) => {
-  let url = import.meta.env.VITE_BLOCK_SCAN_URL;
   if (getCurrentNetwork() === 'Base') {
-    url = 'https://goerli.basescan.org';
+    return getTransactionScanLink(BlockchainNetworkId.baseTestnet, hash);
   } else if (getCurrentNetwork() === 'Linea') {
-    url = 'https://goerli.lineascan.build';
+    return getTransactionScanLink(BlockchainNetworkId.lineaTestnet, hash);
+  } else if (getCurrentNetwork() === 'Coq Testnet') {
+    return getTransactionScanLink(BlockchainNetworkId.ankrTest, hash);
   }
-  return (
-    <a target="_blank" href={`${url}/tx/${hash}`}>
-      {truncateWalletAddrLong(hash)}
-    </a>
-  );
 };
 
 export const moveToUserOperationScan = (hash: string) => {
-  let url = import.meta.env.VITE_SCAN_URL;
   if (getCurrentNetwork() === 'Base') {
-    url = import.meta.env.VITE_SCAN_URL;
+    return getUserOperationScanLink(BlockchainNetworkId.baseTestnet, hash);
   } else if (getCurrentNetwork() === 'Linea') {
-    url = import.meta.env.VITE_SCAN_URL;
+    return getUserOperationScanLink(BlockchainNetworkId.lineaTestnet, hash);
+  } else if (getCurrentNetwork() === 'Coq Testnet') {
+    return getUserOperationScanLink(BlockchainNetworkId.ankrTest, hash);
   }
-  return (
-    <a target="_blank" href={`${url}/user_operation/${hash}`}>
-      {truncateWalletAddrLong(hash)}
-    </a>
-  );
 };
