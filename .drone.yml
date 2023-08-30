@@ -3,7 +3,7 @@ type: docker
 name: aa-wallet
 
 steps:
-  - name: frontend-dev
+  - name: aa-wallet-dev
     image: node:16
     commands:
       - pwd
@@ -47,7 +47,6 @@ steps:
         - push
       branch:
         - dev
-
 
   - name: upload-prod
     image: plugins/s3
