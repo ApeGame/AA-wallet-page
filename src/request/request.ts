@@ -3,6 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { getJWTToken } from '@/utils/localStorage';
 import { RefreshAccessToken } from '@/actions/Login/login';
 import { getCurrentNetwork } from '@/utils/localStorage';
+import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
+import { BlockchainNetworkId } from '@/components/const/const';
 
 export interface ResponseType<T = any> {
   code: number;
@@ -61,11 +63,11 @@ instance.interceptors.response.use(
 );
 
 export const UrlByNetwork = (): string => {
-  if (getCurrentNetwork() === 'Coq Testnet') {
+  if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.ankrTest) {
     return '';
-  } else if (getCurrentNetwork() === 'Base') {
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet) {
     return '/base';
-  } else if (getCurrentNetwork() === 'Linea') {
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet) {
     return '/linea';
   } else {
     return '';

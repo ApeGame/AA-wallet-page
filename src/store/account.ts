@@ -12,8 +12,8 @@ class Account {
 
   networkList: NetworkInfo[] = [
     { name: 'Coq Testnet', symbol: 'COQ' },
-    { name: 'Base', symbol: 'ETH' },
-    { name: 'Linea', symbol: 'ETH' },
+    { name: 'Base Testnet', symbol: 'ETH' },
+    { name: 'Linea Testnet', symbol: 'ETH' },
   ];
 
   constructor() {
