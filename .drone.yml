@@ -37,7 +37,7 @@ steps:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-west-1
+      region: us-east-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
@@ -55,7 +55,7 @@ steps:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-west-1
+      region: us-east-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
