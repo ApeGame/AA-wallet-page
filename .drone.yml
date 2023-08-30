@@ -1,0 +1,70 @@
+kind: pipeline
+type: docker
+name: aa-wallet
+
+steps:
+  - name: frontend-dev
+    image: node:16
+    commands:
+      - pwd
+      - node -v
+      - npm -i
+      - npm run build
+    when:
+      event:
+        - push
+      branch:
+        - dev
+
+  - name: frontend-prod
+    image: node:16
+    commands:
+      - pwd
+      - node -v
+      - node -v
+      - npm -i
+      - npm run build
+    when:
+      event:
+        - push
+      branch:
+        - main
+
+  - name: upload-dev
+    image: plugins/s3
+    settings:
+      bucket: aa-wallet-dev.metaapesgame.com
+      access_key:
+        from_secret: ape_access_key
+      secret_key:
+        from_secret: ape_secret_key
+      region: us-west-1
+      source: dist/**/*
+      target: /
+      strip_prefix: dist/
+    when:
+      event:
+        - push
+      branch:
+        - dev
+
+
+  - name: upload-prod
+    image: plugins/s3
+    settings:
+      bucket: aa-wallet.metaapesgame.com
+      access_key:
+        from_secret: ape_access_key
+      secret_key:
+        from_secret: ape_secret_key
+      region: us-west-1
+      source: dist/**/*
+      target: /
+      strip_prefix: dist/
+      acl: bucket-owner-full-control
+      cache-control: public,max-age=600,s-maxage=3600
+    when:
+      event:
+        - push
+      branch:
+        - main
