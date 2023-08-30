@@ -3,12 +3,12 @@ type: docker
 name: aa-wallet
 
 steps:
-  - name: frontend-dev
+  - name: aa-wallet-dev
     image: node:16
     commands:
       - pwd
       - node -v
-      - npm -i
+      - npm install
       - npm run build
     when:
       event:
@@ -21,8 +21,7 @@ steps:
     commands:
       - pwd
       - node -v
-      - node -v
-      - npm -i
+      - npm install
       - npm run build
     when:
       event:
@@ -38,7 +37,7 @@ steps:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-west-1
+      region: us-east-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
@@ -48,7 +47,6 @@ steps:
       branch:
         - dev
 
-
   - name: upload-prod
     image: plugins/s3
     settings:
@@ -57,7 +55,7 @@ steps:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-west-1
+      region: us-east-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
