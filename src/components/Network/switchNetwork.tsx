@@ -31,10 +31,10 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                       )}
                       style={{ height: 60, fontSize: 15, padding: 10 }}
                       onClick={() => {
+                        location.reload();
                         AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
                         setCurrentNetworkName(row.name);
                         removeCurrentAddress();
-                        location.reload();
                       }}>
                       {row.icon}
                       <span style={{ marginLeft: 10 }}>{row.name}</span>
