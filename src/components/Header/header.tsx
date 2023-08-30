@@ -8,10 +8,8 @@ import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { removeUserInfo } from '@/utils/localStorage';
-import { AccountStore } from '@/store/account';
 import { getCurrentNetwork } from '@/utils/localStorage';
 import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
-import { BlockchainNetworkId } from '@/components/const/const';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',

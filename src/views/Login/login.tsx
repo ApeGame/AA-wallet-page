@@ -66,7 +66,7 @@ const Login = () => {
     <div>
       <div>
         <div style={contentStyle}>
-          <GoogleOAuthProvider clientId="31869352710-11g4q7holnvfpokbhrv9cu7a1qqq7ht5.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="529552025345-87m9l73d109rbng3l5mtv3lio5drrm2g.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 success(credentialResponse);
