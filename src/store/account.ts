@@ -16,6 +16,8 @@ class Account {
 
   state = 'pending'; // "pending", "done" or "error"
 
+  requestFlag = 0;
+
   networkList: NetworkInfo[] = [
     { name: 'Coq Testnet', symbol: 'COQ' },
     { name: 'Base Testnet', symbol: 'ETH' },
@@ -59,10 +61,20 @@ class Account {
             });
           });
         }
+        console.log('getCurrentAddress()', getCurrentAddress());
         if (getCurrentAddress()) {
           const currentWalletAddress = this.getAccountByAddress(getCurrentAddress());
           if (currentWalletAddress.address) {
             AccountStore.setCurrentAccount(currentWalletAddress);
+          } else {
+            this.setCurrentAccount({
+              address: assetRes.data.abstract_account.Address,
+              erc20AccountMap: assetRes.data.abstract_account.Erc20,
+              nativeBalance: assetRes.data.abstract_account.Native,
+              isMultisig: false,
+              isUpdate: false,
+              name: assetRes.data.abstract_account.Name,
+            });
           }
         } else {
           this.setCurrentAccount({

@@ -3,6 +3,7 @@ import { truncateWalletAddrTooLong } from '@/utils/truncateWalletAddr';
 import { Button, Modal, Col, Row, Space, InputNumber, Input, message } from 'antd';
 import { CreateMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
 import { useNavigate } from 'react-router-dom';
+import { AccountStore } from '@/store/account';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -22,7 +23,8 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
     if (addRes.code === 200) {
       messageApi.success('Success');
       navigateTo('/overview');
-      location.reload();
+      AccountStore.loadUserData();
+      onClose();
     } else if (addRes.code === 400) {
       messageApi.error(addRes.data);
     } else {

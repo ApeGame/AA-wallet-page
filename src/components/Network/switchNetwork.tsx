@@ -8,7 +8,7 @@ import '@/assets/styles/accountStyle/style.scss';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { setCurrentNetworkName } from '@/utils/localStorage';
-import { getCurrentNetwork, removeCurrentAddress } from '@/utils/localStorage';
+import { getCurrentNetwork } from '@/utils/localStorage';
 import { getNetworkList } from '../Account/hooks/chainConfig';
 
 const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -34,7 +34,6 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                         AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
                         console.log('row.name', row.name);
                         setCurrentNetworkName(row.name);
-                        removeCurrentAddress();
                         AccountStore.loadUserData();
                         onClose();
                       }}>

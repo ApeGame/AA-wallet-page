@@ -10,6 +10,7 @@ import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { removeUserInfo } from '@/utils/localStorage';
 import { getCurrentNetwork } from '@/utils/localStorage';
 import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
+import { AccountStore } from '@/store/account';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',
@@ -83,7 +84,8 @@ const ContentHeader = () => {
           <HomeOutlined
             onClick={() => {
               navigateTo('/overview');
-              window.location.reload();
+              // window.location.reload();
+              AccountStore.loadUserData();
             }}
           />
         </Col>

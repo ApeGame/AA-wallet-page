@@ -9,7 +9,7 @@ import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-import { formatWeiToEth } from '@/utils/formatterEth';
+import { formatWeiToEthComplete } from '@/utils/formatterEth';
 // import SendApproveDialog from '@/components/TokensOverview/sendApprove';
 // import { useNavigate } from 'react-router-dom';
 import SwitchPaymasterDialog from '@/components/TokensOverview/switchPaymaster';
@@ -232,7 +232,7 @@ const View = () => {
                           </Col>
                           <Col span={8}>
                             <span style={{ textAlign: 'right' }}>
-                              {formatWeiToEth(row.nativeBalance)}{' '}
+                              {formatWeiToEthComplete(row.nativeBalance)}{' '}
                               {' ' + AccountStore.getCurrentNetworkWithStorage().symbol}
                             </span>
                           </Col>
@@ -294,10 +294,10 @@ const View = () => {
                     Balance:
                     {search.get('tokenAddress')
                       ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
-                        formatWeiToEth(
+                        formatWeiToEthComplete(
                           AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
                         )
-                      : formatWeiToEth(AccountStore.currentAccount.nativeBalance) +
+                      : formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance) +
                         ' ' +
                         AccountStore.getCurrentNetworkSymbol()}
                   </Col>
@@ -319,10 +319,10 @@ const View = () => {
                     onClick={() => {
                       const amount = search.get('tokenAddress')
                         ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
-                          formatWeiToEth(
+                          formatWeiToEthComplete(
                             AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
                           )
-                        : formatWeiToEth(AccountStore.currentAccount.nativeBalance);
+                        : formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance);
                       setToAmount(amount);
                     }}>
                     Max

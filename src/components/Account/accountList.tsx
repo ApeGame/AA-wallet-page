@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState } from 'react';
-import { DownOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
 import { Button, Modal, Col, Row, Space } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
@@ -70,7 +70,7 @@ const AccountListDialog = () => {
 
   return (
     <>
-      {AccountStore.accountList.length !== 0 && (
+      {AccountStore.accountList.length !== 0 ? (
         <div>
           <Button type="text" onClick={showModal}>
             <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#000000' }}>
@@ -84,6 +84,11 @@ const AccountListDialog = () => {
             </span>
           </Button>
         </div>
+      ) : (
+        <span>
+          updating &nbsp;
+          <LoadingOutlined />
+        </span>
       )}
 
       <Modal

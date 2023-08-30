@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
 import { BindRecoverEmail, GetCode } from '@/actions/Login/login';
 import { useNavigate } from 'react-router-dom';
+import { AccountStore } from '@/store/account';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -33,7 +34,8 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
     if (res.code === 200) {
       messageApi.success('bind email success');
       navigateTo('/overview');
-      window.location.reload();
+      AccountStore.loadUserData();
+      onClose();
     } else {
       messageApi.error('bind email fail');
     }

@@ -8,14 +8,11 @@ import { AccountStore } from '@/store/account';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { observer } from 'mobx-react';
 import TokensOverview from '@/components/TokensOverview';
-import { GetAccountAsset } from '@/actions/Token/token';
 import MultisigWallet from '@/components/MultisigWallet';
 import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
-import { GetUser } from '@/actions/User/user';
-import { setUserRecoverEmail, getUserRecoverEmail } from '@/utils/localStorage';
+import { getUserRecoverEmail } from '@/utils/localStorage';
 import { useInterval } from '@/hooks/useInterval';
-import { getCurrentAddress } from '@/utils/localStorage';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
