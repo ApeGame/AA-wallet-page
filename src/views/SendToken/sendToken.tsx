@@ -227,15 +227,15 @@ const View = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <Col span={16} style={{ display: 'flex' }}>
+                          <Col span={24} style={{ display: 'flex' }}>
                             <span>{truncateWalletAddrLong(row.address)}</span>
                           </Col>
-                          <Col span={8}>
+                          {/* <Col span={8}>
                             <span style={{ textAlign: 'right' }}>
-                              {formatWeiToEthComplete(row.nativeBalance)}{' '}
+                              {formatWeiToEth(row.nativeBalance)}{' '}
                               {' ' + AccountStore.getCurrentNetworkWithStorage().symbol}
                             </span>
-                          </Col>
+                          </Col> */}
                         </Row>
                       </Space>
                     </Col>
@@ -279,10 +279,10 @@ const View = () => {
           </div>
 
           <Row style={{ marginTop: 20 }}>
-            <Col span={8} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: 18 }}>Asset:</span>
             </Col>
-            <Col span={16}>
+            <Col span={18}>
               <Row>
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                   <Col span={24} style={{ textAlign: 'left' }}>
@@ -296,7 +296,9 @@ const View = () => {
                       ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
                         formatWeiToEthComplete(
                           AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
-                        )
+                        ) +
+                          ' ' +
+                          AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol
                       : formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance) +
                         ' ' +
                         AccountStore.getCurrentNetworkSymbol()}
@@ -307,7 +309,7 @@ const View = () => {
           </Row>
 
           <Row style={{ marginTop: 50 }}>
-            <Col span={8} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                 <Col span={24} style={{ fontSize: 18 }}>
                   Amount:
@@ -330,7 +332,7 @@ const View = () => {
                 </Col>
               </Space>
             </Col>
-            <Col span={16}>
+            <Col span={18}>
               <Input
                 style={{ height: 50 }}
                 placeholder="Enter Amount"
