@@ -10,10 +10,6 @@ import { AccountStore } from '@/store/account';
 import { Activity } from '@/components/Activity/activity';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { formatWeiToEth } from '@/utils/formatterEth';
-import { GetAccountAsset } from '@/actions/Token/token';
-import { getCurrentAddress } from '@/utils/localStorage';
-import { GetUser } from '@/actions/User/user';
-import { setUserRecoverEmail } from '@/utils/localStorage';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -60,73 +56,6 @@ const Overview = () => {
 
   const [recordList, setRecordList] = useState<ActivityRecord[]>([]);
 
-  const loadAccountData = async () => {
-    // account
-    const res = await GetAccountAsset();
-    // const addressSet = new Set();
-    if (res.code === 200) {
-      AccountStore.clearAccountList();
-      // AccountStore.clearCurrentAccount();
-      if (res.data.abstract_account) {
-        AccountStore.pushAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-        console.log('pushAccount_abstract_account', {
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-      if (res.data.multiple_abstract_account) {
-        res.data.multiple_abstract_account.map((item) => {
-          // if (!addressSet.has(item.Address)) {
-          AccountStore.pushAccount({
-            address: item.Address,
-            erc20AccountMap: item.Erc20,
-            nativeBalance: item.Native,
-            isMultisig: true,
-            isUpdate: false,
-            name: item.Name,
-          });
-          // }
-          // addressSet.add(item.Address);
-        });
-      }
-
-      if (getCurrentAddress()) {
-        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
-        console.log('currentWalletAddress', currentWalletAddress.address);
-        console.log('getCurrentAddress', getCurrentAddress());
-        if (currentWalletAddress.address) {
-          AccountStore.setCurrentAccount(currentWalletAddress);
-        }
-      } else {
-        AccountStore.setCurrentAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-    }
-    const userRes = await GetUser();
-    console.log('GetUser res', userRes);
-    if (userRes.code === 200) {
-      console.log('res.data.recover_email', userRes.data.recover_email);
-      setUserRecoverEmail(userRes.data.recover_email);
-    }
-  };
-
   const loadData = async () => {
     setRecordList([]);
     const multisigRecordListRes = await GetMultisigHistoryListErc('0x0000000000000000000000000000000000000000');
@@ -143,7 +72,7 @@ const Overview = () => {
   useEffect(() => {
     // load
     loadData();
-    loadAccountData();
+    AccountStore.loadUserData();
   }, []);
 
   useEffect(() => {

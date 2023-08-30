@@ -1,7 +1,11 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { AccountInfo } from '@/model/account';
 import { NetworkInfo } from '@/model/network';
 import { getCurrentNetwork, setCurrentNetworkName } from '@/utils/localStorage';
+import { GetAccountAsset } from '@/actions/Token/token';
+import { getCurrentAddress } from '@/utils/localStorage';
+import { GetUser } from '@/actions/User/user';
+import { setUserRecoverEmail } from '@/utils/localStorage';
 
 class Account {
   accountList: AccountInfo[] = [];
@@ -9,6 +13,8 @@ class Account {
   currentAccount: AccountInfo = {} as AccountInfo;
 
   currentNetwork: NetworkInfo = {} as NetworkInfo;
+
+  state = 'pending'; // "pending", "done" or "error"
 
   networkList: NetworkInfo[] = [
     { name: 'Coq Testnet', symbol: 'COQ' },
@@ -18,6 +24,70 @@ class Account {
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  async loadUserData() {
+    console.log('loadUserData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+    this.accountList = [];
+    this.state = 'pending';
+
+    try {
+      const assetRes = await GetAccountAsset();
+      const userRes = await GetUser();
+
+      runInAction(() => {
+        if (assetRes.code === 200) {
+          this.pushAccount({
+            address: assetRes.data.abstract_account.Address,
+            erc20AccountMap: assetRes.data.abstract_account.Erc20,
+            nativeBalance: assetRes.data.abstract_account.Native,
+            isMultisig: false,
+            isUpdate: false,
+            name: assetRes.data.abstract_account.Name,
+          });
+        }
+        if (assetRes.data.multiple_abstract_account) {
+          assetRes.data.multiple_abstract_account.map((item) => {
+            this.pushAccount({
+              address: item.Address,
+              erc20AccountMap: item.Erc20,
+              nativeBalance: item.Native,
+              isMultisig: true,
+              isUpdate: false,
+              name: item.Name,
+            });
+          });
+        }
+        if (getCurrentAddress()) {
+          const currentWalletAddress = this.getAccountByAddress(getCurrentAddress());
+          if (currentWalletAddress.address) {
+            AccountStore.setCurrentAccount(currentWalletAddress);
+          }
+        } else {
+          this.setCurrentAccount({
+            address: assetRes.data.abstract_account.Address,
+            erc20AccountMap: assetRes.data.abstract_account.Erc20,
+            nativeBalance: assetRes.data.abstract_account.Native,
+            isMultisig: false,
+            isUpdate: false,
+            name: assetRes.data.abstract_account.Name,
+          });
+        }
+
+        if (userRes.code === 200) {
+          if (userRes.data.recover_email) {
+            setUserRecoverEmail(userRes.data.recover_email);
+          }
+        }
+
+        this.state = 'done';
+      });
+    } catch (e) {
+      runInAction(() => {
+        this.state = 'error';
+      });
+    }
   }
 
   pushAccount(account: AccountInfo) {

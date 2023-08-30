@@ -32,7 +32,7 @@ export const getNetworkList = (): NetworkConfig[] => {
       },
       {
         icon: <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />,
-        name: 'Lines Testnet',
+        name: 'Linea Testnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.lineaTestnet),
         networkId: BlockchainNetworkId.lineaTestnet,
       },
@@ -53,7 +53,7 @@ export const getNetworkList = (): NetworkConfig[] => {
       },
       {
         icon: <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />,
-        name: 'Lines Mainnet',
+        name: 'Linea Mainnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.lineaMainnet),
         networkId: BlockchainNetworkId.lineaMainnet,
       },

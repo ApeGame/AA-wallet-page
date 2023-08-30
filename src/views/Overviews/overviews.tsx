@@ -90,7 +90,7 @@ const Overview = () => {
   useInterval(async () => {
     setTimeout(async () => {
       console.log('overview useInterval load');
-      loadData();
+      AccountStore.loadUserData();
     }, 5 * 1000);
   }, 15 * 1000);
 
@@ -102,79 +102,9 @@ const Overview = () => {
     }, 10 * 1000);
   }, 10 * 1000);
 
-  const loadData = async () => {
-    // account
-    const res = await GetAccountAsset();
-    // const addressSet = new Set();
-    if (res.code === 200) {
-      AccountStore.clearAccountList();
-      // AccountStore.clearCurrentAccount();
-      if (res.data.abstract_account) {
-        AccountStore.pushAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-        console.log('pushAccount_abstract_account', {
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-      if (res.data.multiple_abstract_account) {
-        res.data.multiple_abstract_account.map((item) => {
-          // if (!addressSet.has(item.Address)) {
-          AccountStore.pushAccount({
-            address: item.Address,
-            erc20AccountMap: item.Erc20,
-            nativeBalance: item.Native,
-            isMultisig: true,
-            isUpdate: false,
-            name: item.Name,
-          });
-          // }
-          // addressSet.add(item.Address);
-        });
-      }
-
-      if (getCurrentAddress()) {
-        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
-        console.log('currentWalletAddress', currentWalletAddress.address);
-        console.log('getCurrentAddress', getCurrentAddress());
-        if (currentWalletAddress.address) {
-          AccountStore.setCurrentAccount(currentWalletAddress);
-        }
-      } else {
-        AccountStore.setCurrentAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-    }
-    const userRes = await GetUser();
-    console.log('GetUser res', userRes);
-    if (userRes.code === 200) {
-      console.log('res.data.recover_email', userRes.data.recover_email);
-      setUserRecoverEmail(userRes.data.recover_email);
-    }
-  };
-
   useEffect(() => {
     console.log('overview load');
-    loadData();
-    // if (!AccountStore.currentAccount) {
-    //   AccountStore.setCurrentAccount(AccountStore.getAbstractAccount());
-    // }
+    AccountStore.loadUserData();
   }, [current]);
 
   return (

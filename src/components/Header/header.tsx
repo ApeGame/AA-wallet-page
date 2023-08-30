@@ -69,9 +69,6 @@ const ContentHeader = () => {
             }}>
             <div style={{ padding: 5 }}>
               <span style={{ fontWeight: 'bold', color: '#000000' }}>
-                {/* {AccountStore.getCurrentNetworkWithStorage().name
-                  ? AccountStore.getCurrentNetworkWithStorage().name[0]
-                  : ''} */}
                 {getNetworkByName(getCurrentNetwork()).name[0]}
               </span>
               &nbsp; <DownOutlined />
