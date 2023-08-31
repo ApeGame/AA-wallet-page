@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { truncateWalletAddrTooLong } from '@/utils/truncateWalletAddr';
 import { Button, Modal, Col, Row, Space, InputNumber, Input, message } from 'antd';
 import { CreateMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
