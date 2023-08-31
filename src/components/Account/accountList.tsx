@@ -85,10 +85,11 @@ const AccountListDialog = () => {
           </Button>
         </div>
       ) : (
-        <span>
-          updating &nbsp;
-          <LoadingOutlined />
-        </span>
+        <></>
+        // <span>
+        //   updating &nbsp;
+        //   <LoadingOutlined />
+        // </span>
       )}
 
       <Modal

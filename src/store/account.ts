@@ -31,7 +31,7 @@ class Account {
   async loadUserData() {
     console.log('loadUserData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
-    this.accountList = [];
+    // this.accountList = [];
     this.state = 'pending';
 
     try {
@@ -39,6 +39,7 @@ class Account {
       const userRes = await GetUser();
 
       runInAction(() => {
+        this.accountList.length = 0;
         if (assetRes.code === 200) {
           this.pushAccount({
             address: assetRes.data.abstract_account.Address,
