@@ -70,7 +70,9 @@ const ContentHeader = () => {
             }}>
             <div style={{ padding: 5 }}>
               <span style={{ fontWeight: 'bold', color: '#000000' }}>
-                {getNetworkByName(getCurrentNetwork()).name[0]}
+                {getNetworkByName(getCurrentNetwork()) &&
+                  getNetworkByName(getCurrentNetwork()).name &&
+                  getNetworkByName(getCurrentNetwork()).name[0]}
               </span>
               &nbsp; <DownOutlined />
             </div>
