@@ -30,7 +30,7 @@ const Comp = () => {
   return (
     <div>
       <div style={contentStyle}>
-        <div style={{ height: 340, overflowY: 'auto', width: '100%' }}>
+        <div style={{ height: 370, overflowY: 'auto', width: '100%' }}>
           {AccountStore.currentAccount.nativeBalance && (
             <div
               className="tokenSelect"
