@@ -51,7 +51,9 @@ const UpdateAccountNameDialog = ({
                   placeholder="Please input name"
                   onChange={(e) => {
                     if (e != null) {
-                      setName(e.target.value.trim());
+                      if (e.target.value.trim().length < 10) {
+                        setName(e.target.value.trim());
+                      }
                     }
                   }}
                 />

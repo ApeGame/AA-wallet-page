@@ -29,7 +29,7 @@ const View: React.FC = () => {
   const { Header, Content } = Layout;
 
   return (
-    <FacebookProvider appId="662645895414897">
+    <FacebookProvider appId={import.meta.env.VITE_FACEBOOK_ID}>
       <Layout style={LayoutStyle}>
         <Header style={headerStyle}>
           <ContentHeader />
