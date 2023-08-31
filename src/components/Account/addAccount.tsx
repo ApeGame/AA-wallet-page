@@ -90,7 +90,7 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                   <Button
                     type="primary"
                     onClick={() => {
-                      if (abstractAddressList.indexOf(abstractAddress)) {
+                      if (abstractAddress && abstractAddressList.indexOf(abstractAddress)) {
                         setAbstractAddressList((prevAddress) => [...prevAddress, abstractAddress]);
                       }
                     }}>
