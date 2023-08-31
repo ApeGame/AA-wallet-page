@@ -97,7 +97,7 @@ const Overview = () => {
         messageApi.warning('please add your recover email, click your account to check it');
       }
     }, 10 * 1000);
-  }, 10 * 1000);
+  }, 20 * 1000);
 
   useEffect(() => {
     console.log('overview load');

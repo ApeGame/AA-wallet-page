@@ -46,6 +46,7 @@ const SwitchPaymasterDialog = ({
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
         messageApi.success('Complete');
+        navigateTo('/overview');
       } else {
         messageApi.error('Fail');
       }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { truncateWalletAddrTooLong } from '@/utils/truncateWalletAddr';
 import { Button, Modal, Col, Row, Space, InputNumber, Input, message } from 'antd';
 import { CreateMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
@@ -8,7 +8,7 @@ import { AccountStore } from '@/store/account';
 import '@/assets/styles/accountStyle/style.scss';
 
 export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([]);
+  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([AccountStore.currentAccount.address]);
   const [abstractAddress, setAbstractAddress] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +44,7 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
         onCancel={onClose}
         width={390}
         footer={[]}>
-        <div style={{ height: 330, marginTop: 20, overflowY: 'auto' }}>
+        <div style={{ height: 350, marginTop: 20 }}>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row justify="space-around" align="middle">
               <Col span={12}>
@@ -90,7 +90,9 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                   <Button
                     type="primary"
                     onClick={() => {
-                      setAbstractAddressList((prevAddress) => [...prevAddress, abstractAddress]);
+                      if (abstractAddressList.indexOf(abstractAddress)) {
+                        setAbstractAddressList((prevAddress) => [...prevAddress, abstractAddress]);
+                      }
                     }}>
                     Add
                   </Button>
@@ -104,7 +106,7 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                 </Space.Compact>
               </Col>
             </Row>
-            <Row justify="space-around" align="middle">
+            <Row justify="space-around" align="middle" style={{ height: 130, overflowY: 'auto' }}>
               <Col span={24}>
                 {abstractAddressList.length !== 0 && <span>Abstract Wallet Address List:</span>}
                 <div style={{ minHeight: 90, overflowY: 'auto' }}>

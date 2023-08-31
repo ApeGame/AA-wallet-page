@@ -51,7 +51,7 @@ const Comp = () => {
         <Row justify="space-around" align="middle">
           <Col span={10}>
             <Button
-              type={activityType === 'all' ? 'text' : 'link'}
+              type={activityType === 'all' ? 'link' : 'text'}
               onClick={() => {
                 setActivityType('all');
               }}>
@@ -60,7 +60,7 @@ const Comp = () => {
           </Col>
           <Col span={10}>
             <Button
-              type={activityType === 'signature' ? 'text' : 'link'}
+              type={activityType === 'signature' ? 'link' : 'text'}
               onClick={() => {
                 setActivityType('signature');
               }}>

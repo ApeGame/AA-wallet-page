@@ -1,4 +1,4 @@
-import { Input, Button, Col, Row, Space } from 'antd';
+import { Input, Button, Col, Row, Space, message } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
@@ -13,10 +13,10 @@ import { formatWeiToEthComplete } from '@/utils/formatterEth';
 // import SendApproveDialog from '@/components/TokensOverview/sendApprove';
 // import { useNavigate } from 'react-router-dom';
 import SwitchPaymasterDialog from '@/components/TokensOverview/switchPaymaster';
-import { GetAccountAsset } from '@/actions/Token/token';
-import { getCurrentAddress } from '@/utils/localStorage';
-import { GetUser } from '@/actions/User/user';
-import { setUserRecoverEmail } from '@/utils/localStorage';
+// import { GetAccountAsset } from '@/actions/Token/token';
+// import { getCurrentAddress } from '@/utils/localStorage';
+// import { GetUser } from '@/actions/User/user';
+// import { setUserRecoverEmail } from '@/utils/localStorage';
 
 // import { getSendTransactionType } from '@/utils/localStorage';
 
@@ -34,7 +34,7 @@ const View = () => {
   const [toAmount, setToAmount] = useState('');
   const [search] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  // const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
   // const [paymasterAddress, setPaymasterAddress] = useState('');
   // const [erc20Address, setErc20Address] = useState('');
 
@@ -62,84 +62,24 @@ const View = () => {
 
   const payment = () => {
     setIsLoading(true);
-    setSwitchPaymentFlag(true);
+    if (toAmount) {
+      setSwitchPaymentFlag(true);
+    } else {
+      messageApi.warning('Please input amount');
+    }
+
     setIsLoading(false);
-  };
-
-  const loadAccountData = async () => {
-    // account
-    const res = await GetAccountAsset();
-    // const addressSet = new Set();
-    if (res.code === 200) {
-      AccountStore.clearAccountList();
-      // AccountStore.clearCurrentAccount();
-      if (res.data.abstract_account) {
-        AccountStore.pushAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-        console.log('pushAccount_abstract_account', {
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-      if (res.data.multiple_abstract_account) {
-        res.data.multiple_abstract_account.map((item) => {
-          // if (!addressSet.has(item.Address)) {
-          AccountStore.pushAccount({
-            address: item.Address,
-            erc20AccountMap: item.Erc20,
-            nativeBalance: item.Native,
-            isMultisig: true,
-            isUpdate: false,
-            name: item.Name,
-          });
-          // }
-          // addressSet.add(item.Address);
-        });
-      }
-
-      if (getCurrentAddress()) {
-        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
-        console.log('currentWalletAddress', currentWalletAddress.address);
-        console.log('getCurrentAddress', getCurrentAddress());
-        if (currentWalletAddress.address) {
-          AccountStore.setCurrentAccount(currentWalletAddress);
-        }
-      } else {
-        AccountStore.setCurrentAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-    }
-    const userRes = await GetUser();
-    console.log('GetUser res', userRes);
-    if (userRes.code === 200) {
-      console.log('res.data.recover_email', userRes.data.recover_email);
-      setUserRecoverEmail(userRes.data.recover_email);
-    }
   };
 
   useEffect(() => {
     // load
-    loadAccountData();
+    // loadAccountData();
+    AccountStore.loadUserData();
   }, []);
 
   return (
     <div>
+      {contextHolder}
       <SwitchPaymasterDialog
         isOpen={switchPaymentFlag}
         onClose={handleSwitchPaymentFlagClose}
@@ -259,11 +199,15 @@ const View = () => {
       ) : (
         <div style={{ color: '#000000', paddingLeft: 10, paddingRight: 10, marginTop: 40 }}>
           <div>
-            <div style={{ backgroundColor: '#E6F0FA', padding: 5, marginTop: 20, borderRadius: '15px' }}>
+            <div style={{ backgroundColor: '#E6F0FA', padding: 5, marginTop: 20, height: 70, borderRadius: '15px' }}>
               {AccountStore.currentAccount.address && (
                 <>
                   <span style={{ padding: 10, display: 'flex', color: '#000000' }}>
-                    {AccountStore.currentAccount.name ? AccountStore.currentAccount.name : 'Account'}
+                    {AccountStore.getAccountByAddress(toAddress).address
+                      ? AccountStore.getAccountByAddress(toAddress).name
+                        ? AccountStore.getAccountByAddress(toAddress).name
+                        : 'Account'
+                      : 'Address'}
                   </span>
                   <div
                     style={{
@@ -271,7 +215,7 @@ const View = () => {
                       color: '#000000',
                       height: 20,
                     }}>
-                    {AccountStore.currentAccount.address}
+                    {toAddress}
                   </div>
                 </>
               )}
@@ -339,7 +283,10 @@ const View = () => {
                 value={toAmount}
                 onChange={(e) => {
                   if (e != null) {
-                    setToAmount(e.target.value);
+                    const reg = /[^\d^.]+/g;
+                    if (!reg.test(e.target.value)) {
+                      setToAmount(e.target.value);
+                    }
                   }
                 }}
               />

@@ -32,15 +32,15 @@ export const CheckActivity = ({
             </Col>
           </Row>
           <Row>
-            <Col span={10}>user operation hash</Col>
-            <Col span={14}>
-              <CopyToClipLong address={activityRecord.user_operation_hash} />
-            </Col>
-          </Row>
-          <Row>
             <Col span={10}>transaction hash</Col>
             <Col span={14}>
               <CopyToClipLong address={activityRecord.transaction_hash} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={10}>user operation hash</Col>
+            <Col span={14}>
+              <CopyToClipLong address={activityRecord.user_operation_hash} />
             </Col>
           </Row>
         </Space>
