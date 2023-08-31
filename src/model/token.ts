@@ -17,9 +17,9 @@ export interface PaymasterRequest {
 export const CreatePaymasterRequest = (): PaymasterRequest => {
   let erc20address = '0x13D91374CcB046ca0B66688AdCe4B2B62837A86a';
   if (getCurrentNetwork() === 'Base Testnet') {
-    erc20address = '0xAd6Cf8C4Ec63109cf420fC5C7EB82FC97eC1aBF5';
+    erc20address = '0xE45469233597318F51656B401DD561D9306ED2Fd';
   } else if (getCurrentNetwork() === 'Linea Testnet') {
-    erc20address = '0xd64134a65ae475927ed2711b967a5f08702615cd';
+    erc20address = '0x77E825be7701Fe49D4b825304C77B3754f80D54d';
   }
   const context: PaymasterRequestContext = {
     paymaster_type: 'pay_erc20',
