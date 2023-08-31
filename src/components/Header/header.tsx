@@ -8,8 +8,8 @@ import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { removeUserInfo } from '@/utils/localStorage';
-import { getCurrentNetwork } from '@/utils/localStorage';
-import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
+// import { getCurrentNetwork } from '@/utils/localStorage';
+// import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
 import { AccountStore } from '@/store/account';
 
 const headerStyle: React.CSSProperties = {
