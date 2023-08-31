@@ -32,12 +32,12 @@ steps:
   - name: upload-dev
     image: plugins/s3
     settings:
-      bucket: aa-wallet-dev.metaapesgame.com
+      bucket: wallet-dev.coya.biz
       access_key:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-east-1
+      region: us-west-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
@@ -50,12 +50,12 @@ steps:
   - name: upload-prod
     image: plugins/s3
     settings:
-      bucket: aa-wallet.metaapesgame.com
+      bucket: wallet.coya.biz
       access_key:
         from_secret: ape_access_key
       secret_key:
         from_secret: ape_secret_key
-      region: us-east-1
+      region: us-west-1
       source: dist/**/*
       target: /
       strip_prefix: dist/
