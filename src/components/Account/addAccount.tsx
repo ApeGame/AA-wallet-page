@@ -67,9 +67,10 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
             <Row justify="space-around" align="middle">
               <Col span={24}>
                 <Input
+                  maxLength={15}
                   placeholder="Account name"
                   onChange={(e) => {
-                    if (e.target.value.trim().length < 10) {
+                    if (e.target.value) {
                       setName(e.target.value.trim());
                     }
                   }}

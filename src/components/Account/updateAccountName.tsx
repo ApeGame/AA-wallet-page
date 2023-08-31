@@ -48,10 +48,11 @@ const UpdateAccountNameDialog = ({
             <Row justify="space-around" align="middle">
               <Col span={24}>
                 <Input
+                  maxLength={15}
                   placeholder="Please input name"
                   onChange={(e) => {
                     if (e != null) {
-                      if (e.target.value.trim().length < 10) {
+                      if (e.target.value) {
                         setName(e.target.value.trim());
                       }
                     }
