@@ -86,14 +86,12 @@ const Overview = () => {
     {
       key: '1',
       label: (
-        <Space>
+        <Space
+          onClick={() => {
+            setCheckFlag(true);
+          }}>
           <InfoCircleFilled />
-          <span
-            onClick={() => {
-              setCheckFlag(true);
-            }}>
-            token details
-          </span>
+          <span>token details</span>
         </Space>
       ),
     },
