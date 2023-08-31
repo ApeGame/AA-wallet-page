@@ -45,8 +45,8 @@ const SwitchPaymasterDialog = ({
       const sendRes = await SendNativeToken(toAddress, toAmount.trim(), paymentIndex);
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
+        setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
-        navigateTo('/overview');
       } else {
         messageApi.error('Fail');
       }
@@ -61,8 +61,8 @@ const SwitchPaymasterDialog = ({
       const sendRes = await SendErc20Token(erc20Address, data, paymentIndex);
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
+        setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
-        navigateTo('/overview');
       } else {
         messageApi.error('Fail');
       }
