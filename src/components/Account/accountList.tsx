@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState } from 'react';
-import { DownOutlined, PlusOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
 import { Button, Modal, Col, Row, Space } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
