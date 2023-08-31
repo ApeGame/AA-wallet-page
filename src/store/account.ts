@@ -6,6 +6,7 @@ import { GetAccountAsset } from '@/actions/Token/token';
 import { getCurrentAddress } from '@/utils/localStorage';
 import { GetUser } from '@/actions/User/user';
 import { setUserRecoverEmail } from '@/utils/localStorage';
+import { ActivityStore } from './activity';
 
 class Account {
   accountList: AccountInfo[] = [];
@@ -93,6 +94,8 @@ class Account {
             setUserRecoverEmail(userRes.data.recover_email);
           }
         }
+
+        ActivityStore.loadActivityData();
 
         this.state = 'done';
       });

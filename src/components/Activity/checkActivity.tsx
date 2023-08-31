@@ -19,30 +19,42 @@ export const CheckActivity = ({
     <>
       <Modal centered title="Activity" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
         <Space direction="vertical" size="middle" style={{ display: 'flex', marginTop: 30 }}>
-          <Row>
-            <Col span={24}>{moveToBlockScan(activityRecord.transaction_hash)}</Col>
-          </Row>
-          <Row>
-            <Col span={24}>{moveToUserOperationScan(activityRecord.user_operation_hash)}</Col>
-          </Row>
+          {activityRecord.transaction_hash && (
+            <Row>
+              <Col span={24}>{moveToBlockScan(activityRecord.transaction_hash)}</Col>
+            </Row>
+          )}
+
+          {activityRecord.user_operation_hash && (
+            <Row>
+              <Col span={24}>{moveToUserOperationScan(activityRecord.user_operation_hash)}</Col>
+            </Row>
+          )}
+
           <Row>
             <Col span={10}>status</Col>
             <Col span={14}>
               <div>{GetStatus(activityRecord.status)}</div>
             </Col>
           </Row>
-          <Row>
-            <Col span={10}>transaction hash</Col>
-            <Col span={14}>
-              <CopyToClipLong address={activityRecord.transaction_hash} />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>user operation hash</Col>
-            <Col span={14}>
-              <CopyToClipLong address={activityRecord.user_operation_hash} />
-            </Col>
-          </Row>
+
+          {activityRecord.transaction_hash && (
+            <Row>
+              <Col span={10}>transaction hash</Col>
+              <Col span={14}>
+                <CopyToClipLong address={activityRecord.transaction_hash} />
+              </Col>
+            </Row>
+          )}
+
+          {activityRecord.user_operation_hash && (
+            <Row>
+              <Col span={10}>user operation hash</Col>
+              <Col span={14}>
+                <CopyToClipLong address={activityRecord.user_operation_hash} />
+              </Col>
+            </Row>
+          )}
         </Space>
       </Modal>
     </>

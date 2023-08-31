@@ -2,47 +2,50 @@ import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Col, Row, Button } from 'antd';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-import { ActivityRecord } from '@/model/multisig';
+// import { ActivityRecord } from '@/model/multisig';
 import { ReloadOutlined } from '@ant-design/icons';
-import { GetMultisigHistoryList, GetNeedSignatureList } from '@/actions/MultisigWallet/multisigWallet';
+// import { GetMultisigHistoryList, GetNeedSignatureList } from '@/actions/MultisigWallet/multisigWallet';
+import { ActivityStore } from '@/store/activity';
 import { Activity, SignatureActivity } from './activity';
 
 import '@/assets/styles/accountStyle/style.scss';
+// import { AccountStore } from '@/store/account';
 
 const Comp = () => {
   const [activityType, setActivityType] = useState('all');
-  const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
-  const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
+  // const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
+  // const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
 
-  const loadData = async () => {
-    setMultisigRecordList([]);
-    setNeedMultisigRecordList([]);
+  // const loadData = async () => {
+  //   setMultisigRecordList([]);
+  //   setNeedMultisigRecordList([]);
 
-    const multisigRecordListRes = await GetMultisigHistoryList();
-    if (multisigRecordListRes.code === 200 && multisigRecordListRes.data) {
-      console.log('multisigRecordListRes.data', multisigRecordListRes.data);
-      setMultisigRecordList(
-        multisigRecordListRes.data.map((item) => {
-          return item;
-        })
-      );
-    }
+  //   const multisigRecordListRes = await GetMultisigHistoryList();
+  //   if (multisigRecordListRes.code === 200 && multisigRecordListRes.data) {
+  //     console.log('multisigRecordListRes.data', multisigRecordListRes.data);
+  //     setMultisigRecordList(
+  //       multisigRecordListRes.data.map((item) => {
+  //         return item;
+  //       })
+  //     );
+  //   }
 
-    const needMultisigRecordListRes = await GetNeedSignatureList();
-    if (needMultisigRecordListRes.code === 200 && needMultisigRecordListRes.data) {
-      console.log('needMultisigRecordListRes', needMultisigRecordListRes);
-      setNeedMultisigRecordList(
-        needMultisigRecordListRes.data.map((item) => {
-          return item;
-        })
-      );
-    }
-  };
+  //   const needMultisigRecordListRes = await GetNeedSignatureList();
+  //   if (needMultisigRecordListRes.code === 200 && needMultisigRecordListRes.data) {
+  //     console.log('needMultisigRecordListRes', needMultisigRecordListRes);
+  //     setNeedMultisigRecordList(
+  //       needMultisigRecordListRes.data.map((item) => {
+  //         return item;
+  //       })
+  //     );
+  //   }
+  // };
 
   useEffect(() => {
     // load
     console.log('load user operation');
-    loadData();
+    // loadData();
+    ActivityStore.loadActivityData();
   }, [activityType]);
 
   return (
@@ -70,16 +73,16 @@ const Comp = () => {
           <Col span={4}>
             <ReloadOutlined
               onClick={() => {
-                loadData();
+                ActivityStore.loadActivityData();
               }}
             />
           </Col>
         </Row>
         <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column' }}>
-          {activityType === 'all' && multisigRecordList.length === 0 && <span>No date</span>}
+          {activityType === 'all' && ActivityStore.allActivity.length === 0 && <span>No date</span>}
           {activityType === 'all' &&
-            multisigRecordList &&
-            multisigRecordList.map((row, index) => (
+            ActivityStore.allActivity &&
+            ActivityStore.allActivity.map((row, index) => (
               <Activity activityRecord={row} key={index} />
               // <Space
               //   key={index}
@@ -133,14 +136,14 @@ const Comp = () => {
         </div>
 
         <div style={{ marginTop: 10 }}>
-          {activityType === 'signature' && needMultisigRecordList.length === 0 && <span>No signature date</span>}
+          {activityType === 'signature' && ActivityStore.needActivity.length === 0 && <span>No signature date</span>}
           {activityType === 'signature' &&
-            needMultisigRecordList &&
-            needMultisigRecordList.map((row, index) => (
+            ActivityStore.needActivity &&
+            ActivityStore.needActivity.map((row, index) => (
               <SignatureActivity
                 key={index}
                 activityRecord={row}
-                loadData={loadData}
+                loadData={ActivityStore.loadActivityData}
                 setActivityType={setActivityType}
               />
               // <Space
