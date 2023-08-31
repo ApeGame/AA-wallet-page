@@ -8,7 +8,7 @@ import { AccountStore } from '@/store/account';
 import '@/assets/styles/accountStyle/style.scss';
 
 export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([AccountStore.currentAccount.address]);
+  const [abstractAddressList, setAbstractAddressList] = useState<string[]>([]);
   const [abstractAddress, setAbstractAddress] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -108,6 +108,7 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
             </Row>
             <Row justify="space-around" align="middle" style={{ height: 130, overflowY: 'auto' }}>
               <Col span={24}>
+                <div>default : {truncateWalletAddrTooLong(AccountStore.currentAccount.address)}</div>
                 {abstractAddressList.length !== 0 && <span>Abstract Wallet Address List:</span>}
                 <div style={{ minHeight: 90, overflowY: 'auto' }}>
                   {abstractAddressList.map((item: string, index) => {
