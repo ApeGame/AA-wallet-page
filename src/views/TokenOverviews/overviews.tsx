@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowRightOutlined, LeftOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, LeftOutlined, EllipsisOutlined, InfoCircleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Space, Divider } from 'antd';
+import { Space, Divider, Col, Row, Dropdown } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
@@ -12,6 +12,8 @@ import { Activity } from '@/components/Activity/activity';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import { formatWeiToEth } from '@/utils/formatterEth';
+import type { MenuProps } from 'antd';
+import { TokenDetails } from '@/components/TokensOverview/tokenDetails';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -25,12 +27,6 @@ const functionsListStyle: React.CSSProperties = {
 const iconButtonStyle: React.CSSProperties = {
   fontSize: '25px',
   color: '#FFFFFF',
-};
-
-const backStyle: React.CSSProperties = {
-  marginTop: 30,
-  marginRight: 330,
-  color: '#000000',
 };
 
 const addressStyle: React.CSSProperties = {
@@ -71,6 +67,11 @@ const Overview = () => {
     }
   };
 
+  const [checkFlag, setCheckFlag] = useState(false);
+  const handleCheckActivityClose = () => {
+    setCheckFlag(false);
+  };
+
   useEffect(() => {
     // load
     loadData();
@@ -81,15 +82,63 @@ const Overview = () => {
     console.log('!!!', search.get('tokenAddress'));
   }, [search]);
 
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <Space>
+          <InfoCircleFilled />
+          <span
+            onClick={() => {
+              setCheckFlag(true);
+            }}>
+            token details
+          </span>
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div>
-      <div
+      <TokenDetails
+        isOpen={checkFlag}
+        onClose={handleCheckActivityClose}
+        tokenAddress={search.get('tokenAddress') || ''}
+      />
+      <Row style={{ color: '#000000', marginTop: 35, paddingLeft: 30, paddingRight: 30 }}>
+        <Col span={12}>
+          <div
+            style={{ display: 'flex', flexDirection: 'row' }}
+            onClick={() => {
+              navigateTo('/overview');
+            }}>
+            <LeftOutlined />
+          </div>
+        </Col>
+        <Col span={12}>
+          <div style={{ display: 'flex', flexDirection: 'row-reverse', width: '40' }}>
+            <Dropdown menu={{ items }}>
+              <EllipsisOutlined />
+            </Dropdown>
+          </div>
+        </Col>
+      </Row>
+
+      {/* <div
         style={backStyle}
         onClick={() => {
           navigateTo('/overview');
         }}>
         <LeftOutlined />
       </div>
+      <div
+        style={{}}
+        onClick={() => {
+          navigateTo('/overview');
+        }}>
+        <LeftOutlined />
+      </div> */}
       <div style={{ marginTop: 30 }}>
         {/* {search.get('tokenAddress') && <div style={balanceStyle}>Token Address</div>}
         <div style={balanceStyle}>{search.get('tokenAddress')}</div> */}
