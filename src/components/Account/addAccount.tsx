@@ -73,6 +73,9 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                     if (e.target.value) {
                       setName(e.target.value.trim());
                     }
+                    if (e.target.value.length >= 15) {
+                      messageApi.warning('The length of the account name cannot exceed 15');
+                    }
                   }}
                 />
               </Col>
@@ -93,6 +96,8 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                     onClick={() => {
                       if (abstractAddress && abstractAddressList.indexOf(abstractAddress)) {
                         setAbstractAddressList((prevAddress) => [...prevAddress, abstractAddress]);
+                      } else {
+                        messageApi.warning('Please enter a new address');
                       }
                     }}>
                     Add

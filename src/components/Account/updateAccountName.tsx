@@ -55,6 +55,9 @@ const UpdateAccountNameDialog = ({
                       if (e.target.value) {
                         setName(e.target.value.trim());
                       }
+                      if (e.target.value.length >= 15) {
+                        messageApi.warning('The length of the account name cannot exceed 15');
+                      }
                     }
                   }}
                 />
