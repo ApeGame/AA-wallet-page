@@ -155,6 +155,7 @@ const Overview = () => {
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
 
         {current === 'tokens' && <TokensOverview />}
+        {current === 'nfts' && <TokensOverview />}
         {current === 'multisig' && <MultisigWallet />}
         {current === 'activity' && <Activity />}
       </div>

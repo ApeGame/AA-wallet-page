@@ -48,7 +48,7 @@ const SwitchPaymasterDialog = ({
         setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
       } else {
-        messageApi.error(sendRes.data.ErrorMessage);
+        messageApi.error(sendRes.data);
       }
     } else {
       const data =
@@ -64,7 +64,7 @@ const SwitchPaymasterDialog = ({
         setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
       } else {
-        messageApi.error(sendRes.data.ErrorMessage);
+        messageApi.error(sendRes.data);
       }
     }
     setIsLoading(false);
