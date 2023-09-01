@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Col, Row, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { ImportNft } from './importNft';
+import { useNavigate } from 'react-router-dom';
 
 import nftImage from '@/assets/img/nft/ApeChain.png';
 import nftHeroImage from '@/assets/img/nft/IconHeroDenver.png';
@@ -14,6 +15,8 @@ const listStyle: React.CSSProperties = {
 };
 
 const NftOverview = () => {
+  const navigateTo = useNavigate();
+
   const [isFold, setIsFold] = useState(false);
 
   const [importFlag, setImportFlag] = useState(false);
@@ -43,7 +46,20 @@ const NftOverview = () => {
         {!isFold && (
           <Row style={{ marginTop: 20 }}>
             <Col span={24} style={{ display: 'flex' }}>
-              <img style={{ height: 140, width: 140, marginLeft: 30, cursor: 'pointer' }} src={nftHeroImage} alt="" />
+              <div
+                style={{
+                  height: 150,
+                  width: 150,
+                  marginLeft: 30,
+                  cursor: 'pointer',
+                  backgroundColor: '#E6F0FA',
+                  borderRadius: '15px',
+                }}
+                onClick={() => {
+                  navigateTo('/nftDetail');
+                }}>
+                <img style={{ height: 140, width: 140 }} src={nftHeroImage} alt="" />
+              </div>
             </Col>
           </Row>
         )}
