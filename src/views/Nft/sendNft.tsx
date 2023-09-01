@@ -90,20 +90,10 @@ const View = () => {
       />
       <div style={{ color: '#000000', marginTop: 20 }}>
         <span style={{ fontSize: 18 }}>Send To</span>
-        {isInputAddress ? (
-          <Link to="/overview" style={{ marginLeft: '230px', fontSize: 18 }}>
-            Back
-          </Link>
-        ) : (
-          <Button
-            type="link"
-            style={{ marginLeft: '230px', fontSize: 18 }}
-            onClick={() => {
-              setIsInputAddress(true);
-            }}>
-            Back
-          </Button>
-        )}
+
+        <Link to="/nftDetail" style={{ marginLeft: '230px', fontSize: 18 }}>
+          Back
+        </Link>
       </div>
 
       {isInputAddress ? (
