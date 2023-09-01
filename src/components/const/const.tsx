@@ -37,7 +37,7 @@ export function getNativeTokenSymbol(chainId: BlockchainNetworkId) {
   return NativeTokens[chainId];
 }
 
-const userOperationScan = 'https://userscan-dev.metaapesgame.com';
+const userOperationScan = 'https://userscan-dev.coya.biz';
 
 export const getBlockChainExplorerAddress = (chainId: BlockchainNetworkId) => BlockChainExplorerAddress[chainId];
 

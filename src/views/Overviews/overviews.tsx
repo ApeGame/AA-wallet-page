@@ -9,6 +9,7 @@ import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { observer } from 'mobx-react';
 import TokensOverview from '@/components/TokensOverview';
 import MultisigWallet from '@/components/MultisigWallet';
+import NftOverview from '@/components/Nft';
 import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { getUserRecoverEmail } from '@/utils/localStorage';
@@ -155,7 +156,7 @@ const Overview = () => {
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
 
         {current === 'tokens' && <TokensOverview />}
-        {current === 'nfts' && <TokensOverview />}
+        {current === 'nfts' && <NftOverview />}
         {current === 'multisig' && <MultisigWallet />}
         {current === 'activity' && <Activity />}
       </div>
