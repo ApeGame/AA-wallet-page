@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCurrentNetwork } from '@/utils/localStorage';
 
 export interface PaymasterRequestContextData {
@@ -32,3 +33,9 @@ export const CreatePaymasterRequest = (): PaymasterRequest => {
     ctx: context,
   };
 };
+
+export interface NftAsset {
+  symbol: string;
+  name: string;
+  token_uri: Map<number, string>;
+}

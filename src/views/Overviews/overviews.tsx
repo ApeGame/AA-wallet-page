@@ -89,21 +89,21 @@ const Overview = () => {
     setTimeout(async () => {
       console.log('overview useInterval load');
       AccountStore.loadUserData();
-    }, 5 * 1000);
-  }, 15 * 1000);
+    }, 30 * 1000);
+  }, 30 * 1000);
 
   useInterval(async () => {
     setTimeout(async () => {
       if (!getUserRecoverEmail()) {
         messageApi.warning('please add your recover email, click your account to check it');
       }
-    }, 10 * 1000);
-  }, 20 * 1000);
+    }, 30 * 1000);
+  }, 30 * 1000);
 
   useEffect(() => {
-    console.log('overview load');
+    // console.log('overview load');
     AccountStore.loadUserData();
-  }, [current]);
+  }, []);
 
   return (
     <div>

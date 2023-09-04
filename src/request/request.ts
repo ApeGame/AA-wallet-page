@@ -77,7 +77,7 @@ export const UrlByNetwork = (): string => {
 export const request = async <T = any>(config: AxiosRequestConfig): Promise<ResponseType<T>> => {
   try {
     const { data } = await instance.request<ResponseType<T>>(config);
-    console.log('data', data);
+    // console.log('data', data);
     if (!data) {
       return {
         code: 200,

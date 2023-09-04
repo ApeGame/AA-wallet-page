@@ -1,8 +1,31 @@
-import { Modal, Col, Row, Space, Input, Button } from 'antd';
+import { useState } from 'react';
+import { Modal, Col, Row, Space, Input, Button, message } from 'antd';
+import { UpdateNfts } from '@/actions/Token/token';
+import { AccountStore } from '@/store/account';
 
 export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [tokenAddress, setTokenAddress] = useState('');
+  const [tokenID, setTokenID] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const updateNft = async () => {
+    setIsLoading(true);
+    const updateRes = await UpdateNfts(AccountStore.currentAccount.address, tokenAddress, parseInt(tokenID));
+    console.log('import nft', updateRes);
+    if (updateRes.code === 200) {
+      messageApi.success('import success');
+      AccountStore.loadUserData();
+      onClose();
+    } else {
+      messageApi.error('import fail');
+    }
+    setIsLoading(false);
+  };
+
   return (
     <>
+      {contextHolder}
       <Modal centered title="Import NFT" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
         <Space direction="vertical" size="middle" style={{ display: 'flex', marginTop: 30 }}>
           <Row>
@@ -12,7 +35,15 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           </Row>
           <Row>
             <Col span={24}>
-              <Input size="large" placeholder="0x..." />
+              <Input
+                size="large"
+                placeholder="0x..."
+                onChange={(e) => {
+                  if (e != null) {
+                    setTokenAddress(e.target.value.trim());
+                  }
+                }}
+              />
             </Col>
           </Row>
 
@@ -23,7 +54,15 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           </Row>
           <Row>
             <Col span={24}>
-              <Input size="large" placeholder="Please input token id" />
+              <Input
+                size="large"
+                placeholder="Please input token id"
+                onChange={(e) => {
+                  if (e != null) {
+                    setTokenID(e.target.value.trim());
+                  }
+                }}
+              />
             </Col>
           </Row>
 
@@ -32,7 +71,13 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
               <Button size="large">Cancel</Button>
             </Col>
             <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Button size="large" type="primary">
+              <Button
+                size="large"
+                type="primary"
+                loading={isLoading}
+                onClick={() => {
+                  updateNft();
+                }}>
                 Import
               </Button>
             </Col>

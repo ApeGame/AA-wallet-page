@@ -3,11 +3,39 @@ import { request, ResponseType, UrlByNetwork } from '@/request/request';
 import { ethers } from 'ethers';
 import { AccountStore } from '@/store/account';
 import { CreatePaymasterRequest } from '@/model/token';
+import axios from 'axios';
 
 export const GetAccountAsset = function (): Promise<ResponseType<any>> {
   return request<any>({
     url: `/aa${UrlByNetwork()}/v1/token/wallet/assets`,
     method: 'get',
+  });
+};
+
+export const GetAccountNftAsset = function (): Promise<ResponseType<any>> {
+  return request<any>({
+    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets_721`,
+    method: 'get',
+  });
+};
+
+export const UpdateNfts = function (
+  walletAddress: string,
+  tokenAddress: string,
+  tokenId: number
+): Promise<ResponseType<any>> {
+  const erc721map = new Map();
+  erc721map.set(tokenAddress, [tokenId]);
+
+  console.log('erc721map!!!', erc721map);
+
+  return request<any>({
+    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets_721`,
+    method: 'post',
+    data: {
+      owner: walletAddress,
+      erc_721: Object.fromEntries(erc721map.entries()),
+    },
   });
 };
 
@@ -74,4 +102,21 @@ export const SendApproveRequest = function (toAddress: string, data: string): Pr
       paymaster: CreatePaymasterRequest(),
     },
   });
+};
+
+export const GetNftAttribute = async (uri: string) => {
+  let data;
+  await axios({
+    method: 'get',
+    url: uri,
+    params: {},
+  }).then(
+    (res) => {
+      data = JSON.stringify(res.data);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  return data;
 };

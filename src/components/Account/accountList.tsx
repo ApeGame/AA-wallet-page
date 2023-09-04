@@ -42,6 +42,7 @@ const AccountListDialog = () => {
             isMultisig: item.isMultisig,
             isUpdate: false,
             name: item.name,
+            erc721AccountMap: item.erc721AccountMap,
           });
         }
       });

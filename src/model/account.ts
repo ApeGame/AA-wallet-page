@@ -1,3 +1,5 @@
+import { NftAsset } from './token';
+
 export interface erc20Info {
   symbol: string;
   name: string;
@@ -7,6 +9,7 @@ export interface erc20Info {
 export interface AccountInfo {
   address: string;
   erc20AccountMap: Map<string, erc20Info>;
+  erc721AccountMap: Map<string, NftAsset>;
   nativeBalance: string;
   isMultisig: boolean;
   isUpdate: boolean;

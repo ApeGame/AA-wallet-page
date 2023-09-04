@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { Col, Row, Button, Space, Divider } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
@@ -7,21 +6,24 @@ import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { NftSkill } from '@/components/Nft/nftAttributeSkill';
-
-import nftHeroImage from '@/assets/img/nft/IconHeroDenver.png';
-import skill1 from '@/assets/img/nft/skill1.png';
-import skill2 from '@/assets/img/nft/skill2.png';
-import skill3 from '@/assets/img/nft/skill3.png';
-import skill4 from '@/assets/img/nft/skill4.png';
-import skill5 from '@/assets/img/nft/skill5.png';
+import { useSearchParams } from 'react-router-dom';
+import { NftImage } from '@/components/Nft/nftImage';
+import { NftAttribute } from '@/components/Nft/nftAttribute';
 
 const NftDetail = () => {
   const navigateTo = useNavigate();
+  const [search] = useSearchParams();
 
   const [skillOpenFlag, setSkillOpenFlag] = useState(false);
   const handleSkillClose = () => {
     setSkillOpenFlag(false);
   };
+
+  useEffect(() => {
+    // load
+    // loadData();
+    AccountStore.loadUserData();
+  }, []);
 
   return (
     <>
@@ -42,7 +44,10 @@ const NftDetail = () => {
             <span>/</span>
             <span style={{ fontSize: 15, fontWeight: 'bold' }}>{AccountStore.getCurrentNetworkWithStorage().name}</span>
             <span>,</span>
-            <span style={{ fontSize: 15, fontWeight: 'bold' }}>MetaApes</span>
+            <span style={{ fontSize: 15, fontWeight: 'bold' }}>
+              {AccountStore.currentAccount.erc721AccountMap &&
+                AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].name}
+            </span>
           </Space>
         </div>
 
@@ -58,21 +63,53 @@ const NftDetail = () => {
               height: 360,
               width: 360,
             }}>
-            <img style={{ height: 280, width: 280 }} src={nftHeroImage} alt="" />
+            {AccountStore.currentAccount.erc721AccountMap && (
+              <NftImage
+                tokenUri={
+                  AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].token_uri[
+                    search.get('tokenId') || ''
+                  ]
+                }
+                size={280}
+              />
+            )}
+            {/* <img style={{ height: 280, width: 280 }} src={nftHeroImage} alt="" /> */}
           </div>
         </div>
 
         <div style={{ display: 'flex', marginLeft: 30, marginTop: 30 }}>
-          <span style={{ fontSize: 15, fontWeight: 'bold' }}>
-            {AccountStore.getCurrentNetworkWithStorage().name + ' , ' + 'MetaApes 170799'}
-          </span>
+          {AccountStore.currentAccount.erc721AccountMap && (
+            <span style={{ fontSize: 15, fontWeight: 'bold' }}>
+              {AccountStore.getCurrentNetworkWithStorage().name +
+                ' , ' +
+                AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].name +
+                ' ' +
+                search.get('tokenId')}
+            </span>
+          )}
         </div>
 
         <div style={{ display: 'flex', marginLeft: 30, marginTop: 30, color: '#808080' }}>
-          <span style={{ fontSize: 15, fontWeight: 'bold' }}>#170799</span>
+          <span style={{ fontSize: 15, fontWeight: 'bold' }}>#{search.get('tokenId')}</span>
         </div>
 
         <div style={{ display: 'flex', marginLeft: 30, marginTop: 30 }}>
+          <span style={{ fontSize: 15, fontWeight: 'bold' }}>Attribute</span>
+        </div>
+
+        <div style={{ padding: 30 }}>
+          {AccountStore.currentAccount.erc721AccountMap && (
+            <NftAttribute
+              tokenUri={
+                AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].token_uri[
+                  search.get('tokenId') || ''
+                ]
+              }
+            />
+          )}
+        </div>
+
+        {/* <div style={{ display: 'flex', marginLeft: 30, marginTop: 30 }}>
           <span style={{ fontSize: 15, fontWeight: 'bold' }}>Describe</span>
         </div>
 
@@ -82,9 +119,9 @@ const NftDetail = () => {
               'Meta Apes is a free-to-play and win-to-earn MMO strategy game designed for mobile. It is set in a post-apocalyptic world, in which humanity has ended and a new era ruled by Apes has begun. Next on the agenda is space domination. Each player will have to work closely with his or her Gang to become the strongest Clan and win the ultimate race to space. '
             }
           </span>
-        </div>
+        </div> */}
 
-        <div style={{ padding: 30 }}>
+        {/* <div style={{ padding: 30 }}>
           <span style={{ fontSize: 15, fontWeight: 'bold', display: 'flex' }}>NFT attribute</span>
           <Space direction="vertical" size="small" style={{ display: 'flex', marginTop: 10 }}>
             <Row>
@@ -128,9 +165,9 @@ const NftDetail = () => {
               </Col>
             </Row>
           </Space>
-        </div>
+        </div> */}
 
-        <div style={{ paddingLeft: 30, paddingRight: 30 }}>
+        {/* <div style={{ paddingLeft: 30, paddingRight: 30 }}>
           <span style={{ fontSize: 15, fontWeight: 'bold', display: 'flex' }}>NFT properties skills</span>
           <Space direction="vertical" size="middle" style={{ display: 'flex', marginTop: 15 }}>
             <Row style={{ cursor: 'pointer' }} onClick={() => setSkillOpenFlag(true)}>
@@ -189,7 +226,7 @@ const NftDetail = () => {
               </Col>
             </Row>
           </Space>
-        </div>
+        </div> */}
 
         <Divider />
 

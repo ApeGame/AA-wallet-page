@@ -2,11 +2,12 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { AccountInfo } from '@/model/account';
 import { NetworkInfo } from '@/model/network';
 import { getCurrentNetwork, setCurrentNetworkName } from '@/utils/localStorage';
-import { GetAccountAsset } from '@/actions/Token/token';
+import { GetAccountAsset, GetAccountNftAsset } from '@/actions/Token/token';
 import { getCurrentAddress } from '@/utils/localStorage';
 import { GetUser } from '@/actions/User/user';
 import { setUserRecoverEmail } from '@/utils/localStorage';
 import { ActivityStore } from './activity';
+import { NftAsset } from '@/model/token';
 
 class Account {
   accountList: AccountInfo[] = [];
@@ -30,18 +31,35 @@ class Account {
   }
 
   async loadUserData() {
-    console.log('loadUserData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    // console.log('loadUserData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
     // this.accountList = [];
     this.state = 'pending';
 
     try {
+      const nftAssetRes = await GetAccountNftAsset();
       const assetRes = await GetAccountAsset();
       const userRes = await GetUser();
 
-      runInAction(() => {
+      runInAction(async () => {
         this.accountList.length = 0;
-        if (assetRes.code === 200) {
+
+        const nftMap = new Map<string, Map<string, NftAsset>>();
+
+        if (nftAssetRes.code === 200) {
+          nftMap.set(nftAssetRes.data.abstract_account.Address, nftAssetRes.data.abstract_account.Erc721S);
+
+          Object.keys(nftAssetRes.data.multiple_abstract_account).map((key) => {
+            nftMap.set(
+              nftAssetRes.data.multiple_abstract_account[key].Address,
+              nftAssetRes.data.multiple_abstract_account[key].Erc721S
+            );
+          });
+        }
+
+        console.log('nftMap!!!', nftMap);
+
+        if (assetRes.code === 200 && nftAssetRes.code === 200) {
           this.pushAccount({
             address: assetRes.data.abstract_account.Address,
             erc20AccountMap: assetRes.data.abstract_account.Erc20,
@@ -49,6 +67,7 @@ class Account {
             isMultisig: false,
             isUpdate: false,
             name: assetRes.data.abstract_account.Name,
+            erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
           });
         }
         if (assetRes.data.multiple_abstract_account) {
@@ -60,6 +79,7 @@ class Account {
               isMultisig: true,
               isUpdate: false,
               name: item.Name,
+              erc721AccountMap: nftMap.get(item.Address) || new Map<string, NftAsset>(),
             });
           });
         }
@@ -76,6 +96,7 @@ class Account {
               isMultisig: false,
               isUpdate: false,
               name: assetRes.data.abstract_account.Name,
+              erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
             });
           }
         } else {
@@ -86,6 +107,7 @@ class Account {
             isMultisig: false,
             isUpdate: false,
             name: assetRes.data.abstract_account.Name,
+            erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
           });
         }
 
