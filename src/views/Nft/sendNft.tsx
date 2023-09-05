@@ -1,7 +1,6 @@
-import { Input, Button, Col, Row, Space, message } from 'antd';
+import { Input, Button, Col, Row, Space } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 // import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
 // import { ethers } from 'ethers';
@@ -29,11 +28,12 @@ const addressStyle: React.CSSProperties = {
 };
 
 const View = () => {
+  const navigateTo = useNavigate();
+
   const [toAddress, setToAddress] = useState('');
-  const [toAmount, setToAmount] = useState('');
   const [search] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
+  // const [messageApi, contextHolder] = message.useMessage();
   // const [paymasterAddress, setPaymasterAddress] = useState('');
   // const [erc20Address, setErc20Address] = useState('');
 
@@ -41,6 +41,7 @@ const View = () => {
   // const handleSendApproveFlagClose = () => {
   //   setSendApproveFlag(false);
   // };
+
   const [isInputAddress, setIsInputAddress] = useState(true);
 
   const [switchPaymentFlag, setSwitchPaymentFlag] = useState(false);
@@ -51,7 +52,7 @@ const View = () => {
   // const navigateTo = useNavigate();
 
   useEffect(() => {
-    console.log('~', search.get('tokenAddress'));
+    console.log('~', search.get('tokenAddress'), search.get('tokenId'));
   }, [search]);
 
   const selectAccount = (address: string) => {
@@ -61,13 +62,8 @@ const View = () => {
 
   const payment = () => {
     setIsLoading(true);
-    setToAmount('10');
-    if (toAmount) {
-      // setSwitchPaymentFlag(true);
-      console.log('payment');
-    } else {
-      messageApi.warning('Please input amount');
-    }
+
+    setSwitchPaymentFlag(true);
 
     setIsLoading(false);
   };
@@ -80,20 +76,26 @@ const View = () => {
 
   return (
     <div>
-      {contextHolder}
       <SwitchPaymasterDialog
         isOpen={switchPaymentFlag}
         onClose={handleSwitchPaymentFlagClose}
-        toAmount={toAmount}
+        toAmount={'0'}
         toAddress={toAddress}
-        erc20Address={search.get('tokenAddress') || ''}
+        erc20Address={''}
+        erc721Address={search.get('tokenAddress') || ''}
+        tokenId={parseInt(search.get('tokenId') || '')}
       />
       <div style={{ color: '#000000', marginTop: 20 }}>
         <span style={{ fontSize: 18 }}>Send To</span>
 
-        <Link to="/nftDetail" style={{ marginLeft: '230px', fontSize: 18 }}>
+        <Button
+          type="link"
+          style={{ marginLeft: '230px', fontSize: 18 }}
+          onClick={() => {
+            navigateTo(-1);
+          }}>
           Back
-        </Link>
+        </Button>
       </div>
 
       {isInputAddress ? (
@@ -219,10 +221,13 @@ const View = () => {
             </Col>
             <Col span={18}>
               <Row>
-                <Col span={24}>{'MetaApes'}</Col>
+                <Col span={24}>
+                  {AccountStore.currentAccount.erc721AccountMap &&
+                    AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].name}
+                </Col>
               </Row>
               <Row>
-                <Col span={24}>{'Token ID : 170799'}</Col>
+                <Col span={24}>{`Token ID : ${search.get('tokenId')}`}</Col>
               </Row>
             </Col>
           </Row>

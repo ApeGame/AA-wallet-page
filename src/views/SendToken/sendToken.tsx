@@ -86,6 +86,8 @@ const View = () => {
         toAmount={toAmount}
         toAddress={toAddress}
         erc20Address={search.get('tokenAddress') || ''}
+        erc721Address={''}
+        tokenId={0}
       />
       <div style={{ color: '#000000', marginTop: 20 }}>
         <span style={{ fontSize: 18 }}>Send To</span>

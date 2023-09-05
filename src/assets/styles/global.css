@@ -1,0 +1,13 @@
+.content {
+  margin-top: 150px;
+  max-width: 420px;
+  border: solid #eee thin;
+}
+
+@media screen and (max-width: 400px) {
+  .content {
+    margin-top: 10px;
+    max-width: 420px;
+    border: solid red thin;
+  }
+}

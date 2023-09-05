@@ -14,7 +14,7 @@ export const GetAccountAsset = function (): Promise<ResponseType<any>> {
 
 export const GetAccountNftAsset = function (): Promise<ResponseType<any>> {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets_721`,
+    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets_721?refresh=true`,
     method: 'get',
   });
 };
@@ -39,10 +39,39 @@ export const UpdateNfts = function (
   });
 };
 
+export const DeleteNfts = function (
+  walletAddress: string,
+  tokenAddress: string,
+  tokenId: number
+): Promise<ResponseType<any>> {
+  const erc721map = new Map();
+  erc721map.set(tokenAddress, [tokenId]);
+  console.log('erc721map!!!', erc721map);
+
+  return request<any>({
+    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets_721`,
+    method: 'delete',
+    data: {
+      owner: walletAddress,
+      erc_721: Object.fromEntries(erc721map.entries()),
+    },
+  });
+};
+
 export const UpdateToken = function (tokenAddress: string): Promise<ResponseType<any>> {
   return request<any>({
     url: `/aa${UrlByNetwork()}/v1/token/wallet/assets`,
     method: 'post',
+    data: {
+      erc_20: [tokenAddress],
+    },
+  });
+};
+
+export const DeleteToken = function (tokenAddress: string): Promise<ResponseType<any>> {
+  return request<any>({
+    url: `/aa${UrlByNetwork()}/v1/token/wallet/assets`,
+    method: 'delete',
     data: {
       erc_20: [tokenAddress],
     },

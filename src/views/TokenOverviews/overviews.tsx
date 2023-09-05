@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowRightOutlined, LeftOutlined, EllipsisOutlined, InfoCircleFilled } from '@ant-design/icons';
+import { ArrowRightOutlined, LeftOutlined, EllipsisOutlined, InfoCircleFilled, LineOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Space, Divider, Col, Row, Dropdown } from 'antd';
+import { Space, Divider, Col, Row, Dropdown, message } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 // import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
@@ -14,6 +14,7 @@ import { AccountStore } from '@/store/account';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import type { MenuProps } from 'antd';
 import { TokenDetails } from '@/components/TokensOverview/tokenDetails';
+import { DeleteToken } from '@/actions/Token/token';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -53,6 +54,8 @@ const Overview = () => {
   const [search] = useSearchParams();
 
   const [recordList, setRecordList] = useState<ActivityRecord[]>([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   const loadData = async () => {
     setRecordList([]);
@@ -95,10 +98,29 @@ const Overview = () => {
         </Space>
       ),
     },
+    {
+      key: '2',
+      label: (
+        <Space
+          onClick={async () => {
+            const res = await DeleteToken(search.get('tokenAddress') || '');
+            if (res.code === 200) {
+              setTimeout(() => navigateTo('/overview'), 700);
+              messageApi.success('Complete');
+            } else {
+              messageApi.error(res.data);
+            }
+          }}>
+          <LineOutlined />
+          <span>Hide</span>
+        </Space>
+      ),
+    },
   ];
 
   return (
     <div>
+      {contextHolder}
       <TokenDetails
         isOpen={checkFlag}
         onClose={handleCheckActivityClose}

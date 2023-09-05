@@ -5,6 +5,8 @@ import { Outlet } from 'react-router-dom';
 import ContentHeader from '@/components/Header/header';
 import { FacebookProvider } from 'react-facebook';
 
+import '@/assets/styles/global.css';
+
 const headerStyle: React.CSSProperties = {
   height: 65,
   backgroundColor: '#FFFFFF',
@@ -19,9 +21,14 @@ const contentStyle: React.CSSProperties = {
   overflowY: 'auto',
 };
 
-const LayoutStyle: React.CSSProperties = {
-  marginTop: '150px',
-  maxWidth: '420px',
+const pageStyle: React.CSSProperties = {
+  marginTop: 150,
+  maxWidth: 420,
+  border: 'solid #eee thin',
+};
+
+const pageMobileStyle: React.CSSProperties = {
+  maxWidth: 420,
   border: 'solid #eee thin',
 };
 
@@ -30,7 +37,7 @@ const View: React.FC = () => {
 
   return (
     <FacebookProvider appId={import.meta.env.VITE_FACEBOOK_ID}>
-      <Layout style={LayoutStyle}>
+      <Layout style={window.screen.width >= 500 ? pageStyle : pageMobileStyle}>
         <Header style={headerStyle}>
           <ContentHeader />
         </Header>
