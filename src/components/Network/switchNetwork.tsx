@@ -31,7 +31,7 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                       )}
                       style={{ height: 60, fontSize: 15, padding: 10 }}
                       onClick={() => {
-                        AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
+                        // AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
                         console.log('row.name', row.name);
                         setCurrentNetworkName(row.name);
                         AccountStore.loadUserData();

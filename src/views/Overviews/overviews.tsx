@@ -14,6 +14,7 @@ import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { getUserRecoverEmail } from '@/utils/localStorage';
 import { useInterval } from '@/hooks/useInterval';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -124,7 +125,7 @@ const Overview = () => {
           </div>
           {AccountStore.currentAccount.nativeBalance && (
             <div style={balanceStyle}>
-              {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + AccountStore.getCurrentNetworkSymbol()}
+              {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + getCurrentNetworkWithStorage().symbol}
             </div>
           )}
         </>

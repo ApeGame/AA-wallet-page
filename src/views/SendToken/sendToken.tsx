@@ -13,6 +13,7 @@ import { formatWeiToEthComplete } from '@/utils/formatterEth';
 // import SendApproveDialog from '@/components/TokensOverview/sendApprove';
 // import { useNavigate } from 'react-router-dom';
 import SwitchPaymasterDialog from '@/components/TokensOverview/switchPaymaster';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 // import { GetAccountAsset } from '@/actions/Token/token';
 // import { getCurrentAddress } from '@/utils/localStorage';
 // import { GetUser } from '@/actions/User/user';
@@ -175,7 +176,7 @@ const View = () => {
                           {/* <Col span={8}>
                             <span style={{ textAlign: 'right' }}>
                               {formatWeiToEth(row.nativeBalance)}{' '}
-                              {' ' + AccountStore.getCurrentNetworkWithStorage().symbol}
+                              {' ' + getCurrentNetworkWithStorage().symbol}
                             </span>
                           </Col> */}
                         </Row>
@@ -234,7 +235,7 @@ const View = () => {
                   <Col span={24} style={{ textAlign: 'left' }}>
                     {search.get('tokenAddress')
                       ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].name
-                      : AccountStore.getCurrentNetworkSymbol()}
+                      : getCurrentNetworkWithStorage().symbol}
                   </Col>
                   <Col span={24} style={{ textAlign: 'left' }}>
                     Balance:
@@ -247,7 +248,7 @@ const View = () => {
                           AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol
                       : formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance) +
                         ' ' +
-                        AccountStore.getCurrentNetworkSymbol()}
+                        getCurrentNetworkWithStorage().symbol}
                   </Col>
                 </Space>
               </Row>

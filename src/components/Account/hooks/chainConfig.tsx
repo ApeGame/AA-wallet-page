@@ -4,6 +4,7 @@ import apeIcon from '@/assets/img/ankr.svg';
 import baseIcon from '@/assets/img/base.svg';
 import lineaIcon from '@/assets/img/linea.svg';
 import { NetworkConfig } from '@/model/network';
+import { getCurrentNetwork, setCurrentNetworkName } from '@/utils/localStorage';
 
 export type ChainType =
   | BlockchainNetworkId.ankrTest
@@ -87,4 +88,22 @@ export const getNetworkByName = (name: string): NetworkConfig => {
     return {} as NetworkConfig;
   }
   return {} as NetworkConfig;
+};
+
+export const setDefaultNetwork = () => {
+  setCurrentNetworkName(getNetworkList()[0].name);
+};
+
+export const getCurrentNetworkWithStorage = (): NetworkConfig => {
+  if (getCurrentNetwork()) {
+    if (getNetworkByName(getCurrentNetwork()).name) {
+      return getNetworkByName(getCurrentNetwork());
+    } else {
+      setCurrentNetworkName(getNetworkList()[0].name);
+      return getNetworkByName(getCurrentNetwork());
+    }
+  } else {
+    setCurrentNetworkName(getNetworkList()[0].name);
+    return getNetworkByName(getCurrentNetwork());
+  }
 };

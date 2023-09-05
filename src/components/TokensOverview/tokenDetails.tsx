@@ -1,5 +1,5 @@
 import { Modal, Col, Row, Space } from 'antd';
-import { AccountStore } from '@/store/account';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -33,7 +33,7 @@ export const TokenDetails = ({
           <Row>
             <Col span={10}>Network</Col>
             <Col span={14}>
-              <span>{AccountStore.getCurrentNetworkWithStorage().name}</span>
+              <span>{getCurrentNetworkWithStorage().name}</span>
             </Col>
           </Row>
         </Space>

@@ -5,6 +5,7 @@ import { Col, Row } from 'antd';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import { AccountStore } from '@/store/account';
 import { Link } from 'react-router-dom';
+import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -56,13 +57,10 @@ const Comp = () => {
                         borderRadius: '50%',
                         background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
                       }}>
-                      <span>
-                        {AccountStore.getCurrentNetworkWithStorage().symbol &&
-                          AccountStore.getCurrentNetworkWithStorage().symbol[0]}
-                      </span>
+                      <span>{getCurrentNetworkWithStorage().symbol && getCurrentNetworkWithStorage().symbol[0]}</span>
                     </div>
 
-                    <span style={{ marginLeft: 15 }}>{AccountStore.getCurrentNetworkWithStorage().symbol}</span>
+                    <span style={{ marginLeft: 15 }}>{getCurrentNetworkWithStorage().symbol}</span>
                   </span>
                 </Col>
                 <Col
@@ -76,7 +74,7 @@ const Comp = () => {
                   <span>
                     {formatWeiToEth(AccountStore.currentAccount.nativeBalance) +
                       ' ' +
-                      AccountStore.getCurrentNetworkWithStorage().symbol}
+                      getCurrentNetworkWithStorage().symbol}
                   </span>
                 </Col>
               </Row>

@@ -166,7 +166,7 @@ const View = () => {
                           {/* <Col span={8}>
                             <span style={{ textAlign: 'right' }}>
                               {formatWeiToEth(row.nativeBalance)}{' '}
-                              {' ' + AccountStore.getCurrentNetworkWithStorage().symbol}
+                              {' ' + getCurrentNetworkWithStorage().symbol}
                             </span>
                           </Col> */}
                         </Row>

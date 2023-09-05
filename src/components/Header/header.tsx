@@ -11,6 +11,7 @@ import { removeUserInfo } from '@/utils/localStorage';
 // import { getCurrentNetwork } from '@/utils/localStorage';
 // import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
 import { AccountStore } from '@/store/account';
+import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
 
 const headerStyle: React.CSSProperties = {
   color: '#000000',
@@ -69,9 +70,7 @@ const ContentHeader = () => {
               borderRadius: '15px',
             }}>
             <div style={{ padding: 5 }}>
-              <span style={{ fontWeight: 'bold', color: '#000000' }}>
-                {AccountStore.getCurrentNetworkWithStorage().name[0]}
-              </span>
+              <span style={{ fontWeight: 'bold', color: '#000000' }}>{getCurrentNetworkWithStorage().name[0]}</span>
               &nbsp; <DownOutlined />
             </div>
           </div>

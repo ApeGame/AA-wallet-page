@@ -63,11 +63,20 @@ instance.interceptors.response.use(
 );
 
 export const UrlByNetwork = (): string => {
-  if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.ankrTest) {
+  if (
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.ankrTest ||
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.basMainnet
+  ) {
     return '';
-  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet) {
+  } else if (
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet ||
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseMainnet
+  ) {
     return '/base';
-  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet) {
+  } else if (
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet ||
+    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaMainnet
+  ) {
     return '/linea';
   } else {
     return '';

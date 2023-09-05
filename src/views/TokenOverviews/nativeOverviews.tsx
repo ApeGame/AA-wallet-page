@@ -10,6 +10,7 @@ import { AccountStore } from '@/store/account';
 import { Activity } from '@/components/Activity/activity';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { formatWeiToEth } from '@/utils/formatterEth';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -109,7 +110,7 @@ const Overview = () => {
               {AccountStore.currentAccount.nativeBalance && (
                 <div style={balanceStyle}>
                   {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
-                  {' ' + AccountStore.getCurrentNetworkSymbol()}
+                  {' ' + getCurrentNetworkWithStorage().symbol}
                 </div>
               )}
             </>

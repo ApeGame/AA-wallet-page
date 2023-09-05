@@ -11,6 +11,7 @@ import { NftImage } from '@/components/Nft/nftImage';
 import { NftAttribute } from '@/components/Nft/nftAttribute';
 import type { MenuProps } from 'antd';
 import { DeleteNfts } from '@/actions/Token/token';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 
 const NftDetail = () => {
   const navigateTo = useNavigate();
@@ -71,9 +72,7 @@ const NftDetail = () => {
                 {AccountStore.currentAccount.isMultisig ? AccountStore.currentAccount.name : 'Account'}
               </span>
               <span>/</span>
-              <span style={{ fontSize: 15, fontWeight: 'bold' }}>
-                {AccountStore.getCurrentNetworkWithStorage().name}
-              </span>
+              <span style={{ fontSize: 15, fontWeight: 'bold' }}>{getCurrentNetworkWithStorage().name}</span>
               <span>,</span>
               <span style={{ fontSize: 15, fontWeight: 'bold' }}>
                 {AccountStore.currentAccount.erc721AccountMap &&
@@ -118,7 +117,7 @@ const NftDetail = () => {
           <div style={{ display: 'flex', marginLeft: 30, marginTop: 30 }}>
             {AccountStore.currentAccount.erc721AccountMap && (
               <span style={{ fontSize: 15, fontWeight: 'bold' }}>
-                {AccountStore.getCurrentNetworkWithStorage().name +
+                {getCurrentNetworkWithStorage().name +
                   ' , ' +
                   AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].name +
                   ' ' +

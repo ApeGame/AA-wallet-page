@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
 import UpdateAccountNameDialog from './updateAccountName';
 import { getUserRecoverEmail, setCurrentAddress } from '@/utils/localStorage';
+import { getCurrentNetworkWithStorage } from './hooks/chainConfig';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -148,7 +149,7 @@ const AccountListDialog = () => {
                     </Col>
                     <Col span={9}>
                       <span style={{ textAlign: 'right' }}>
-                        {formatWeiToEth(row.nativeBalance)} {AccountStore.getCurrentNetworkSymbol()}
+                        {formatWeiToEth(row.nativeBalance)} {getCurrentNetworkWithStorage().symbol}
                       </span>
                     </Col>
                   </Row>
