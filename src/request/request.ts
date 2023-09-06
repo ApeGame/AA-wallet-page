@@ -63,24 +63,38 @@ instance.interceptors.response.use(
 );
 
 export const UrlByNetwork = (): string => {
-  if (
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.ankrTest ||
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.basMainnet
-  ) {
-    return '';
-  } else if (
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet ||
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseMainnet
-  ) {
-    return '/base';
-  } else if (
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet ||
-    getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaMainnet
-  ) {
-    return '/linea';
+  if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.ankrTest) {
+    return `/${BlockchainNetworkId.ankrTest}`;
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.basMainnet) {
+    return `/${BlockchainNetworkId.basMainnet}`;
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet) {
+    return `/${BlockchainNetworkId.baseTestnet}`;
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseMainnet) {
+    return `/${BlockchainNetworkId.baseMainnet}`;
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet) {
+    return `/${BlockchainNetworkId.lineaTestnet}`;
+  } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaMainnet) {
+    return `/${BlockchainNetworkId.lineaMainnet}`;
   } else {
-    return '';
+    return `/${BlockchainNetworkId.ankrTest}`;
   }
+
+  //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.basMainnet
+  // ) {
+  //   return '/coq';
+  // } else if (
+  //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseTestnet ||
+  //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.baseMainnet
+  // ) {
+  //   return '/base';
+  // } else if (
+  //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaTestnet ||
+  //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaMainnet
+  // ) {
+  //   return '/linea';
+  // } else {
+  //   return '';
+  // }
 };
 
 export const request = async <T = any>(config: AxiosRequestConfig): Promise<ResponseType<T>> => {

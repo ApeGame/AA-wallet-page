@@ -67,12 +67,12 @@ const routes = [
       {
         path: '/sendNFT',
         element: withLoadingComponent(<SendNft />),
-      },
-      {
-        path: '/sendOperation',
-        element: withLoadingComponent(<SendOperation />),
-      },
+      }, 
     ],
+  },
+  {
+    path: '/sendOperation',
+    element: withLoadingComponent(<SendOperation />),
   },
   {
     path: '*',
