@@ -62,21 +62,41 @@ export const BindRecoverEmail = function (email: string, code: string): Promise<
   });
 };
 
-export const RequestGoogleLogin = function (credential: string): Promise<ResponseType<any>> {
+export const RequestGoogleLogin = function (
+  credential: string,
+  serverId: string,
+  playerId: string
+): Promise<ResponseType<any>> {
+  let url = '';
+  if (serverId.length !== 0 && playerId.length !== 0) {
+    url = `/aa${UrlByNetwork()}/v1/google/login?type=game&serverid=${serverId}&playerid=${playerId}`;
+  } else {
+    url = `/aa${UrlByNetwork()}/v1/google/login`;
+  }
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/google/login`,
+    url: url,
     method: 'post',
     data: data,
   });
 };
 
-export const RequestFBLogin = function (credential: string): Promise<ResponseType<any>> {
+export const RequestFBLogin = function (
+  credential: string,
+  serverId: string,
+  playerId: string
+): Promise<ResponseType<any>> {
+  let url = '';
+  if (serverId.length !== 0 && playerId.length !== 0) {
+    url = `/aa${UrlByNetwork()}/v1/facebook/login?type=game&serverid=${serverId}&playerid=${playerId}`;
+  } else {
+    url = `/aa${UrlByNetwork()}/v1/facebook/login`;
+  }
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/facebook/login`,
+    url: url,
     method: 'post',
     data: data,
   });
