@@ -69,7 +69,7 @@ export const RequestGoogleLogin = function (
 ): Promise<ResponseType<any>> {
   let url = '';
   if (serverId.length !== 0 && playerId.length !== 0) {
-    url = `/aa${UrlByNetwork()}/v1/google/login?type=game&serverid=${serverId}&playerid=${playerId}`;
+    url = `/aa${UrlByNetwork()}/v1/google/login?type=game&server_id=${serverId}&player_id=${playerId}`;
   } else {
     url = `/aa${UrlByNetwork()}/v1/google/login`;
   }
@@ -89,7 +89,7 @@ export const RequestFBLogin = function (
 ): Promise<ResponseType<any>> {
   let url = '';
   if (serverId.length !== 0 && playerId.length !== 0) {
-    url = `/aa${UrlByNetwork()}/v1/facebook/login?type=game&serverid=${serverId}&playerid=${playerId}`;
+    url = `/aa${UrlByNetwork()}/v1/facebook/login?type=game&server_id=${serverId}&player_id=${playerId}`;
   } else {
     url = `/aa${UrlByNetwork()}/v1/facebook/login`;
   }

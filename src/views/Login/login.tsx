@@ -27,6 +27,7 @@ const Login = () => {
   const [search] = useSearchParams();
 
   const success = async (response: any) => {
+    console.log('login!', search.get('serverid') || '', search.get('playerid') || '');
     console.log('response', response);
     const res = await RequestGoogleLogin(
       response.credential,
@@ -48,6 +49,7 @@ const Login = () => {
   };
 
   const handleClick = async () => {
+    console.log('login!', search.get('serverid') || '', search.get('playerid') || '');
     const api = await init();
     const response = await api?.login({ scope: 'email' });
     console.log('FB', (response as any).authResponse.accessToken);
