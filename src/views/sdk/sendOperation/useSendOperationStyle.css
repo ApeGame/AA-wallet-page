@@ -1,0 +1,14 @@
+.sdkRoot{
+  padding: 68px 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: normal;
+  width: 100%;
+}
+
+
+@media only screen and (max-width: 576px) {
+  .sdkRoot{
+    padding-top: 36px;
+  }
+}

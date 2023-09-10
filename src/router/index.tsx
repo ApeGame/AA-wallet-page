@@ -2,6 +2,7 @@
 import React, { lazy } from 'react';
 import Home from '@/views/Home';
 import { Navigate } from 'react-router-dom';
+import SDK from '@/views/sdk/sdk';
 
 const Login = lazy(() => import('@/views/Login/login'));
 const Overview = lazy(() => import('@/views/Overviews/overviews'));
@@ -13,7 +14,8 @@ const MultisigWallet = lazy(() => import('@/views/MultisigWallet/multisigWallet'
 const RecoverBind = lazy(() => import('@/views/Login/bind'));
 const NftDetail = lazy(() => import('@/views/Nft/nftDetail'));
 const SendNft = lazy(() => import('@/views/Nft/sendNft'));
-const SendOperation = lazy(() => import('@/views/sendOperation/sendOperation'));
+const SendOperation = lazy(() => import('@/views/sdk/sendOperation/sendOperation'));
+const Connect = lazy(() => import('@/views/sdk/connect/connect'));
 
 const withLoadingComponent = (comp: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{comp}</React.Suspense>
@@ -71,8 +73,18 @@ const routes = [
     ],
   },
   {
-    path: '/sendOperation',
-    element: withLoadingComponent(<SendOperation />),
+    path: '/',
+    element: <SDK />,
+    children: [
+      {
+        path: '/sendOperation',
+        element: withLoadingComponent(<SendOperation />),
+      },
+      {
+        path: '/connect',
+        element: withLoadingComponent(<Connect />),
+      },
+    ],
   },
   {
     path: '*',
