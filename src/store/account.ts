@@ -28,9 +28,9 @@ class Account {
     this.state = 'pending';
 
     try {
-      const nftAssetRes = await GetAccountNftAsset();
       const assetRes = await GetAccountAsset();
       const userRes = await GetUser();
+      const nftAssetRes = await GetAccountNftAsset();
 
       runInAction(async () => {
         this.accountList.length = 0;
@@ -57,7 +57,7 @@ class Account {
             nativeBalance: assetRes.data.abstract_account.Native,
             isMultisig: false,
             isUpdate: false,
-            name: assetRes.data.abstract_account.Name,
+            name: 'Account',
             erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
           });
         }
@@ -86,7 +86,7 @@ class Account {
               nativeBalance: assetRes.data.abstract_account.Native,
               isMultisig: false,
               isUpdate: false,
-              name: assetRes.data.abstract_account.Name,
+              name: 'Account',
               erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
             });
           }
@@ -97,7 +97,7 @@ class Account {
             nativeBalance: assetRes.data.abstract_account.Native,
             isMultisig: false,
             isUpdate: false,
-            name: assetRes.data.abstract_account.Name,
+            name: 'Account',
             erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
           });
         }

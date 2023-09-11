@@ -17,32 +17,31 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
 
   return (
     <>
-      <Modal centered title="Select a network" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
-        <div style={{ height: 300, marginTop: 50, overflowY: 'auto' }}>
-          <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-            <Row justify="space-around" align="middle">
-              {getNetworkList() &&
-                getNetworkList().map((row, index) => (
-                  <Col key={index} span={24}>
-                    <div
-                      className={classNames(
-                        'networkItem',
-                        getCurrentNetwork() === row.name ? 'networkItemSelect' : 'networkItem'
-                      )}
-                      style={{ height: 60, fontSize: 15, padding: 10 }}
-                      onClick={() => {
-                        // AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
-                        console.log('row.name', row.name);
-                        setCurrentNetworkName(row.name);
-                        AccountStore.loadUserData();
-                        onClose();
-                      }}>
-                      {row.icon}
-                      <span style={{ marginLeft: 10 }}>{row.name}</span>
-                    </div>
-                  </Col>
-                ))}
-              <Col span={24}>
+      <Modal centered title="Select A Network" open={isOpen} onOk={onClose} onCancel={onClose} width={410} footer={[]}>
+        <div style={{ height: 360, marginTop: 20, overflowY: 'auto' }}>
+          <Row justify="space-around" align="middle">
+            {getNetworkList() &&
+              getNetworkList().map((row, index) => (
+                <Col key={index} span={24} style={{ marginTop: 10, marginBottom: 10 }}>
+                  <div
+                    className={classNames(
+                      'networkItem',
+                      getCurrentNetwork() === row.name ? 'networkItemSelect' : 'networkItem'
+                    )}
+                    style={{ height: 30, fontSize: 15, padding: 10 }}
+                    onClick={() => {
+                      // AccountStore.setCurrentNetwork({ name: row.name, symbol: row.symbol });
+                      setCurrentNetworkName(row.name);
+                      AccountStore.loadUserData();
+                      onClose();
+                    }}>
+                    <span style={{ height: 30, width: 30 }}> {row.icon}</span>
+
+                    <span style={{ marginLeft: 10 }}>{row.name}</span>
+                  </div>
+                </Col>
+              ))}
+            {/* <Col span={24}>
                 <div className="networkItem" style={{ height: 60, fontSize: 15, padding: 10 }}>
                   <img style={{ height: 40, width: 40 }} src={ethIcon} alt="" />
                   <span style={{ marginLeft: 10 }}>Ethereum</span>
@@ -59,9 +58,8 @@ const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: ()
                   <img style={{ height: 40, width: 40 }} src={zkevmIcon} alt="" />
                   <span style={{ marginLeft: 10 }}>Zkevm</span>
                 </div>
-              </Col>
-            </Row>
-          </Space>
+              </Col> */}
+          </Row>
         </div>
         <Row style={{ marginTop: 10 }} justify="space-around" align="middle">
           <span>More networks coming soon...</span>

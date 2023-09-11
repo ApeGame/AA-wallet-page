@@ -8,28 +8,32 @@ import { FacebookProvider } from 'react-facebook';
 import '@/assets/styles/global.css';
 
 const headerStyle: React.CSSProperties = {
-  height: 65,
+  height: 80,
   backgroundColor: '#FFFFFF',
   paddingInline: 15,
+  fontFamily: 'Poppins',
 };
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 775,
+  height: 830,
   color: '#fff',
   backgroundColor: '#',
   overflowY: 'auto',
+  fontFamily: 'Poppins',
 };
 
 const pageStyle: React.CSSProperties = {
-  marginTop: 150,
-  maxWidth: 420,
+  marginTop: 100,
+  maxWidth: 460,
   border: 'solid #eee thin',
+  fontFamily: 'Poppins',
 };
 
 const pageMobileStyle: React.CSSProperties = {
-  maxWidth: 420,
+  maxWidth: 460,
   border: 'solid #eee thin',
+  fontFamily: 'Poppins',
 };
 
 const View: React.FC = () => {

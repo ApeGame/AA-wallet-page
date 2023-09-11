@@ -1,45 +1,14 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Col, Row, Button } from 'antd';
-// import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-// import { ActivityRecord } from '@/model/multisig';
-import { ReloadOutlined } from '@ant-design/icons';
-// import { GetMultisigHistoryList, GetNeedSignatureList } from '@/actions/MultisigWallet/multisigWallet';
+import { SyncOutlined } from '@ant-design/icons';
 import { ActivityStore } from '@/store/activity';
 import { Activity, SignatureActivity } from './activity';
 
 import '@/assets/styles/accountStyle/style.scss';
-// import { AccountStore } from '@/store/account';
 
 const Comp = () => {
   const [activityType, setActivityType] = useState('all');
-  // const [multisigRecordList, setMultisigRecordList] = useState<ActivityRecord[]>([]);
-  // const [needMultisigRecordList, setNeedMultisigRecordList] = useState<ActivityRecord[]>([]);
-
-  // const loadData = async () => {
-  //   setMultisigRecordList([]);
-  //   setNeedMultisigRecordList([]);
-
-  //   const multisigRecordListRes = await GetMultisigHistoryList();
-  //   if (multisigRecordListRes.code === 200 && multisigRecordListRes.data) {
-  //     console.log('multisigRecordListRes.data', multisigRecordListRes.data);
-  //     setMultisigRecordList(
-  //       multisigRecordListRes.data.map((item) => {
-  //         return item;
-  //       })
-  //     );
-  //   }
-
-  //   const needMultisigRecordListRes = await GetNeedSignatureList();
-  //   if (needMultisigRecordListRes.code === 200 && needMultisigRecordListRes.data) {
-  //     console.log('needMultisigRecordListRes', needMultisigRecordListRes);
-  //     setNeedMultisigRecordList(
-  //       needMultisigRecordListRes.data.map((item) => {
-  //         return item;
-  //       })
-  //     );
-  //   }
-  // };
 
   useEffect(() => {
     // load
@@ -50,9 +19,17 @@ const Comp = () => {
 
   return (
     <>
-      <div style={{ height: 410, overflowY: 'auto', marginTop: 10, color: '#000000' }}>
-        <Row justify="space-around" align="middle">
-          <Col span={10}>
+      <div>
+        <Row
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: 15,
+            paddingRight: 25,
+            backgroundColor: '#FFFFFF',
+            height: 45,
+          }}>
+          <Col span={7} style={{ display: 'flex' }}>
             <Button
               type={activityType === 'all' ? 'link' : 'text'}
               onClick={() => {
@@ -61,7 +38,7 @@ const Comp = () => {
               All Activity
             </Button>
           </Col>
-          <Col span={10}>
+          <Col span={7} style={{ display: 'flex' }}>
             <Button
               type={activityType === 'signature' ? 'link' : 'text'}
               onClick={() => {
@@ -70,156 +47,36 @@ const Comp = () => {
               Signature Activity
             </Button>
           </Col>
-          <Col span={4}>
-            <ReloadOutlined
+          <Col span={10} style={{ display: 'flex', alignItems: 'center', flexDirection: 'row-reverse' }}>
+            <SyncOutlined
+              style={{ fontSize: 18, color: '#356DF3' }}
               onClick={() => {
                 ActivityStore.loadActivityData();
               }}
             />
           </Col>
         </Row>
-        <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column' }}>
-          {activityType === 'all' && ActivityStore.allActivity.length === 0 && <span>No date</span>}
-          {activityType === 'all' &&
-            ActivityStore.allActivity &&
-            ActivityStore.allActivity.map((row, index) => (
-              <Activity activityRecord={row} key={index} />
-              // <Space
-              //   key={index}
-              //   direction="vertical"
-              //   size="small"
-              //   style={{
-              //     display: 'flex',
-              //     width: '100%',
-              //     paddingTop: 30,
-              //     paddingBottom: 30,
-              //     borderBottom: '1px solid #D3D3D3',
-              //   }}>
-              //   <Row style={rowStyle}>
-              //     <Col span={10}>
-              //       <span>Sender : </span>
-              //     </Col>
-              //     <Col span={14}>
-              //       <CopyToClipLong address={row.sender || ''} />
-              //     </Col>
-              //   </Row>
-              //   {row.user_operation_hash && (
-              //     <Row style={rowStyle}>
-              //       <Col span={10}>
-              //         <span>User operation hash : </span>
-              //       </Col>
-              //       <Col span={14}>
-              //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-              //       </Col>
-              //     </Row>
-              //   )}
-              //   {row.transaction_hash && (
-              //     <Row style={rowStyle}>
-              //       <Col span={10}>
-              //         <span>Transaction hash : </span>
-              //       </Col>
-              //       <Col span={14}>
-              //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-              //       </Col>
-              //     </Row>
-              //   )}
-              //   <Row style={rowStyle}>
-              //     <Col span={10}>
-              //       <span>Status : </span>
-              //     </Col>
-              //     <Col span={12}>
-              //       <span>{GetStatus(row.status)} </span>
-              //     </Col>
-              //   </Row>
-              // </Space>
-            ))}
-        </div>
+        <div style={{ height: 365, overflowY: 'auto', color: '#000000' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {activityType === 'all' && ActivityStore.allActivity.length === 0 && <span>No date</span>}
+            {activityType === 'all' &&
+              ActivityStore.allActivity &&
+              ActivityStore.allActivity.map((row, index) => <Activity activityRecord={row} key={index} />)}
+          </div>
 
-        <div style={{ marginTop: 10 }}>
-          {activityType === 'signature' && ActivityStore.needActivity.length === 0 && <span>No signature date</span>}
-          {activityType === 'signature' &&
-            ActivityStore.needActivity &&
-            ActivityStore.needActivity.map((row, index) => (
-              <SignatureActivity
-                key={index}
-                activityRecord={row}
-                loadData={ActivityStore.loadActivityData}
-                setActivityType={setActivityType}
-              />
-              // <Space
-              //   key={index}
-              //   direction="vertical"
-              //   size="small"
-              //   style={{
-              //     display: 'flex',
-              //     width: '100%',
-              //     paddingTop: 30,
-              //     paddingBottom: 30,
-              //     borderBottom: '1px solid #D3D3D3',
-              //   }}>
-              //   <Row style={rowStyle}>
-              //     <Col span={10}>
-              //       <span>Sender : </span>
-              //     </Col>
-              //     <Col span={14}>
-              //       <CopyToClipLong address={row.sender || ''} />
-              //     </Col>
-              //   </Row>
-              //   <Row style={rowStyle}>
-              //     <Col span={10}>
-              //       <span>Status : </span>
-              //     </Col>
-              //     <Col span={12}>
-              //       <span>{GetStatus(row.status)} </span>
-              //     </Col>
-              //   </Row>
-              //   {row.user_operation_hash && (
-              //     <Row style={rowStyle}>
-              //       <Col span={10}>
-              //         <span>User operation hash : </span>
-              //       </Col>
-              //       <Col span={14}>
-              //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-              //       </Col>
-              //     </Row>
-              //   )}
-              //   {row.transaction_hash && (
-              //     <Row style={rowStyle}>
-              //       <Col span={10}>
-              //         <span>Transaction hash : </span>
-              //       </Col>
-              //       <Col span={14}>
-              //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-              //       </Col>
-              //     </Row>
-              //   )}
-              //   {row.status === 1 && (
-              //     <Row style={rowStyle}>
-              //       <Col span={10}>
-              //         <span>Operation : </span>
-              //       </Col>
-              //       <Col span={12}>
-              //         <Button
-              //           size="small"
-              //           type="primary"
-              //           onClick={() => {
-              //             approveSig(row.id);
-              //           }}>
-              //           Approve
-              //         </Button>
-              //         &nbsp;
-              //         <Button
-              //           size="small"
-              //           onClick={() => {
-              //             rejectSig('id');
-              //           }}>
-              //           Refuse
-              //         </Button>
-              //       </Col>
-              //     </Row>
-              //   )}
-              // </Space>
-            ))}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {activityType === 'signature' && ActivityStore.needActivity.length === 0 && <span>No signature date</span>}
+            {activityType === 'signature' &&
+              ActivityStore.needActivity &&
+              ActivityStore.needActivity.map((row, index) => (
+                <SignatureActivity
+                  key={index}
+                  activityRecord={row}
+                  loadData={ActivityStore.loadActivityData}
+                  setActivityType={setActivityType}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </>

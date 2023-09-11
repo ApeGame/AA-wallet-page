@@ -34,25 +34,16 @@ const iconButtonStyle: React.CSSProperties = {
 const menuStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: 'transparent',
-};
-
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '45px',
-  color: '#0376C9',
+  backgroundColor: '#FFFFFF',
 };
 
 const balanceStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginTop: '45px',
   color: '#000000',
-  fontWeight: 'bold',
-  fontSize: 25,
+  fontSize: 35,
+  fontWeight: 600,
 };
 
 const Overview = () => {
@@ -111,7 +102,73 @@ const Overview = () => {
       {contextHolder}
       {AccountStore.currentAccount && (
         <>
-          <div style={addressStyle}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              marginTop: 2,
+            }}>
+            <span
+              style={{
+                marginTop: 25,
+                fontSize: 21,
+                fontWeight: 500,
+                lineHeight: 'normal',
+              }}>
+              {AccountStore.currentAccount.name}
+              <span style={{ fontSize: 15, fontWeight: 500, lineHeight: 'normal' }}>
+                {AccountStore.currentAccount.isMultisig ? ' (Multisig Account)' : ' (Abstract Account)'}
+              </span>
+            </span>
+            <div style={{ marginBottom: 25, marginTop: 10, color: '#356DF3', fontSize: 17 }}>
+              <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              marginTop: 2,
+            }}>
+            <div style={{ marginTop: 70, height: 170 }}>
+              {AccountStore.currentAccount.nativeBalance && (
+                <div style={balanceStyle}>
+                  {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
+                  {' ' + getCurrentNetworkWithStorage().symbol}
+                </div>
+              )}
+              <div style={functionsListStyle}>
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      width: 40,
+                      height: 40,
+                      borderRadius: '50%',
+                      backgroundColor: '#0376c9',
+                    }}
+                    onClick={() => {
+                      navigateTo(`/sendToken`);
+                    }}>
+                    <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+                  </div>
+                  <p style={{ marginTop: 2 }}>Send</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div style={addressStyle}>
             <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
               <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                 {AccountStore.currentAccount.address && (
@@ -127,35 +184,12 @@ const Overview = () => {
             <div style={balanceStyle}>
               {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + getCurrentNetworkWithStorage().symbol}
             </div>
-          )}
+          )} */}
         </>
       )}
 
-      <div style={functionsListStyle}>
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: '#0376c9',
-            }}
-            onClick={() => {
-              navigateTo(`/sendToken`);
-            }}>
-            <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          </div>
-          <p style={{ marginTop: 2 }}>Send</p>
-        </div>
-      </div>
-      <div style={{ marginTop: 15 }}>
+      <div>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
-
         {current === 'tokens' && <TokensOverview />}
         {current === 'nfts' && <NftOverview />}
         {current === 'multisig' && <MultisigWallet />}

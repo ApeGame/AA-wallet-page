@@ -20,19 +20,19 @@ export const getNetworkList = (): NetworkConfig[] => {
   if (baseEnv === 'dev') {
     return [
       {
-        icon: <img style={{ height: 40, width: 40 }} src={coqIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={coqIcon} alt="" />,
         name: 'Coq Testnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.ankrTest),
         networkId: BlockchainNetworkId.ankrTest,
       },
       {
-        icon: <img style={{ height: 40, width: 40 }} src={baseIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
         name: 'Base Testnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.baseTestnet),
         networkId: BlockchainNetworkId.baseTestnet,
       },
       {
-        icon: <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={lineaIcon} alt="" />,
         name: 'Linea Testnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.lineaTestnet),
         networkId: BlockchainNetworkId.lineaTestnet,
@@ -41,19 +41,19 @@ export const getNetworkList = (): NetworkConfig[] => {
   } else if (baseEnv === 'production') {
     return [
       {
-        icon: <img style={{ height: 40, width: 40 }} src={apeIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={apeIcon} alt="" />,
         name: 'Ape Chain',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.basMainnet),
         networkId: BlockchainNetworkId.basMainnet,
       },
       {
-        icon: <img style={{ height: 40, width: 40 }} src={baseIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
         name: 'Base Mainnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.baseMainnet),
         networkId: BlockchainNetworkId.baseMainnet,
       },
       {
-        icon: <img style={{ height: 40, width: 40 }} src={lineaIcon} alt="" />,
+        icon: <img style={{ height: '100%', width: '100%' }} src={lineaIcon} alt="" />,
         name: 'Linea Mainnet',
         symbol: getNativeTokenSymbol(BlockchainNetworkId.lineaMainnet),
         networkId: BlockchainNetworkId.lineaMainnet,

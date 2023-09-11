@@ -88,6 +88,7 @@ const Login = () => {
                 console.log('Login Failed');
               }}
               size="large"
+              shape="circle"
             />
           </GoogleOAuthProvider>
         </div>

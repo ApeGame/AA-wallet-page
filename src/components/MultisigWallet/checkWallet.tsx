@@ -15,7 +15,7 @@ export const CheckWallet = ({
 }) => {
   return (
     <>
-      <Modal centered title="Multisig wallet" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
+      <Modal centered title="Multisig Wallet" open={isOpen} onOk={onClose} onCancel={onClose} width={390} footer={[]}>
         <Space direction="vertical" size="middle" style={{ display: 'flex', marginTop: 30 }}>
           <Row>
             <Col span={10}>Wallet name</Col>

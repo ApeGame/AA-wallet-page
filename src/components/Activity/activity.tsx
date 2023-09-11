@@ -3,7 +3,7 @@ import { ActivityRecord } from '@/model/multisig';
 import { Col, Row, Button, message } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { CheckActivity } from './checkActivity';
-import { GetStatus } from './status';
+import { GetStatusContent } from './status';
 import { UpdateNeedSignature } from '@/actions/MultisigWallet/multisigWallet';
 
 export const Activity = ({ activityRecord }: { activityRecord: ActivityRecord }) => {
@@ -16,31 +16,42 @@ export const Activity = ({ activityRecord }: { activityRecord: ActivityRecord })
     <>
       <CheckActivity isOpen={checkFlag} onClose={handleCheckActivityClose} activityRecord={activityRecord} />
       <Row
-        style={{ height: 60, marginTop: 25, marginBottom: 25, cursor: 'pointer' }}
+        style={{ height: 60, marginTop: 15, marginBottom: 15, cursor: 'pointer', paddingLeft: 10 }}
         onClick={() => {
           setCheckFlag(true);
         }}>
-        <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
-              width: 47,
-              height: 47,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 45,
+              height: 45,
               borderRadius: '50%',
-              background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
-            }}></div>
+              background: '#356DF3',
+              color: '#FFF',
+              fontSize: 25,
+              fontWeight: 700,
+            }}>
+            S
+          </div>
         </Col>
-        <Col span={18}>
+        <Col span={13} style={{ display: 'flex', marginTop: 4 }}>
           <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
             <div style={{ height: 30, display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontWeight: 'bold', fontSize: 19 }}>{'sender : '}</span> &nbsp;
-              <span style={{ fontSize: 15 }}>
-                <CopyToClipLong address={activityRecord.sender} />
-              </span>
+              <span style={{ fontSize: 15 }}>{'Sender : '}</span> &nbsp;
             </div>
-            <div style={{ height: 30, display: 'flex', alignItems: 'center', fontSize: 17 }}>
+            <span style={{ fontSize: 12, color: '#356DF3' }}>
+              <CopyToClipLong address={activityRecord.sender} />
+            </span>
+            {/* <div style={{ height: 30, display: 'flex', alignItems: 'center', fontSize: 17 }}>
               {GetStatus(activityRecord.status)}
-            </div>
+            </div> */}
           </div>
+        </Col>
+        <Col span={7} style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
+          {GetStatusContent(activityRecord.status)}
         </Col>
       </Row>
     </>
@@ -87,17 +98,57 @@ export const SignatureActivity = ({
   return (
     <>
       {contextHolder}
-      <Row style={{ height: 60, marginTop: 30, marginBottom: 30 }}>
-        <Col span={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Row style={{ height: 60, marginTop: 15, marginBottom: 15, cursor: 'pointer', paddingLeft: 10 }}>
+        <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
-              width: 47,
-              height: 47,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 45,
+              height: 45,
               borderRadius: '50%',
-              background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
-            }}></div>
+              background: '#356DF3',
+              color: '#FFF',
+              fontSize: 25,
+              fontWeight: 700,
+            }}>
+            S
+          </div>
         </Col>
-        <Col span={18}>
+        <Col span={13} style={{ display: 'flex', marginTop: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+            <div style={{ height: 30, display: 'flex', alignItems: 'center' }}>
+              <span style={{ fontSize: 15 }}>{'Sender : '}</span> &nbsp;
+            </div>
+            <span style={{ fontSize: 12, color: '#356DF3' }}>
+              <CopyToClipLong address={activityRecord.sender} />
+            </span>
+          </div>
+        </Col>
+        <Col span={7} style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
+          {GetStatusContent(activityRecord.status)}
+        </Col>
+      </Row>
+      {/* <Row style={{ height: 60, marginTop: 15, marginBottom: 15 }}>
+        <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 45,
+              height: 45,
+              borderRadius: '50%',
+              background: '#356DF3',
+              color: '#FFF',
+              fontSize: 25,
+              fontWeight: 700,
+            }}>
+            S
+          </div>
+        </Col>
+        <Col span={13}>
           <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
             <div style={{ height: 30, display: 'flex', alignItems: 'center' }}>
               <span style={{ fontWeight: 'bold', fontSize: 19 }}>{'sender : '}</span> &nbsp;
@@ -106,7 +157,7 @@ export const SignatureActivity = ({
               </span>
             </div>
             <div style={{ height: 30, display: 'flex', alignItems: 'center', fontSize: 17 }}>
-              <div>{GetStatus(activityRecord.status)}</div>
+              <div>{GetStatusContent(activityRecord.status)}</div>
               {activityRecord.status === 1 && (
                 <div style={{ marginLeft: 10 }}>
                   <Row style={rowStyle}>
@@ -134,7 +185,7 @@ export const SignatureActivity = ({
             </div>
           </div>
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };
