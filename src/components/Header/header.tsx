@@ -1,50 +1,20 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useEffect } from 'react';
 import { Col, Row, Space } from 'antd';
-import { LogoutOutlined, HomeOutlined, DownOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { DownOutlined } from '@ant-design/icons';
 import AccountListDialog from '../Account/accountList';
 import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
-import { removeUserInfo } from '@/utils/localStorage';
-// import { getCurrentNetwork } from '@/utils/localStorage';
-// import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
-import { AccountStore } from '@/store/account';
 import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
-import { getUserInfo } from '@/utils/localStorage';
 import apeIcon from '@/assets/img/ape.svg';
 
 import '@/assets/styles/accountStyle/style.scss';
 
-const headerStyle: React.CSSProperties = {
-  backgroundColor: '#FFFFFF',
-};
-
-const titleStyle: React.CSSProperties = {
-  textAlign: 'center',
-  fontSize: '16px',
-  fontWeight: 'bold',
-};
-
-const moreStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row-reverse',
-  cursor: 'pointer',
-};
-
 const ContentHeader = () => {
-  const navigateTo = useNavigate();
-
   const [switchNetworkFlag, setSwitchNetworkFlag] = React.useState(false);
   const handleSwitchNetworkClose = () => {
     setSwitchNetworkFlag(false);
-  };
-
-  const loginOut = () => {
-    removeUserInfo();
-    navigateTo('/login');
   };
 
   useEffect(() => {

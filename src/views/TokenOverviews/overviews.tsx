@@ -30,14 +30,6 @@ const iconButtonStyle: React.CSSProperties = {
   color: '#FFFFFF',
 };
 
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '30px',
-  color: '#0376C9',
-};
-
 const balanceStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { CheckCircleOutlined, PlusOutlined, EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
-import { Button, Modal, Col, Row, Space } from 'antd';
+import { Button, Modal, Col, Row } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import classNames from 'classnames';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Col, Row, Button, message } from 'antd';
+import { Col, Row, message, Button } from 'antd';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { CheckActivity } from './checkActivity';
 import { GetStatusContent } from './status';
@@ -67,7 +67,6 @@ export const SignatureActivity = ({
   loadData: () => void;
   setActivityType: (type: string) => void;
 }) => {
-  const rowStyle: React.CSSProperties = { textAlign: 'left', paddingLeft: 25 };
   const approveSig = async (id: string) => {
     const res = await UpdateNeedSignature('', id);
     console.log('UpdateNeedSignature', res);
@@ -98,7 +97,7 @@ export const SignatureActivity = ({
   return (
     <>
       {contextHolder}
-      <Row style={{ height: 60, marginTop: 15, marginBottom: 15, cursor: 'pointer', paddingLeft: 10 }}>
+      <Row style={{ height: 60, marginTop: 15, marginBottom: 15, paddingLeft: 10 }}>
         <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
@@ -126,8 +125,34 @@ export const SignatureActivity = ({
             </span>
           </div>
         </Col>
-        <Col span={7} style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
+        <Col
+          span={7}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
           {GetStatusContent(activityRecord.status)}
+          <div>
+            {activityRecord.status === 1 && (
+              <div>
+                <Button
+                  size="small"
+                  type="link"
+                  style={{ color: '#0048F4', fontSize: 10 }}
+                  onClick={() => {
+                    approveSig(activityRecord.id);
+                  }}>
+                  Approve
+                </Button>
+                <Button
+                  size="small"
+                  type="link"
+                  style={{ color: '#B22222', fontSize: 10 }}
+                  onClick={() => {
+                    rejectSig('id');
+                  }}>
+                  Refuse
+                </Button>
+              </div>
+            )}
+          </div>
         </Col>
       </Row>
       {/* <Row style={{ height: 60, marginTop: 15, marginBottom: 15 }}>

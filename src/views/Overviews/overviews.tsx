@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { MenuProps, Menu, Space, message } from 'antd';
+import { MenuProps, Menu, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { AccountStore } from '@/store/account';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';

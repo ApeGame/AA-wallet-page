@@ -1,9 +1,9 @@
 // import React, { useEffect } from 'react';
-import { Modal, Col, Row, Space } from 'antd';
+import { Modal, Col, Row } from 'antd';
 import { observer } from 'mobx-react';
-import ethIcon from '@/assets/img/eth.svg';
-import bscIcon from '@/assets/img/binance.svg';
-import zkevmIcon from '@/assets/img/zkevm.svg';
+// import ethIcon from '@/assets/img/eth.svg';
+// import bscIcon from '@/assets/img/binance.svg';
+// import zkevmIcon from '@/assets/img/zkevm.svg';
 import '@/assets/styles/accountStyle/style.scss';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
@@ -12,9 +12,6 @@ import { getCurrentNetwork } from '@/utils/localStorage';
 import { getNetworkList } from '../Account/hooks/chainConfig';
 
 const SwitchNetworkDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [messageApi, contextHolder] = message.useMessage();
-
   return (
     <>
       <Modal centered title="Select A Network" open={isOpen} onOk={onClose} onCancel={onClose} width={410} footer={[]}>

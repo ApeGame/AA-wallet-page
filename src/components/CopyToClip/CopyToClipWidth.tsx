@@ -25,7 +25,7 @@ export const CopyToClipWidth = ({ address }: ICopyToClipProps) => {
         {truncateWalletAddrLong(address)}
         <CopyToClipboard text={address} onCopy={() => () => setCopy(true)}>
           <Tooltip title={isCopy ? 'copied' : 'copy to clipboard'} arrow>
-            <CopyFilled style={{ marginLeft: 60 }} />
+            <CopyFilled style={{ paddingLeft: '1rem', color: '#0048F4' }} />
           </Tooltip>
         </CopyToClipboard>
       </h4>

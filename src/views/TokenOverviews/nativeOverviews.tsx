@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Space, Divider } from 'antd';
+import { Divider } from 'antd';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
@@ -30,14 +30,6 @@ const backStyle: React.CSSProperties = {
   marginRight: 380,
   paddingTop: 20,
   color: '#000000',
-};
-
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '30px',
-  color: '#0376C9',
 };
 
 const balanceStyle: React.CSSProperties = {
