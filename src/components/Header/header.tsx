@@ -6,7 +6,7 @@ import AccountListDialog from '../Account/accountList';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
-import apeIcon from '@/assets/img/ape.svg';
+import logoIcon from '../../../public/logo.svg';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -25,7 +25,7 @@ const ContentHeader = () => {
       <SwitchNetworkDialog isOpen={switchNetworkFlag} onClose={handleSwitchNetworkClose} />
       <Row>
         <Col span={9} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
-          <img style={{ height: 40, width: 40 }} src={apeIcon} alt="" />
+          <img style={{ height: 40, width: 40 }} src={logoIcon} alt="" />
         </Col>
         <Col span={11} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
           <div
