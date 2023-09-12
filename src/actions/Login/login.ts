@@ -35,7 +35,7 @@ export const RefreshAccessToken = async () => {
 
 export const RecoverLogin = async (email: string, code: string): Promise<ResponseType<any>> => {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/recover/login`,
+    url: `${UrlByNetwork()}/v1/recover/login`,
     method: 'post',
     data: {
       email_address: email,
@@ -46,14 +46,14 @@ export const RecoverLogin = async (email: string, code: string): Promise<Respons
 
 export const GetCode = function (address: string): Promise<ResponseType<any>> {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/email/${address}/code`,
+    url: `${UrlByNetwork()}/v1/email/${address}/code`,
     method: 'get',
   });
 };
 
 export const BindRecoverEmail = function (email: string, code: string): Promise<ResponseType<any>> {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/user/email`,
+    url: `${UrlByNetwork()}/v1/token/user/email`,
     method: 'post',
     data: {
       email_address: email,
@@ -62,21 +62,41 @@ export const BindRecoverEmail = function (email: string, code: string): Promise<
   });
 };
 
-export const RequestGoogleLogin = function (credential: string): Promise<ResponseType<any>> {
+export const RequestGoogleLogin = function (
+  credential: string,
+  serverId: string,
+  playerId: string
+): Promise<ResponseType<any>> {
+  let url = '';
+  if (serverId.length !== 0 && playerId.length !== 0) {
+    url = `${UrlByNetwork()}/v1/google/login?type=game&server_id=${serverId}&player_id=${playerId}`;
+  } else {
+    url = `${UrlByNetwork()}/v1/google/login`;
+  }
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/google/login`,
+    url: url,
     method: 'post',
     data: data,
   });
 };
 
-export const RequestFBLogin = function (credential: string): Promise<ResponseType<any>> {
+export const RequestFBLogin = function (
+  credential: string,
+  serverId: string,
+  playerId: string
+): Promise<ResponseType<any>> {
+  let url = '';
+  if (serverId.length !== 0 && playerId.length !== 0) {
+    url = `${UrlByNetwork()}/v1/facebook/login?type=game&server_id=${serverId}&player_id=${playerId}`;
+  } else {
+    url = `${UrlByNetwork()}/v1/facebook/login`;
+  }
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/facebook/login`,
+    url: url,
     method: 'post',
     data: data,
   });
@@ -86,7 +106,7 @@ export const BindGoogleLogin = function (credential: string): Promise<ResponseTy
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/user/google`,
+    url: `${UrlByNetwork()}/v1/token/user/google`,
     method: 'post',
     data: data,
   });
@@ -96,7 +116,7 @@ export const BindFBLogin = function (credential: string): Promise<ResponseType<a
   const data = new FormData();
   data.append('credential', credential);
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/user/facebook`,
+    url: `${UrlByNetwork()}/v1/token/user/facebook`,
     method: 'post',
     data: data,
   });

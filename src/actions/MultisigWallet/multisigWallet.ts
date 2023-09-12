@@ -7,7 +7,7 @@ export const CreateMultisigAddress = function (
   aaSigners: string[]
 ): Promise<ResponseType<any>> {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple_address`,
+    url: `${UrlByNetwork()}/v1/token/wallet/multiple_address`,
     method: 'post',
     data: {
       name: name,
@@ -19,7 +19,7 @@ export const CreateMultisigAddress = function (
 
 export const UpdateMultisigAddressName = function (name: string, address: string): Promise<ResponseType<any>> {
   return request<any>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple_address/${address}`,
+    url: `${UrlByNetwork()}/v1/token/wallet/multiple_address/${address}`,
     method: 'post',
     data: {
       name: name,
@@ -29,14 +29,14 @@ export const UpdateMultisigAddressName = function (name: string, address: string
 
 export const GetMultisigAddress = function (): Promise<ResponseType<MultisigInfo[]>> {
   return request<MultisigInfo[]>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple_address`,
+    url: `${UrlByNetwork()}/v1/token/wallet/multiple_address`,
     method: 'get',
   });
 };
 
 export const GetNeedSignatureList = function (): Promise<ResponseType<ActivityRecord[]>> {
   return request<ActivityRecord[]>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/signature`,
+    url: `${UrlByNetwork()}/v1/token/wallet/signature`,
     method: 'get',
   });
 };
@@ -44,9 +44,9 @@ export const GetNeedSignatureList = function (): Promise<ResponseType<ActivityRe
 export const UpdateNeedSignature = function (operation: string, id: string): Promise<ResponseType<MultisigInfo>> {
   let url = '';
   if (operation.length > 0) {
-    url = `/aa${UrlByNetwork()}/v1/token/wallet/signature/${id}?operation=reject`;
+    url = `${UrlByNetwork()}/v1/token/wallet/signature/${id}?operation=reject`;
   } else {
-    url = `/aa${UrlByNetwork()}/v1/token/wallet/signature/${id}`;
+    url = `${UrlByNetwork()}/v1/token/wallet/signature/${id}`;
   }
   return request<MultisigInfo>({
     url: url,
@@ -56,14 +56,14 @@ export const UpdateNeedSignature = function (operation: string, id: string): Pro
 
 export const GetMultisigHistoryList = function (): Promise<ResponseType<ActivityRecord[]>> {
   return request<ActivityRecord[]>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple/user_operation`,
+    url: `${UrlByNetwork()}/v1/token/wallet/multiple/user_operation`,
     method: 'get',
   });
 };
 
 export const GetMultisigHistoryListErc = function (erc20Address: string): Promise<ResponseType<ActivityRecord[]>> {
   return request<ActivityRecord[]>({
-    url: `/aa${UrlByNetwork()}/v1/token/wallet/multiple/user_operation?erc20=${erc20Address}`,
+    url: `${UrlByNetwork()}/v1/token/wallet/multiple/user_operation?erc20=${erc20Address}`,
     method: 'get',
   });
 };

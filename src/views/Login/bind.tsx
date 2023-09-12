@@ -58,7 +58,7 @@ const BindAccount = () => {
           <span style={{ color: '#000000' }}>Bind for login</span>
         </div>
         <div style={contentStyle}>
-          <GoogleOAuthProvider clientId="31869352710-11g4q7holnvfpokbhrv9cu7a1qqq7ht5.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 success(credentialResponse);

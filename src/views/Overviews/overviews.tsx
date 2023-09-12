@@ -2,20 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { MenuProps, Menu, Space, message } from 'antd';
+import { MenuProps, Menu, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { AccountStore } from '@/store/account';
 import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
 import { observer } from 'mobx-react';
 import TokensOverview from '@/components/TokensOverview';
-import { GetAccountAsset } from '@/actions/Token/token';
 import MultisigWallet from '@/components/MultisigWallet';
+import NftOverview from '@/components/Nft';
 import Activity from '@/components/Activity';
 import { formatWeiToEth } from '@/utils/formatterEth';
-import { GetUser } from '@/actions/User/user';
-import { setUserRecoverEmail, getUserRecoverEmail } from '@/utils/localStorage';
+import { getUserRecoverEmail } from '@/utils/localStorage';
 import { useInterval } from '@/hooks/useInterval';
-import { getCurrentAddress } from '@/utils/localStorage';
+import { getCurrentNetworkWithStorage } from '@/components/Account/hooks/chainConfig';
 
 const functionsListStyle: React.CSSProperties = {
   display: 'flex',
@@ -35,25 +34,16 @@ const iconButtonStyle: React.CSSProperties = {
 const menuStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: 'transparent',
-};
-
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '45px',
-  color: '#0376C9',
+  backgroundColor: '#FFFFFF',
 };
 
 const balanceStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginTop: '45px',
   color: '#000000',
-  fontWeight: 'bold',
-  fontSize: 25,
+  fontSize: 35,
+  fontWeight: 600,
 };
 
 const Overview = () => {
@@ -90,99 +80,95 @@ const Overview = () => {
   useInterval(async () => {
     setTimeout(async () => {
       console.log('overview useInterval load');
-      loadData();
-    }, 5 * 1000);
-  }, 15 * 1000);
+      AccountStore.loadUserData();
+    }, 30 * 1000);
+  }, 30 * 1000);
 
   useInterval(async () => {
     setTimeout(async () => {
       if (!getUserRecoverEmail()) {
         messageApi.warning('please add your recover email, click your account to check it');
       }
-    }, 10 * 1000);
-  }, 10 * 1000);
-
-  const loadData = async () => {
-    // account
-    const res = await GetAccountAsset();
-    // const addressSet = new Set();
-    if (res.code === 200) {
-      AccountStore.clearAccountList();
-      // AccountStore.clearCurrentAccount();
-      if (res.data.abstract_account) {
-        AccountStore.pushAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-        console.log('pushAccount_abstract_account', {
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-      if (res.data.multiple_abstract_account) {
-        res.data.multiple_abstract_account.map((item) => {
-          // if (!addressSet.has(item.Address)) {
-          AccountStore.pushAccount({
-            address: item.Address,
-            erc20AccountMap: item.Erc20,
-            nativeBalance: item.Native,
-            isMultisig: true,
-            isUpdate: false,
-            name: item.Name,
-          });
-          // }
-          // addressSet.add(item.Address);
-        });
-      }
-
-      if (getCurrentAddress()) {
-        const currentWalletAddress = AccountStore.getAccountByAddress(getCurrentAddress());
-        console.log('currentWalletAddress', currentWalletAddress.address);
-        console.log('getCurrentAddress', getCurrentAddress());
-        if (currentWalletAddress.address) {
-          AccountStore.setCurrentAccount(currentWalletAddress);
-        }
-      } else {
-        AccountStore.setCurrentAccount({
-          address: res.data.abstract_account.Address,
-          erc20AccountMap: res.data.abstract_account.Erc20,
-          nativeBalance: res.data.abstract_account.Native,
-          isMultisig: false,
-          isUpdate: false,
-          name: res.data.abstract_account.Name,
-        });
-      }
-    }
-    const userRes = await GetUser();
-    console.log('GetUser res', userRes);
-    if (userRes.code === 200) {
-      console.log('res.data.recover_email', userRes.data.recover_email);
-      setUserRecoverEmail(userRes.data.recover_email);
-    }
-  };
+    }, 30 * 1000);
+  }, 30 * 1000);
 
   useEffect(() => {
-    console.log('overview load');
-    loadData();
-    // if (!AccountStore.currentAccount) {
-    //   AccountStore.setCurrentAccount(AccountStore.getAbstractAccount());
-    // }
-  }, [current]);
+    // console.log('overview load');
+    AccountStore.loadUserData();
+  }, []);
 
   return (
     <div>
       {contextHolder}
       {AccountStore.currentAccount && (
         <>
-          <div style={addressStyle}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              marginTop: 2,
+            }}>
+            <span
+              style={{
+                marginTop: 25,
+                fontSize: 21,
+                fontWeight: 500,
+                lineHeight: 'normal',
+              }}>
+              {AccountStore.currentAccount.name}
+              <span style={{ fontSize: 15, fontWeight: 500, lineHeight: 'normal' }}>
+                {AccountStore.currentAccount.isMultisig ? ' (Multisig Account)' : ' (Abstract Account)'}
+              </span>
+            </span>
+            <div style={{ marginBottom: 25, marginTop: 10, color: '#356DF3', fontSize: 17 }}>
+              <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+            </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              marginTop: 2,
+            }}>
+            <div style={{ marginTop: 70, height: 170 }}>
+              {AccountStore.currentAccount.nativeBalance && (
+                <div style={balanceStyle}>
+                  {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
+                  {' ' + getCurrentNetworkWithStorage().symbol}
+                </div>
+              )}
+              <div style={functionsListStyle}>
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      width: 50,
+                      height: 50,
+                      borderRadius: '50%',
+                      backgroundColor: '#0376c9',
+                    }}
+                    onClick={() => {
+                      navigateTo(`/sendToken`);
+                    }}>
+                    <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+                  </div>
+                  <p style={{ marginTop: 2, fontSize: 15 }}>Send</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div style={addressStyle}>
             <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
               <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                 {AccountStore.currentAccount.address && (
@@ -196,38 +182,16 @@ const Overview = () => {
           </div>
           {AccountStore.currentAccount.nativeBalance && (
             <div style={balanceStyle}>
-              {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + AccountStore.getCurrentNetworkSymbol()}
+              {formatWeiToEth(AccountStore.currentAccount.nativeBalance)} {' ' + getCurrentNetworkWithStorage().symbol}
             </div>
-          )}
+          )} */}
         </>
       )}
 
-      <div style={functionsListStyle}>
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: '#0376c9',
-            }}
-            onClick={() => {
-              navigateTo(`/sendToken`);
-            }}>
-            <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          </div>
-          <p style={{ marginTop: 2 }}>Send</p>
-        </div>
-      </div>
-      <div style={{ marginTop: 15 }}>
+      <div>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={menuStyle} />
-
         {current === 'tokens' && <TokensOverview />}
+        {current === 'nfts' && <NftOverview />}
         {current === 'multisig' && <MultisigWallet />}
         {current === 'activity' && <Activity />}
       </div>

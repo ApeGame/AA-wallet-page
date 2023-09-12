@@ -4,33 +4,44 @@ import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 import ContentHeader from '@/components/Header/header';
 import { FacebookProvider } from 'react-facebook';
+import { observer } from 'mobx-react';
+import '@/assets/styles/global.css';
 
 const headerStyle: React.CSSProperties = {
-  height: 65,
+  height: 80,
   backgroundColor: '#FFFFFF',
   paddingInline: 15,
+  fontFamily: 'Poppins',
 };
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  height: 775,
+  height: 830,
   color: '#fff',
   backgroundColor: '#',
   overflowY: 'auto',
+  fontFamily: 'Poppins',
 };
 
-const LayoutStyle: React.CSSProperties = {
-  marginTop: '150px',
-  maxWidth: '420px',
+const pageStyle: React.CSSProperties = {
+  marginTop: 100,
+  maxWidth: 460,
   border: 'solid #eee thin',
+  fontFamily: 'Poppins',
+};
+
+const pageMobileStyle: React.CSSProperties = {
+  maxWidth: 460,
+  border: 'solid #eee thin',
+  fontFamily: 'Poppins',
 };
 
 const View: React.FC = () => {
   const { Header, Content } = Layout;
 
   return (
-    <FacebookProvider appId="662645895414897">
-      <Layout style={LayoutStyle}>
+    <FacebookProvider appId={import.meta.env.VITE_FACEBOOK_ID}>
+      <Layout style={window.screen.width >= 500 ? pageStyle : pageMobileStyle}>
         <Header style={headerStyle}>
           <ContentHeader />
         </Header>
@@ -42,4 +53,4 @@ const View: React.FC = () => {
   );
 };
 
-export default View;
+export default observer(View);

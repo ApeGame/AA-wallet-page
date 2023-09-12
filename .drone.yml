@@ -9,7 +9,7 @@ steps:
       - pwd
       - node -v
       - npm install
-      - npm run build
+      - npm run stage
     when:
       event:
         - push

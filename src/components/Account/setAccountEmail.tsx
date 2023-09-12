@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, Col, Row, Space, Input, message } from 'antd';
 import { BindRecoverEmail, GetCode } from '@/actions/Login/login';
 import { useNavigate } from 'react-router-dom';
+import { AccountStore } from '@/store/account';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -33,7 +34,8 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
     if (res.code === 200) {
       messageApi.success('bind email success');
       navigateTo('/overview');
-      window.location.reload();
+      AccountStore.loadUserData();
+      onClose();
     } else {
       messageApi.error('bind email fail');
     }
@@ -49,30 +51,33 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
         open={isOpen}
         onOk={onClose}
         onCancel={onClose}
-        width={390}
+        width={410}
         footer={[]}>
-        <div style={{ height: 180, marginTop: 50, overflowY: 'auto' }}>
+        <div style={{ height: 360, marginTop: 20 }}>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row justify="space-around" align="middle">
-              <Col span={24}>
-                <Space.Compact style={{ width: '95%' }}>
-                  <Input
-                    placeholder="Please input email address"
-                    onChange={(e) => {
-                      if (e != null) {
-                        setEmailAddress(e.target.value.trim());
-                      }
-                    }}
-                  />
-                  <Button
-                    type="primary"
-                    loading={isSendLoading}
-                    onClick={() => {
-                      sendCode();
-                    }}>
-                    Send code
-                  </Button>
-                </Space.Compact>
+              <Col span={16}>
+                <Input
+                  size="large"
+                  placeholder="Please input email address"
+                  onChange={(e) => {
+                    if (e != null) {
+                      setEmailAddress(e.target.value.trim());
+                    }
+                  }}
+                />
+              </Col>
+              <Col span={8}>
+                <Button
+                  type="primary"
+                  size="large"
+                  style={{ marginLeft: 5 }}
+                  loading={isSendLoading}
+                  onClick={() => {
+                    sendCode();
+                  }}>
+                  Send code
+                </Button>
               </Col>
             </Row>
 
@@ -80,6 +85,7 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
               <Col span={24}>
                 <Input
                   placeholder="Please input code"
+                  size="large"
                   onChange={(e) => {
                     if (e != null) {
                       setCode(e.target.value.trim());
@@ -89,7 +95,7 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
               </Col>
             </Row>
 
-            <Row justify="space-around" align="middle">
+            <Row justify="space-around" align="middle" style={{ marginTop: 170 }}>
               <Button
                 type="primary"
                 size={'large'}

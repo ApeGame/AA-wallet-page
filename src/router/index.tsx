@@ -11,6 +11,8 @@ const NativeTokenOverview = lazy(() => import('@/views/TokenOverviews/nativeOver
 const AddToken = lazy(() => import('@/views/AddToken/addToken'));
 const MultisigWallet = lazy(() => import('@/views/MultisigWallet/multisigWallet'));
 const RecoverBind = lazy(() => import('@/views/Login/bind'));
+const NftDetail = lazy(() => import('@/views/Nft/nftDetail'));
+const SendNft = lazy(() => import('@/views/Nft/sendNft'));
 
 const withLoadingComponent = (comp: JSX.Element) => (
   <React.Suspense fallback={<div>Loading...</div>}>{comp}</React.Suspense>
@@ -56,6 +58,14 @@ const routes = [
       {
         path: '/recover_bind',
         element: withLoadingComponent(<RecoverBind />),
+      },
+      {
+        path: '/nftDetail',
+        element: withLoadingComponent(<NftDetail />),
+      },
+      {
+        path: '/sendNFT',
+        element: withLoadingComponent(<SendNft />),
       },
     ],
   },

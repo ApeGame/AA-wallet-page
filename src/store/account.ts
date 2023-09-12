@@ -1,7 +1,12 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { AccountInfo } from '@/model/account';
 import { NetworkInfo } from '@/model/network';
-import { getCurrentNetwork, setCurrentNetworkName } from '@/utils/localStorage';
+import { GetAccountAsset, GetAccountNftAsset } from '@/actions/Token/token';
+import { getCurrentAddress } from '@/utils/localStorage';
+import { GetUser } from '@/actions/User/user';
+import { setUserRecoverEmail } from '@/utils/localStorage';
+import { ActivityStore } from './activity';
+import { NftAsset } from '@/model/token';
 
 class Account {
   accountList: AccountInfo[] = [];
@@ -10,14 +15,108 @@ class Account {
 
   currentNetwork: NetworkInfo = {} as NetworkInfo;
 
-  networkList: NetworkInfo[] = [
-    { name: 'Coq Testnet', symbol: 'COQ' },
-    { name: 'Base', symbol: 'ETH' },
-    { name: 'Linea', symbol: 'ETH' },
-  ];
+  state = 'pending'; // "pending", "done" or "error"
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  async loadUserData() {
+    // console.log('loadUserData!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+    // this.accountList = [];
+    this.state = 'pending';
+
+    try {
+      const assetRes = await GetAccountAsset();
+      const userRes = await GetUser();
+      const nftAssetRes = await GetAccountNftAsset();
+
+      runInAction(async () => {
+        this.accountList.length = 0;
+
+        const nftMap = new Map<string, Map<string, NftAsset>>();
+
+        if (nftAssetRes.code === 200) {
+          nftMap.set(nftAssetRes.data.abstract_account.Address, nftAssetRes.data.abstract_account.Erc721S);
+
+          Object.keys(nftAssetRes.data.multiple_abstract_account).map((key) => {
+            nftMap.set(
+              nftAssetRes.data.multiple_abstract_account[key].Address,
+              nftAssetRes.data.multiple_abstract_account[key].Erc721S
+            );
+          });
+        }
+
+        console.log('nftMap!!!', nftMap);
+
+        if (assetRes.code === 200 && nftAssetRes.code === 200) {
+          this.pushAccount({
+            address: assetRes.data.abstract_account.Address,
+            erc20AccountMap: assetRes.data.abstract_account.Erc20,
+            nativeBalance: assetRes.data.abstract_account.Native,
+            isMultisig: false,
+            isUpdate: false,
+            name: 'Account',
+            erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
+          });
+        }
+        if (assetRes.data.multiple_abstract_account) {
+          assetRes.data.multiple_abstract_account.map((item) => {
+            this.pushAccount({
+              address: item.Address,
+              erc20AccountMap: item.Erc20,
+              nativeBalance: item.Native,
+              isMultisig: true,
+              isUpdate: false,
+              name: item.Name,
+              erc721AccountMap: nftMap.get(item.Address) || new Map<string, NftAsset>(),
+            });
+          });
+        }
+        console.log('getCurrentAddress()', getCurrentAddress());
+        if (getCurrentAddress()) {
+          const currentWalletAddress = this.getAccountByAddress(getCurrentAddress());
+          if (currentWalletAddress.address) {
+            AccountStore.setCurrentAccount(currentWalletAddress);
+          } else {
+            this.setCurrentAccount({
+              address: assetRes.data.abstract_account.Address,
+              erc20AccountMap: assetRes.data.abstract_account.Erc20,
+              nativeBalance: assetRes.data.abstract_account.Native,
+              isMultisig: false,
+              isUpdate: false,
+              name: 'Account',
+              erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
+            });
+          }
+        } else {
+          this.setCurrentAccount({
+            address: assetRes.data.abstract_account.Address,
+            erc20AccountMap: assetRes.data.abstract_account.Erc20,
+            nativeBalance: assetRes.data.abstract_account.Native,
+            isMultisig: false,
+            isUpdate: false,
+            name: 'Account',
+            erc721AccountMap: nftMap.get(assetRes.data.abstract_account.Address) || new Map<string, NftAsset>(),
+          });
+        }
+
+        if (userRes.code === 200) {
+          if (userRes.data.recover_email) {
+            setUserRecoverEmail(userRes.data.recover_email);
+          }
+        }
+
+        ActivityStore.loadActivityData();
+
+        this.state = 'done';
+      });
+    } catch (e) {
+      runInAction(() => {
+        this.state = 'error';
+      });
+    }
   }
 
   pushAccount(account: AccountInfo) {
@@ -86,55 +185,9 @@ class Account {
     }
   }
 
-  pushNetwork(network: NetworkInfo) {
-    this.networkList.push(network);
-  }
-
-  setCurrentNetwork(network: NetworkInfo) {
-    this.currentNetwork = network;
-  }
-
-  getCurrentNetworkWithStorage(): NetworkInfo {
-    if (getCurrentNetwork()) {
-      if (this.getNetworkByName(getCurrentNetwork()).name) {
-        return {
-          name: this.getNetworkByName(getCurrentNetwork()).name,
-          symbol: this.getNetworkByName(getCurrentNetwork()).symbol,
-        };
-      } else {
-        setCurrentNetworkName('Coq Testnet');
-        return { name: 'Coq Testnet', symbol: 'COQ' };
-      }
-    } else {
-      setCurrentNetworkName('Coq Testnet');
-      return { name: 'Coq Testnet', symbol: 'COQ' };
-    }
-  }
-
-  getCurrentNetworkSymbol(): string {
-    return this.getCurrentNetworkWithStorage().symbol;
-  }
-
-  clearNetworkList() {
-    this.networkList.length = 0;
-  }
-
-  clearCurrentNetwork() {
-    this.currentNetwork = {} as NetworkInfo;
-  }
-
-  getNetworkByName(name: string): NetworkInfo {
-    if (this.networkList) {
-      for (let i = 0; i < this.networkList.length; i++) {
-        if (this.networkList[i].name === name) {
-          return this.networkList[i];
-        }
-      }
-    } else {
-      return {} as NetworkInfo;
-    }
-    return {} as NetworkInfo;
-  }
+  // setCurrentNetwork(network: NetworkInfo) {
+  //   this.currentNetwork = network;
+  // }
 }
 
 export const AccountStore = new Account();

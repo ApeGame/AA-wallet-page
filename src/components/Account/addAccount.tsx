@@ -3,6 +3,7 @@ import { truncateWalletAddrTooLong } from '@/utils/truncateWalletAddr';
 import { Button, Modal, Col, Row, Space, InputNumber, Input, message } from 'antd';
 import { CreateMultisigAddress } from '@/actions/MultisigWallet/multisigWallet';
 import { useNavigate } from 'react-router-dom';
+import { AccountStore } from '@/store/account';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -22,7 +23,8 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
     if (addRes.code === 200) {
       messageApi.success('Success');
       navigateTo('/overview');
-      location.reload();
+      AccountStore.loadUserData();
+      onClose();
     } else if (addRes.code === 400) {
       messageApi.error(addRes.data);
     } else {
@@ -36,13 +38,13 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
       {contextHolder}
       <Modal
         centered
-        title="Add a multisig wallet account "
+        title="Add A Multisig Wallet Account "
         open={isOpen}
         onOk={onClose}
         onCancel={onClose}
-        width={390}
+        width={410}
         footer={[]}>
-        <div style={{ height: 330, marginTop: 20, overflowY: 'auto' }}>
+        <div style={{ height: 360, marginTop: 20 }}>
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row justify="space-around" align="middle">
               <Col span={12}>
@@ -58,6 +60,7 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
                         setThreshold(value);
                       }
                     }}
+                    size="large"
                   />
                 </span>
               </Col>
@@ -65,47 +68,66 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
             <Row justify="space-around" align="middle">
               <Col span={24}>
                 <Input
+                  maxLength={15}
                   placeholder="Account name"
                   onChange={(e) => {
-                    if (e != null) {
+                    if (e.target.value) {
                       setName(e.target.value.trim());
                     }
+                    if (e.target.value.length >= 15) {
+                      messageApi.warning('The length of the account name cannot exceed 15');
+                    }
                   }}
+                  size="large"
                 />
               </Col>
             </Row>
             <Row justify="space-around" align="middle">
-              <Col span={24}>
-                <Space.Compact style={{ width: '95%' }}>
-                  <Input
-                    placeholder="Add Abstract Address"
-                    onChange={(e) => {
-                      if (e != null) {
-                        setAbstractAddress(e.target.value.trim());
-                      }
-                    }}
-                  />
-                  <Button
-                    type="primary"
-                    onClick={() => {
+              <Col span={14}>
+                <Input
+                  placeholder="Add Abstract Address"
+                  onChange={(e) => {
+                    if (e != null) {
+                      setAbstractAddress(e.target.value.trim());
+                    }
+                  }}
+                  value={abstractAddress}
+                  size="large"
+                />
+              </Col>
+              <Col span={5}>
+                <Button
+                  type="link"
+                  size="large"
+                  style={{ width: 70 }}
+                  onClick={() => {
+                    setAbstractAddressList([]);
+                    setAbstractAddress('');
+                  }}>
+                  Reset
+                </Button>
+              </Col>
+              <Col span={5}>
+                <Button
+                  type="primary"
+                  size="large"
+                  style={{ width: 70 }}
+                  onClick={() => {
+                    if (abstractAddress && abstractAddressList.indexOf(abstractAddress)) {
                       setAbstractAddressList((prevAddress) => [...prevAddress, abstractAddress]);
-                    }}>
-                    Add
-                  </Button>
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      setAbstractAddressList([]);
-                    }}>
-                    Reset
-                  </Button>
-                </Space.Compact>
+                    } else {
+                      messageApi.warning('Please enter a new address');
+                    }
+                  }}>
+                  + Add
+                </Button>
               </Col>
             </Row>
             <Row justify="space-around" align="middle">
               <Col span={24}>
+                <div>default : {truncateWalletAddrTooLong(AccountStore.currentAccount.address)}</div>
                 {abstractAddressList.length !== 0 && <span>Abstract Wallet Address List:</span>}
-                <div style={{ minHeight: 90, overflowY: 'auto' }}>
+                <div style={{ height: 80, overflowY: 'auto' }}>
                   {abstractAddressList.map((item: string, index) => {
                     return (
                       <div key={index} style={{ fontSize: 5 }}>

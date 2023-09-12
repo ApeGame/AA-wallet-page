@@ -28,7 +28,7 @@ const View = () => {
     if (addRes.code === 200) {
       messageApi.success('Complete');
       navigateTo('/overview');
-      location.reload();
+      // AccountStore.loadUserData();
     } else {
       messageApi.error('Fail');
     }

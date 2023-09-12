@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
 import { ethers } from 'ethers';
+import { AccountStore } from '@/store/account';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -15,12 +16,16 @@ const SwitchPaymasterDialog = ({
   toAmount,
   toAddress,
   erc20Address,
+  erc721Address,
+  tokenId,
 }: {
   isOpen: boolean;
   onClose: () => void;
   toAmount: string;
   toAddress: string;
   erc20Address: string;
+  erc721Address: string;
+  tokenId: number;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
@@ -41,15 +46,19 @@ const SwitchPaymasterDialog = ({
 
   const send = async () => {
     setIsLoading(true);
-    if (!erc20Address) {
+    if (!erc20Address && !erc721Address) {
+      console.log('Native Transfer');
       const sendRes = await SendNativeToken(toAddress, toAmount.trim(), paymentIndex);
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
+        setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
       } else {
-        messageApi.error('Fail');
+        messageApi.error(sendRes.data);
       }
-    } else {
+    } else if (erc20Address && !erc721Address) {
+      console.log('erc20 Transfer');
+
       const data =
         '0xa9059cbb000000000000000000000000' +
         toAddress.trim().slice(2) +
@@ -60,10 +69,40 @@ const SwitchPaymasterDialog = ({
       const sendRes = await SendErc20Token(erc20Address, data, paymentIndex);
       console.log('sendRes', sendRes);
       if (sendRes.code === 200) {
+        setTimeout(() => navigateTo('/overview'), 700);
         messageApi.success('Complete');
-        navigateTo('/overview');
       } else {
-        messageApi.error('Fail');
+        messageApi.error(sendRes.data);
+      }
+    } else if (!erc20Address && erc721Address) {
+      console.log('erc721 Transfer');
+
+      const data =
+        '0x23b872dd000000000000000000000000' +
+        AccountStore.currentAccount.address.trim().slice(2) +
+        '0'.repeat(24) +
+        toAddress.trim().slice(2) +
+        '0'.repeat(24) +
+        '0'.repeat(40 - tokenId.toString(16).toString().length) +
+        tokenId.toString(16);
+      console.log('data1', data);
+      console.log(
+        'data2',
+        '0x23b872dd0000000000000000000000005b38da6a701c568545dcfcb03fcb875f56beddc4000000000000000000000000ab8483f64d9c6d1ecf9b849ae677dd3315835cb2000000000000000000000000000000000000000000000000000000000005464e'
+      );
+      console.log('data1Length', data.length);
+      console.log(
+        'data2Length',
+        '0x23b872dd0000000000000000000000005b38da6a701c568545dcfcb03fcb875f56beddc4000000000000000000000000ab8483f64d9c6d1ecf9b849ae677dd3315835cb2000000000000000000000000000000000000000000000000000000000005464e'
+          .length
+      );
+      const sendRes = await SendErc20Token(erc721Address, data, paymentIndex);
+      console.log('sendRes', sendRes);
+      if (sendRes.code === 200) {
+        setTimeout(() => navigateTo('/overview'), 700);
+        messageApi.success('Complete');
+      } else {
+        messageApi.error(sendRes.data);
       }
     }
     setIsLoading(false);
