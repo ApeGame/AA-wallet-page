@@ -6,11 +6,13 @@ import AccountListDialog from '../Account/accountList';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
-import logoIcon from '../../../public/logo.svg';
+import { useNavigate } from 'react-router-dom';
+import logoIcon from '@/assets/img/logo/logo.svg';
 
 import '@/assets/styles/accountStyle/style.scss';
 
 const ContentHeader = () => {
+  const navigateTo = useNavigate();
   const [switchNetworkFlag, setSwitchNetworkFlag] = React.useState(false);
   const handleSwitchNetworkClose = () => {
     setSwitchNetworkFlag(false);
@@ -25,7 +27,14 @@ const ContentHeader = () => {
       <SwitchNetworkDialog isOpen={switchNetworkFlag} onClose={handleSwitchNetworkClose} />
       <Row>
         <Col span={9} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
-          <img style={{ height: 40, width: 40 }} src={logoIcon} alt="" />
+          <img
+            style={{ height: 40, width: 40, cursor: 'pointer' }}
+            src={logoIcon}
+            alt=""
+            onClick={() => {
+              navigateTo('overview');
+            }}
+          />
         </Col>
         <Col span={11} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
           <div

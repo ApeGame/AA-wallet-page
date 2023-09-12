@@ -199,6 +199,7 @@ const View = () => {
             <Row>
               <Col span={24}>
                 {AccountStore.currentAccount.erc721AccountMap &&
+                  AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''] &&
                   AccountStore.currentAccount.erc721AccountMap[search.get('tokenAddress') || ''].name}
               </Col>
             </Row>
