@@ -39,8 +39,6 @@ export function getNativeTokenSymbol(chainId: BlockchainNetworkId) {
   return NativeTokens[chainId];
 }
 
-const userOperationScan = 'https://userscan-dev.coya.biz';
-
 export const getBlockChainExplorerAddress = (chainId: BlockchainNetworkId) => BlockChainExplorerAddress[chainId];
 
 export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: string) => {
@@ -53,7 +51,7 @@ export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: str
 
 export const getUserOperationScanLink = (chainId: BlockchainNetworkId, hash: string) => {
   return (
-    <a target="_blank" href={`${userOperationScan}/user_operation/${hash}?chainId=${chainId}`}>
+    <a target="_blank" href={`${import.meta.env.VITE_OPERATION_SCAN_URL}/user_operation/${hash}?chainId=${chainId}`}>
       <CopyToClipWidth address={hash || ''} />
     </a>
   );
