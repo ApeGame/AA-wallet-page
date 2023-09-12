@@ -1,22 +1,12 @@
 import { Input, Button, Col, Row, Space, message } from 'antd';
 import { useState } from 'react';
-import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
-// import { SendNativeToken, SendErc20Token } from '@/actions/Token/token';
-// import { ethers } from 'ethers';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
 import classNames from 'classnames';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-// import SendApproveDialog from '@/components/TokensOverview/sendApprove';
-// import { useNavigate } from 'react-router-dom';
 import SwitchPaymasterDialog from '@/components/TokensOverview/switchPaymaster';
-// import { GetAccountAsset } from '@/actions/Token/token';
-// import { getCurrentAddress } from '@/utils/localStorage';
-// import { GetUser } from '@/actions/User/user';
-// import { setUserRecoverEmail } from '@/utils/localStorage';
-
-// import { getSendTransactionType } from '@/utils/localStorage';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -32,21 +22,11 @@ const View = () => {
   const [search] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-  // const [messageApi, contextHolder] = message.useMessage();
-  // const [paymasterAddress, setPaymasterAddress] = useState('');
-  // const [erc20Address, setErc20Address] = useState('');
-
-  // const [sendApproveFlag, setSendApproveFlag] = useState(false);
-  // const handleSendApproveFlagClose = () => {
-  //   setSendApproveFlag(false);
-  // };
 
   const [switchPaymentFlag, setSwitchPaymentFlag] = useState(false);
   const handleSwitchPaymentFlagClose = () => {
     setSwitchPaymentFlag(false);
   };
-
-  // const navigateTo = useNavigate();
 
   useEffect(() => {
     console.log('~', search.get('tokenAddress'), search.get('tokenId'));
