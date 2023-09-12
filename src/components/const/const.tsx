@@ -1,3 +1,5 @@
+import { CopyToClipWidth } from '@/components/CopyToClip/CopyToClipWidth';
+
 export enum BlockchainNetworkId {
   ankrTest = 12077,
   basMainnet = 16350,
@@ -44,7 +46,7 @@ export const getBlockChainExplorerAddress = (chainId: BlockchainNetworkId) => Bl
 export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: string) => {
   return (
     <a target="_blank" href={`${getBlockChainExplorerAddress(chainId)}/tx/${txhash}`}>
-      View on block explorer
+      <CopyToClipWidth address={txhash || ''} />
     </a>
   );
 };
@@ -52,7 +54,7 @@ export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: str
 export const getUserOperationScanLink = (chainId: BlockchainNetworkId, hash: string) => {
   return (
     <a target="_blank" href={`${userOperationScan}/user_operation/${hash}?chainId=${chainId}`}>
-      View on user operation explorer
+      <CopyToClipWidth address={hash || ''} />
     </a>
   );
 };
