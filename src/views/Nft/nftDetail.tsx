@@ -4,7 +4,7 @@ import { LeftOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
-import { CopyToClipLong } from '@/components/CopyToClip/CopyToClip';
+import { CopyToClipWidth } from '@/components/CopyToClip/CopyToClipWidth';
 import { NftSkill } from '@/components/Nft/nftAttributeSkill';
 import { useSearchParams } from 'react-router-dom';
 import { NftImage } from '@/components/Nft/nftImage';
@@ -153,8 +153,10 @@ const NftDetail = () => {
               <Col span={12} style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold' }}>Contract Address</span>
               </Col>
-              <Col span={12} style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
-                <CopyToClipLong address={search.get('tokenAddress') || ''} />
+              <Col
+                span={12}
+                style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', color: '#0048F4' }}>
+                <CopyToClipWidth address={search.get('tokenAddress') || ''} />
               </Col>
             </Row>
 

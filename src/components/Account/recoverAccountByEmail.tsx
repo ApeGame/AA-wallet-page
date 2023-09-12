@@ -64,7 +64,7 @@ export const RecoverAccountByEmailDialog = ({ isOpen, onClose }: { isOpen: boole
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Row justify="space-around" align="middle">
               <Col span={24}>
-                <Space.Compact style={{ width: '95%' }}>
+                <Space.Compact style={{ width: '100%' }}>
                   <Input
                     placeholder="Please input your email address"
                     onChange={(e) => {

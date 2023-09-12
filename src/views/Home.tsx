@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 import ContentHeader from '@/components/Header/header';
 import { FacebookProvider } from 'react-facebook';
-
+import { observer } from 'mobx-react';
 import '@/assets/styles/global.css';
 
 const headerStyle: React.CSSProperties = {
@@ -53,4 +53,4 @@ const View: React.FC = () => {
   );
 };
 
-export default View;
+export default observer(View);

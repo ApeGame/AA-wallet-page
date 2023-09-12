@@ -39,6 +39,7 @@ const AccountListDialog = () => {
   const logOut = () => {
     removeUserInfo();
     navigateTo('/login');
+    window.location.reload();
   };
 
   const selectAccount = (address: string) => {

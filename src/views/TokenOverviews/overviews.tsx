@@ -199,8 +199,8 @@ const Overview = () => {
                             alignItems: 'center',
                             flexDirection: 'column',
                             cursor: 'pointer',
-                            width: 40,
-                            height: 40,
+                            width: 50,
+                            height: 50,
                             borderRadius: '50%',
                             backgroundColor: '#0376c9',
                           }}
@@ -209,7 +209,7 @@ const Overview = () => {
                           }}>
                           <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
                         </div>
-                        <p style={{ marginTop: 2 }}>Send</p>
+                        <p style={{ marginTop: 2, fontSize: 15 }}>Send</p>
                       </div>
                     </div>
                   </div>

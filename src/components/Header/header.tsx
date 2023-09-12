@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Col, Row, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import AccountListDialog from '../Account/accountList';
-import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
 import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
@@ -66,22 +65,7 @@ const ContentHeader = () => {
             }}>
             <span style={{ fontSize: 20 }}>{getUserInfo().username && getUserInfo().username[0]}</span>
           </div> */}
-          {getJWTToken() ? (
-            <AccountListDialog />
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                cursor: 'pointer',
-                width: 50,
-                height: 50,
-                borderRadius: '50%',
-                backgroundColor: '#E0E0E0',
-              }}></div>
-          )}
+          <AccountListDialog />
         </Col>
       </Row>
       {/* <Row>
