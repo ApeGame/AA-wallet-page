@@ -208,7 +208,7 @@ const View = () => {
           </Col>
         </Row>
 
-        <div style={{ padding: 10, marginTop: 90 }}>
+        <div style={{ padding: 10, marginTop: 180 }}>
           <Button style={{ width: '100%' }} type="primary" size="large" loading={isLoading} onClick={payment}>
             Send
           </Button>
