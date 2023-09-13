@@ -79,7 +79,6 @@ const View = () => {
   }, [connectType]);
   const receiveMessageFormIndex = (params) => {
     console.log('-----params------', params.data)
-
   }
   
   useEffect(() => {
