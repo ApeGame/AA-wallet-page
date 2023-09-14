@@ -34,55 +34,56 @@ const NftOverview = () => {
     <>
       <ImportNft isOpen={importFlag} onClose={handleImportClose} />
       <div style={{ color: '#000000', marginTop: 35, height: 325 }}>
-        {Object.keys(AccountStore.currentAccount.erc721AccountMap).map((key, index) => {
-          return (
-            <div key={index}>
-              <Row>
-                <Col span={21} style={{ display: 'flex', alignItems: 'center' }}>
-                  <span style={{ fontSize: 15, fontWeight: 'bold', marginLeft: 30 }}>
-                    {AccountStore.currentAccount.erc721AccountMap[key].name}
-                  </span>
-                </Col>
-                <Col span={3} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                  <DownOutlined
-                    onClick={() => {
-                      setIsFold(!isFold);
-                    }}
-                  />
-                </Col>
-              </Row>
-              {!isFold &&
-                Object.keys(AccountStore.currentAccount.erc721AccountMap[key].token_uri).map((keyNft, index) => {
-                  return (
-                    <div key={index}>
-                      <Row style={{ marginTop: 20 }}>
-                        <Col span={24} style={{ display: 'flex' }}>
-                          <div
-                            style={{
-                              height: 150,
-                              width: 150,
-                              marginLeft: 30,
-                              cursor: 'pointer',
-                              backgroundColor: '#E6F0FA',
-                              borderRadius: '15px',
-                            }}
-                            onClick={() => {
-                              // navigateTo('/nftDetail');
-                              navigateTo(`/nftDetail?tokenAddress=${key}&tokenId=${keyNft}`);
-                            }}>
-                            <NftImage
-                              tokenUri={AccountStore.currentAccount.erc721AccountMap[key].token_uri[keyNft]}
-                              size={140}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  );
-                })}
-            </div>
-          );
-        })}
+        {AccountStore.currentAccount.erc721AccountMap &&
+          Object.keys(AccountStore.currentAccount.erc721AccountMap).map((key, index) => {
+            return (
+              <div key={index}>
+                <Row>
+                  <Col span={21} style={{ display: 'flex', alignItems: 'center' }}>
+                    <span style={{ fontSize: 15, fontWeight: 'bold', marginLeft: 30 }}>
+                      {AccountStore.currentAccount.erc721AccountMap[key].name}
+                    </span>
+                  </Col>
+                  <Col span={3} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                    <DownOutlined
+                      onClick={() => {
+                        setIsFold(!isFold);
+                      }}
+                    />
+                  </Col>
+                </Row>
+                {!isFold &&
+                  Object.keys(AccountStore.currentAccount.erc721AccountMap[key].token_uri).map((keyNft, index) => {
+                    return (
+                      <div key={index}>
+                        <Row style={{ marginTop: 20 }}>
+                          <Col span={24} style={{ display: 'flex' }}>
+                            <div
+                              style={{
+                                height: 150,
+                                width: 150,
+                                marginLeft: 30,
+                                cursor: 'pointer',
+                                backgroundColor: '#E6F0FA',
+                                borderRadius: '15px',
+                              }}
+                              onClick={() => {
+                                // navigateTo('/nftDetail');
+                                navigateTo(`/nftDetail?tokenAddress=${key}&tokenId=${keyNft}`);
+                              }}>
+                              <NftImage
+                                tokenUri={AccountStore.currentAccount.erc721AccountMap[key].token_uri[keyNft]}
+                                size={140}
+                              />
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    );
+                  })}
+              </div>
+            );
+          })}
 
         {/* <div>
           <Row>

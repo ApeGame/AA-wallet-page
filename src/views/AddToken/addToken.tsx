@@ -24,14 +24,19 @@ const View = () => {
 
   const addToken = async () => {
     setIsLoading(true);
-    const addRes = await UpdateToken(tokenAddress.trim());
-    if (addRes.code === 200) {
-      messageApi.success('Complete');
-      navigateTo('/overview');
-      // AccountStore.loadUserData();
+    if (tokenAddress.trim().length === 0) {
+      messageApi.warning('token address cannot be empty');
     } else {
-      messageApi.error('Fail');
+      const addRes = await UpdateToken(tokenAddress.trim());
+      if (addRes.code === 200) {
+        messageApi.success('Complete');
+        navigateTo('/overview');
+        // AccountStore.loadUserData();
+      } else {
+        messageApi.error(addRes.data);
+      }
     }
+
     setIsLoading(false);
   };
 
@@ -46,6 +51,7 @@ const View = () => {
       </div>
       <div style={contentStyle}>
         <Input
+          size="large"
           placeholder="Enter Token Address"
           onChange={(e) => {
             if (e != null) {
@@ -55,11 +61,14 @@ const View = () => {
         />
       </div>
 
-      <div style={contentStyle}>
-        <Button type="primary" size="large" loading={isLoading} onClick={addToken}>
-          Add
-        </Button>
-      </div>
+      <Button
+        style={{ width: '90%', marginTop: '33rem' }}
+        type="primary"
+        size="large"
+        loading={isLoading}
+        onClick={addToken}>
+        Add
+      </Button>
     </div>
   );
 };

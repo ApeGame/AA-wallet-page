@@ -23,7 +23,7 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         AccountStore.loadUserData();
         onClose();
       } else {
-        messageApi.error('import fail');
+        messageApi.error(updateRes.data);
       }
     }
     setIsLoading(false);
@@ -74,7 +74,9 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
           <Row style={{ marginTop: 20 }}>
             <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Button size="large">Cancel</Button>
+              <Button size="large" onClick={onClose}>
+                Cancel
+              </Button>
             </Col>
             <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Button
