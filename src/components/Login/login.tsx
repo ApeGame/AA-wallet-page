@@ -134,9 +134,7 @@ const LoginDialog = () => {
           <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
 
           {!(check1 && check2) && (
-            <span style={{ marginTop: 25, fontSize: 10, color: 'red' }}>
-              *Please click on the following two terms before logging in*
-            </span>
+            <span style={{ marginTop: 25, fontSize: 10, color: 'red' }}>Please check the boxes before proceeding</span>
           )}
 
           <Space
