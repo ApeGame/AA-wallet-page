@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Col, Row, Button } from 'antd';
+import { Col, Row, Button, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { ImportNft } from './importNft';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ const listStyle: React.CSSProperties = {
   alignItems: 'center',
   flexDirection: 'column',
   fontSize: '15px',
+  color: '#000000',
 };
 
 const NftOverview = () => {
@@ -50,58 +51,35 @@ const NftOverview = () => {
                   />
                 </Col>
               </Row>
-              {
-                !isFold &&
-                  Object.keys(AccountStore.currentAccount.erc721AccountMap[key].token_uri).map((keyNft, index) => {
-                    return (
-                      <div key={index}>
-                        <Row style={{ marginTop: 20 }}>
-                          <Col span={24} style={{ display: 'flex' }}>
-                            <div
-                              style={{
-                                height: 150,
-                                width: 150,
-                                marginLeft: 30,
-                                cursor: 'pointer',
-                                backgroundColor: '#E6F0FA',
-                                borderRadius: '15px',
-                              }}
-                              onClick={() => {
-                                // navigateTo('/nftDetail');
-                                navigateTo(`/nftDetail?tokenAddress=${key}&tokenId=${keyNft}`);
-                              }}>
-                              <NftImage
-                                tokenUri={AccountStore.currentAccount.erc721AccountMap[key].token_uri[keyNft]}
-                                size={140}
-                              />
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    );
-                  })
-
-                // (
-                //   <Row style={{ marginTop: 20 }}>
-                //     <Col span={24} style={{ display: 'flex' }}>
-                //       <div
-                //         style={{
-                //           height: 150,
-                //           width: 150,
-                //           marginLeft: 30,
-                //           cursor: 'pointer',
-                //           backgroundColor: '#E6F0FA',
-                //           borderRadius: '15px',
-                //         }}
-                //         onClick={() => {
-                //           navigateTo('/nftDetail');
-                //         }}>
-                //         <img style={{ height: 140, width: 140 }} src={nftHeroImage} alt="" />
-                //       </div>
-                //     </Col>
-                //   </Row>
-                // )
-              }
+              {!isFold &&
+                Object.keys(AccountStore.currentAccount.erc721AccountMap[key].token_uri).map((keyNft, index) => {
+                  return (
+                    <div key={index}>
+                      <Row style={{ marginTop: 20 }}>
+                        <Col span={24} style={{ display: 'flex' }}>
+                          <div
+                            style={{
+                              height: 150,
+                              width: 150,
+                              marginLeft: 30,
+                              cursor: 'pointer',
+                              backgroundColor: '#E6F0FA',
+                              borderRadius: '15px',
+                            }}
+                            onClick={() => {
+                              // navigateTo('/nftDetail');
+                              navigateTo(`/nftDetail?tokenAddress=${key}&tokenId=${keyNft}`);
+                            }}>
+                            <NftImage
+                              tokenUri={AccountStore.currentAccount.erc721AccountMap[key].token_uri[keyNft]}
+                              size={140}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
             </div>
           );
         })}
@@ -141,7 +119,7 @@ const NftOverview = () => {
           )}
         </div> */}
       </div>
-      <div style={listStyle}>
+      {/* <div style={listStyle}>
         <Button
           type="link"
           onClick={() => {
@@ -149,6 +127,18 @@ const NftOverview = () => {
           }}>
           Import NFT
         </Button>
+      </div> */}
+      <div style={listStyle}>
+        <Space>
+          <span style={{ fontSize: 15 }}>Don't see your NFT?</span>
+          <Button
+            type="link"
+            onClick={() => {
+              setImportFlag(true);
+            }}>
+            Import NFT
+          </Button>
+        </Space>
       </div>
     </>
   );

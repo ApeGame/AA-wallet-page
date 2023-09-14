@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { ActivityRecord } from '@/model/multisig';
-import { Space, Divider } from 'antd';
+import { Divider } from 'antd';
 import { GetMultisigHistoryListErc } from '@/actions/MultisigWallet/multisigWallet';
 import { observer } from 'mobx-react';
 import { AccountStore } from '@/store/account';
@@ -27,17 +27,9 @@ const iconButtonStyle: React.CSSProperties = {
 };
 
 const backStyle: React.CSSProperties = {
-  marginTop: 30,
-  marginRight: 330,
+  marginRight: 380,
+  paddingTop: 20,
   color: '#000000',
-};
-
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '30px',
-  color: '#0376C9',
 };
 
 const balanceStyle: React.CSSProperties = {
@@ -81,82 +73,89 @@ const Overview = () => {
   }, [search]);
 
   return (
-    <div>
-      <div
-        style={backStyle}
-        onClick={() => {
-          navigateTo('/overview');
-        }}>
-        <LeftOutlined />
-      </div>
-      <div style={{ marginTop: 30 }}>
-        {/* {search.get('tokenAddress') && <div style={balanceStyle}>Token Address</div>}
-        <div style={balanceStyle}>{search.get('tokenAddress')}</div> */}
-        <div style={{ color: '#000000' }}>
+    <>
+      <div style={{ backgroundColor: '#FFFFFF' }}>
+        <div
+          style={backStyle}
+          onClick={() => {
+            navigateTo('/overview');
+          }}>
+          <LeftOutlined />
+        </div>
+        <div style={{ marginTop: 20 }}>
           {AccountStore.currentAccount && (
             <>
-              <div style={addressStyle}>
-                <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
-                  <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                    {AccountStore.currentAccount.address && (
-                      <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
-                    )}
-                    <span style={{ color: '#000000' }}>
-                      {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
-                    </span>
-                  </Space>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#FFFFFF',
+                  color: '#000000',
+                  marginTop: 2,
+                }}>
+                <span
+                  style={{
+                    marginTop: 25,
+                    fontSize: 21,
+                    fontWeight: 500,
+                    lineHeight: 'normal',
+                  }}>
+                  {AccountStore.currentAccount.name}
+                  <span style={{ fontSize: 15, fontWeight: 500, lineHeight: 'normal' }}>
+                    {AccountStore.currentAccount.isMultisig ? ' (Multisig Account)' : ' (Abstract Account)'}
+                  </span>
+                </span>
+                <div style={{ marginBottom: 25, marginTop: 10, color: '#356DF3', fontSize: 17 }}>
+                  <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
                 </div>
               </div>
-              {AccountStore.currentAccount.nativeBalance && (
-                <div style={balanceStyle}>
-                  {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
-                  {' ' + getCurrentNetworkWithStorage().symbol}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  backgroundColor: '#FFFFFF',
+                  color: '#000000',
+                  marginTop: 2,
+                }}>
+                <div style={{ marginTop: 10, height: 170 }}>
+                  {AccountStore.currentAccount.nativeBalance && (
+                    <div style={balanceStyle}>
+                      {formatWeiToEth(AccountStore.currentAccount.nativeBalance)}{' '}
+                      {' ' + getCurrentNetworkWithStorage().symbol}
+                    </div>
+                  )}
+                  <div style={functionsListStyle}>
+                    <div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                          cursor: 'pointer',
+                          width: 50,
+                          height: 50,
+                          borderRadius: '50%',
+                          backgroundColor: '#0376c9',
+                        }}
+                        onClick={() => {
+                          navigateTo(`/sendToken`);
+                        }}>
+                        <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+                      </div>
+                      <p style={{ marginTop: 2, fontSize: 15 }}>Send</p>
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
             </>
           )}
         </div>
+        <Divider />
       </div>
-
-      <div style={functionsListStyle}>
-        {/* <div
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            // navigateTo('/sendToken');
-            navigateTo(`/sendToken?tokenAddress=${search.get('tokenAddress')}`);
-          }}>
-          <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          <p style={{ marginTop: 5 }}>Send</p>
-        </div> */}
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: '#0376c9',
-            }}
-            onClick={() => {
-              // navigateTo('/sendToken');
-              navigateTo(`/sendToken`);
-            }}>
-            <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          </div>
-          <p style={{ marginTop: 2 }}>Send</p>
-        </div>
-      </div>
-
-      <Divider />
-
-      {/* <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000000' }}>
-        Transactions:
-      </span> */}
-
       <div style={{ color: '#000000' }}>
         {recordList.length === 0 ? (
           <span style={{ fontSize: 15 }}>No Data</span>
@@ -164,66 +163,14 @@ const Overview = () => {
           <div
             style={{
               color: '#000000',
-              height: 400,
+              height: 420,
               overflowY: 'auto',
-              marginTop: 15,
             }}>
-            {recordList &&
-              recordList.map((row, index) => (
-                <Activity activityRecord={row} key={index} />
-                // <Space
-                //   key={index}
-                //   direction="vertical"
-                //   size="small"
-                //   style={{
-                //     display: 'flex',
-                //     width: '100%',
-                //     paddingTop: 10,
-                //     paddingBottom: 10,
-                //     borderBottom: '1px solid #D3D3D3',
-                //   }}>
-                //   <Row justify="space-between" align="bottom">
-                //     <Col span={10}>
-                //       <span>Sender : </span>
-                //     </Col>
-                //     <Col span={14}>
-                //       <CopyToClipLong address={row.sender || ''} />
-                //     </Col>
-                //   </Row>
-                //   {row.user_operation_hash && (
-                //     <Row justify="space-between" align="bottom">
-                //       <Col span={10}>
-                //         <span>User operation hash : </span>
-                //       </Col>
-                //       <Col span={14}>
-                //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                //       </Col>
-                //     </Row>
-                //   )}
-                //   {row.transaction_hash && (
-                //     <Row justify="space-between" align="bottom">
-                //       <Col span={10}>
-                //         <span>Transaction hash : </span>
-                //       </Col>
-                //       <Col span={14}>
-                //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-                //       </Col>
-                //     </Row>
-                //   )}
-                //   <Row justify="space-between" align="bottom">
-                //     <Col span={10}>
-                //       <span>Status : </span>
-                //     </Col>
-                //     <Col span={12}>
-                //       <span>{GetStatus(row.status)} </span>
-                //     </Col>
-                //   </Row>
-                // </Space>
-              ))}
+            {recordList && recordList.map((row, index) => <Activity activityRecord={row} key={index} />)}
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

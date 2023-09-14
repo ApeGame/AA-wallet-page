@@ -1,50 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useEffect } from 'react';
-import { Col, Row } from 'antd';
-import { LogoutOutlined, HomeOutlined, DownOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Col, Row, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import AccountListDialog from '../Account/accountList';
-import { getJWTToken } from '@/utils/localStorage';
 import { observer } from 'mobx-react';
 import SwitchNetworkDialog from '@/components/Network/switchNetwork';
-import { removeUserInfo } from '@/utils/localStorage';
-// import { getCurrentNetwork } from '@/utils/localStorage';
-// import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
-import { AccountStore } from '@/store/account';
 import { getCurrentNetworkWithStorage } from '../Account/hooks/chainConfig';
+import { useNavigate } from 'react-router-dom';
+import logoIcon from '@/assets/img/logo/logo.svg';
 
-const headerStyle: React.CSSProperties = {
-  color: '#000000',
-  height: 65,
-  backgroundColor: '#FFFFFF',
-};
-
-const titleStyle: React.CSSProperties = {
-  textAlign: 'center',
-  fontSize: '16px',
-  fontWeight: 'bold',
-  height: 65,
-};
-
-const moreStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row-reverse',
-  cursor: 'pointer',
-  height: 65,
-};
+import '@/assets/styles/accountStyle/style.scss';
 
 const ContentHeader = () => {
   const navigateTo = useNavigate();
-
   const [switchNetworkFlag, setSwitchNetworkFlag] = React.useState(false);
   const handleSwitchNetworkClose = () => {
     setSwitchNetworkFlag(false);
-  };
-
-  const loginOut = () => {
-    removeUserInfo();
-    navigateTo('/login');
   };
 
   useEffect(() => {
@@ -52,9 +23,61 @@ const ContentHeader = () => {
   }, []);
 
   return (
-    <div style={headerStyle}>
+    <>
       <SwitchNetworkDialog isOpen={switchNetworkFlag} onClose={handleSwitchNetworkClose} />
       <Row>
+        <Col span={9} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
+          <img
+            style={{ height: 40, width: 40, cursor: 'pointer' }}
+            src={logoIcon}
+            alt=""
+            onClick={() => {
+              navigateTo('overview');
+            }}
+          />
+        </Col>
+        <Col span={11} style={{ display: 'flex', alignItems: 'center', height: 80 }}>
+          <div
+            onClick={() => {
+              setSwitchNetworkFlag(true);
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: 40,
+              borderRadius: '50px',
+              border: '1.5px solid #EFEFEF',
+            }}>
+            <div style={{ display: 'flex', alignItems: 'center', paddingLeft: 3 }}>
+              <Space>
+                <div style={{ height: 30, width: 30, display: 'flex', alignItems: 'center', paddingLeft: 5 }}>
+                  {getCurrentNetworkWithStorage().icon}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>{getCurrentNetworkWithStorage().name}</div>
+              </Space>
+            </div>
+            <div style={{ paddingLeft: 15, paddingRight: 10 }}>
+              <DownOutlined />
+            </div>
+          </div>
+        </Col>
+        <Col span={4} style={{ display: 'flex', alignItems: 'center', height: 80, paddingLeft: 5 }}>
+          {/* <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 50,
+              height: 50,
+              borderRadius: '50%',
+              background: '#E0E0E0',
+            }}>
+            <span style={{ fontSize: 20 }}>{getUserInfo().username && getUserInfo().username[0]}</span>
+          </div> */}
+          <AccountListDialog />
+        </Col>
+      </Row>
+      {/* <Row>
         <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }}>
           <div
             onClick={() => {
@@ -91,8 +114,8 @@ const ContentHeader = () => {
         <Col span={2} style={moreStyle}>
           <LogoutOutlined onClick={loginOut} />
         </Col>
-      </Row>
-    </div>
+      </Row> */}
+    </>
   );
 };
 

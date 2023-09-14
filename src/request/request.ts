@@ -76,7 +76,13 @@ export const UrlByNetwork = (): string => {
   } else if (getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.lineaMainnet) {
     return `/${BlockchainNetworkId.lineaMainnet}`;
   } else {
-    return `/${BlockchainNetworkId.ankrTest}`;
+    if (import.meta.env.MODE === 'dev') {
+      return `/${BlockchainNetworkId.ankrTest}`;
+    } else if (import.meta.env.MODE === 'production') {
+      return `/${BlockchainNetworkId.basMainnet}`;
+    } else {
+      return `/${BlockchainNetworkId.ankrTest}`;
+    }
   }
 
   //   getNetworkByName(getCurrentNetwork()).networkId === BlockchainNetworkId.basMainnet

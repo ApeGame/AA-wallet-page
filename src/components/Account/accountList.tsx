@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState } from 'react';
-import { DownOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, PlusOutlined, EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
-import { Button, Modal, Col, Row, Space } from 'antd';
+import { Button, Modal, Col, Row } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { formatWeiToEth } from '@/utils/formatterEth';
 import classNames from 'classnames';
@@ -12,11 +12,15 @@ import { AddAccountEmailDialog } from '@/components/Account/setAccountEmail';
 import UpdateAccountNameDialog from './updateAccountName';
 import { getUserRecoverEmail, setCurrentAddress } from '@/utils/localStorage';
 import { getCurrentNetworkWithStorage } from './hooks/chainConfig';
+import { removeUserInfo } from '@/utils/localStorage';
+import { useNavigate } from 'react-router-dom';
 
 import '@/assets/styles/accountStyle/style.scss';
 
 const AccountListDialog = () => {
   const [open, setOpen] = useState(false);
+
+  const navigateTo = useNavigate();
 
   const [addAccountFlag, setAddAccountFlag] = React.useState(false);
   const handleAddAccountClose = () => {
@@ -30,6 +34,12 @@ const AccountListDialog = () => {
 
   const showModal = () => {
     setOpen(true);
+  };
+
+  const logOut = () => {
+    removeUserInfo();
+    navigateTo('/login');
+    window.location.reload();
   };
 
   const selectAccount = (address: string) => {
@@ -74,7 +84,7 @@ const AccountListDialog = () => {
     <>
       {AccountStore.accountList.length !== 0 ? (
         <div>
-          <Button type="text" onClick={showModal}>
+          {/* <Button type="text" onClick={showModal}>
             <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#000000' }}>
               {AccountStore.accountList.map((row, index) => (
                 <span key={index}>
@@ -84,7 +94,24 @@ const AccountListDialog = () => {
               &nbsp; &nbsp;
               <DownOutlined />
             </span>
-          </Button>
+          </Button> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              cursor: 'pointer',
+              width: 50,
+              height: 50,
+              borderRadius: '50%',
+              backgroundColor: '#E0E0E0',
+            }}
+            onClick={showModal}>
+            <span style={{ fontSize: '25px', fontWeight: 'bold', color: '#9D9D9D' }}>
+              {AccountStore.currentAccount.name && AccountStore.currentAccount.name[0]}
+            </span>
+          </div>
         </div>
       ) : (
         <></>
@@ -96,13 +123,13 @@ const AccountListDialog = () => {
 
       <Modal
         centered
-        title="Select an account "
+        title="Select An Account "
         open={open}
         onOk={handleOk}
         onCancel={handleCancel}
-        width={390}
+        width={410}
         footer={[]}>
-        <div style={{ height: 330, marginTop: 20, overflowY: 'auto' }}>
+        <div style={{ height: 360, marginTop: 20, overflowY: 'auto' }}>
           {AccountStore.accountList.map((row, index) => (
             <div key={index}>
               <UpdateAccountNameDialog
@@ -121,44 +148,86 @@ const AccountListDialog = () => {
                 onClick={() => {
                   selectAccount(row.address);
                 }}
-                style={{ padding: 10 }}>
-                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                  <Row>
-                    <Col span={24}>
-                      <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                        {row.name ? row.name : 'Account'}
-                        {row.isMultisig ? '(Multisig)' : '(Abstract)'}
-                      </span>
-
-                      {row.isMultisig && (
-                        <span
-                          style={{ marginLeft: 10 }}
-                          onClick={(e) => {
-                            console.log('edit name');
-                            e.stopPropagation();
-                            AccountStore.updateAccountNameFlagByAddress(row.address, true);
-                          }}>
-                          <EditOutlined />
+                style={{ marginTop: 20, marginBottom: 20 }}>
+                <Row>
+                  <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        width: 35,
+                        height: 35,
+                        borderRadius: '30%',
+                        background: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontSize: '15px',
+                        fontWeight: 'bold',
+                      }}>
+                      {row.name && row.name[0]}
+                    </div>
+                  </Col>
+                  <Col span={18}>
+                    <Row>
+                      <Col span={24}>
+                        <span style={{ fontSize: '15px', fontWeight: 'bold' }}>
+                          {row.name ? row.name : 'Account'}
+                          {row.isMultisig ? '(Multisig)' : '(Abstract)'}
                         </span>
-                      )}
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={15}>
-                      <span>{truncateWalletAddrLong(row.address)}</span>
-                    </Col>
-                    <Col span={9}>
-                      <span style={{ textAlign: 'right' }}>
-                        {formatWeiToEth(row.nativeBalance)} {getCurrentNetworkWithStorage().symbol}
-                      </span>
-                    </Col>
-                  </Row>
-                </Space>
+
+                        {row.isMultisig && (
+                          <span
+                            style={{ marginLeft: 10 }}
+                            onClick={(e) => {
+                              console.log('edit name');
+                              e.stopPropagation();
+                              AccountStore.updateAccountNameFlagByAddress(row.address, true);
+                            }}>
+                            <EditOutlined />
+                          </span>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={16}>
+                        <span
+                          style={{
+                            fontFamily: 'Poppins',
+                            color: '#999',
+                            fontStyle: 'normal',
+                            fontWeight: '500',
+                            lineHeight: '10px',
+                            fontSize: '1',
+                          }}>
+                          {truncateWalletAddrLong(row.address)}
+                        </span>
+                      </Col>
+                      <Col span={8}>
+                        <span
+                          style={{
+                            textAlign: 'right',
+                            fontFamily: 'Poppins',
+                            color: '#999',
+                            fontStyle: 'normal',
+                            fontWeight: '500',
+                            lineHeight: '10px',
+                            fontSize: '1',
+                          }}>
+                          {formatWeiToEth(row.nativeBalance)} {getCurrentNetworkWithStorage().symbol}
+                        </span>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {row.address === AccountStore.currentAccount.address && (
+                      <CheckCircleOutlined style={{ color: '#39B54A', fontWeight: 'bolder' }} />
+                    )}
+                  </Col>
+                </Row>
               </div>
             </div>
           ))}
         </div>
-        <div style={{ height: 100, marginTop: 10, overflowY: 'auto' }}>
+        <div style={{ height: 100, marginTop: 10, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
           {!getUserRecoverEmail() ? (
             <span>
               <Button
@@ -184,6 +253,16 @@ const AccountListDialog = () => {
               Add Multisig Wallet Account
             </Button>
             <AddAccountDialog isOpen={addAccountFlag} onClose={handleAddAccountClose} />
+          </span>
+          <span>
+            <Button
+              type="link"
+              onClick={() => {
+                logOut();
+              }}>
+              <LogoutOutlined style={{ color: '#1677ff' }} />
+              Log out
+            </Button>
           </span>
         </div>
       </Modal>

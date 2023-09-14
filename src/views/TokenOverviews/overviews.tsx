@@ -30,14 +30,6 @@ const iconButtonStyle: React.CSSProperties = {
   color: '#FFFFFF',
 };
 
-const addressStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '30px',
-  color: '#0376C9',
-};
-
 const balanceStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -119,117 +111,168 @@ const Overview = () => {
   ];
 
   return (
-    <div>
-      {contextHolder}
-      <TokenDetails
-        isOpen={checkFlag}
-        onClose={handleCheckActivityClose}
-        tokenAddress={search.get('tokenAddress') || ''}
-      />
-      <Row style={{ color: '#000000', marginTop: 35, paddingLeft: 30, paddingRight: 30 }}>
-        <Col span={12}>
-          <div
-            style={{ display: 'flex', flexDirection: 'row' }}
-            onClick={() => {
-              navigateTo('/overview');
-            }}>
-            <LeftOutlined />
-          </div>
-        </Col>
-        <Col span={12}>
-          <div style={{ display: 'flex', flexDirection: 'row-reverse', width: '40' }}>
-            <Dropdown menu={{ items }}>
-              <EllipsisOutlined />
-            </Dropdown>
-          </div>
-        </Col>
-      </Row>
-
-      {/* <div
-        style={backStyle}
-        onClick={() => {
-          navigateTo('/overview');
-        }}>
-        <LeftOutlined />
-      </div>
-      <div
-        style={{}}
-        onClick={() => {
-          navigateTo('/overview');
-        }}>
-        <LeftOutlined />
-      </div> */}
-      <div style={{ marginTop: 30 }}>
-        {/* {search.get('tokenAddress') && <div style={balanceStyle}>Token Address</div>}
-        <div style={balanceStyle}>{search.get('tokenAddress')}</div> */}
-        {AccountStore.currentAccount && (
-          <>
-            <div style={addressStyle}>
-              <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
-                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                  {AccountStore.currentAccount.address && (
-                    <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
-                  )}
-                  <span style={{ color: '#000000' }}>
-                    {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
-                  </span>
-                </Space>
-              </div>
-            </div>
-            {AccountStore.currentAccount.nativeBalance && (
-              <div style={balanceStyle}>
-                {search.get('tokenAddress') &&
-                  AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
-                  formatWeiToEth(
-                    AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
-                  )}{' '}
-                {' ' + search.get('tokenAddress') &&
-                  AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
-                  AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      <div style={functionsListStyle}>
-        {/* <div
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            // navigateTo('/sendToken');
-            navigateTo(`/sendToken?tokenAddress=${search.get('tokenAddress')}`);
-          }}>
-          <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
-          <p style={{ marginTop: 5 }}>Send</p>
-        </div> */}
+    <>
+      <div style={{ backgroundColor: '#FFFFFF' }}>
         <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: '#0376c9',
-            }}
-            onClick={() => {
-              // navigateTo('/sendToken');
-              navigateTo(`/sendToken?tokenAddress=${search.get('tokenAddress')}`);
-            }}>
-            <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+          {contextHolder}
+          <TokenDetails
+            isOpen={checkFlag}
+            onClose={handleCheckActivityClose}
+            tokenAddress={search.get('tokenAddress') || ''}
+          />
+          <Row style={{ color: '#000000', paddingTop: 35, paddingLeft: 30, paddingRight: 30 }}>
+            <Col span={12}>
+              <div
+                style={{ display: 'flex', flexDirection: 'row' }}
+                onClick={() => {
+                  navigateTo('/overview');
+                }}>
+                <LeftOutlined />
+              </div>
+            </Col>
+            <Col span={12}>
+              <div style={{ display: 'flex', flexDirection: 'row-reverse', width: '40' }}>
+                <Dropdown menu={{ items }}>
+                  <EllipsisOutlined />
+                </Dropdown>
+              </div>
+            </Col>
+          </Row>
+
+          <div style={{ marginTop: 20 }}>
+            {AccountStore.currentAccount && (
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
+                    marginTop: 2,
+                  }}>
+                  <span
+                    style={{
+                      marginTop: 25,
+                      fontSize: 21,
+                      fontWeight: 500,
+                      lineHeight: 'normal',
+                    }}>
+                    {AccountStore.currentAccount.name}
+                    <span style={{ fontSize: 15, fontWeight: 500, lineHeight: 'normal' }}>
+                      {AccountStore.currentAccount.isMultisig ? ' (Multisig Account)' : ' (Abstract Account)'}
+                    </span>
+                  </span>
+                  <div style={{ marginBottom: 25, marginTop: 10, color: '#356DF3', fontSize: 17 }}>
+                    <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
+                    marginTop: 2,
+                  }}>
+                  <div style={{ marginTop: 10, height: 170 }}>
+                    {AccountStore.currentAccount.nativeBalance && (
+                      <div style={balanceStyle}>
+                        {search.get('tokenAddress') &&
+                          AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
+                          formatWeiToEth(
+                            AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
+                          )}{' '}
+                        {' ' + search.get('tokenAddress') &&
+                          AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
+                          AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol}
+                      </div>
+                    )}
+                    <div style={functionsListStyle}>
+                      <div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            cursor: 'pointer',
+                            width: 50,
+                            height: 50,
+                            borderRadius: '50%',
+                            backgroundColor: '#0376c9',
+                          }}
+                          onClick={() => {
+                            navigateTo(`/sendToken?tokenAddress=${search.get('tokenAddress')}`);
+                          }}>
+                          <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+                        </div>
+                        <p style={{ marginTop: 2, fontSize: 15 }}>Send</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {/* {AccountStore.currentAccount && (
+              <>
+                <div style={addressStyle}>
+                  <div style={{ width: '55%', backgroundColor: '#E6F0FA', padding: 15, borderRadius: '15px' }}>
+                    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                      {AccountStore.currentAccount.address && (
+                        <CopyToClipLong address={AccountStore.currentAccount.address || ''} />
+                      )}
+                      <span style={{ color: '#000000' }}>
+                        {AccountStore.currentAccount.isMultisig ? '(Multisig Account)' : '(Abstract Account)'}
+                      </span>
+                    </Space>
+                  </div>
+                </div>
+                {AccountStore.currentAccount.nativeBalance && (
+                  <div style={balanceStyle}>
+                    {search.get('tokenAddress') &&
+                      AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
+                      formatWeiToEth(
+                        AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
+                      )}{' '}
+                    {' ' + search.get('tokenAddress') &&
+                      AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
+                      AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol}
+                  </div>
+                )}
+              </>
+            )} */}
           </div>
-          <p style={{ marginTop: 2 }}>Send</p>
+
+          {/* <div style={functionsListStyle}>
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  cursor: 'pointer',
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  backgroundColor: '#0376c9',
+                }}
+                onClick={() => {
+                  // navigateTo('/sendToken');
+                  navigateTo(`/sendToken?tokenAddress=${search.get('tokenAddress')}`);
+                }}>
+                <ArrowRightOutlined rotate={-45} style={iconButtonStyle} />
+              </div>
+              <p style={{ marginTop: 2 }}>Send</p>
+            </div>
+          </div> */}
+
+          <Divider />
         </div>
       </div>
-
-      <Divider />
-
-      {/* <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#000000' }}>
-        Transactions:
-      </span> */}
 
       <div style={{ color: '#000000' }}>
         {recordList.length === 0 ? (
@@ -239,65 +282,14 @@ const Overview = () => {
             style={{
               color: '#000000',
               marginTop: 15,
-              height: 400,
+              height: 420,
               overflowY: 'auto',
             }}>
-            {recordList &&
-              recordList.map((row, index) => (
-                <Activity activityRecord={row} key={index} />
-                // <Space
-                //   key={index}
-                //   direction="vertical"
-                //   size="small"
-                //   style={{
-                //     display: 'flex',
-                //     width: '100%',
-                //     paddingTop: 10,
-                //     paddingBottom: 10,
-                //     borderBottom: '1px solid #D3D3D3',
-                //   }}>
-                //   <Row justify="space-between" align="bottom">
-                //     <Col span={10}>
-                //       <span>Sender : </span>
-                //     </Col>
-                //     <Col span={14}>
-                //       <CopyToClipLong address={row.sender || ''} />
-                //     </Col>
-                //   </Row>
-                //   {row.user_operation_hash && (
-                //     <Row justify="space-between" align="bottom">
-                //       <Col span={10}>
-                //         <span>User operation hash : </span>
-                //       </Col>
-                //       <Col span={14}>
-                //         <span>{row.user_operation_hash && moveToUserOperationScan(row.user_operation_hash)}</span>
-                //       </Col>
-                //     </Row>
-                //   )}
-                //   {row.transaction_hash && (
-                //     <Row justify="space-between" align="bottom">
-                //       <Col span={10}>
-                //         <span>Transaction hash : </span>
-                //       </Col>
-                //       <Col span={14}>
-                //         <span>{row.transaction_hash && moveToBlockScan(row.transaction_hash)}</span>
-                //       </Col>
-                //     </Row>
-                //   )}
-                //   <Row justify="space-between" align="bottom">
-                //     <Col span={10}>
-                //       <span>Status : </span>
-                //     </Col>
-                //     <Col span={12}>
-                //       <span>{GetStatus(row.status)} </span>
-                //     </Col>
-                //   </Row>
-                // </Space>
-              ))}
+            {recordList && recordList.map((row, index) => <Activity activityRecord={row} key={index} />)}
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
