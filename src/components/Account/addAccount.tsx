@@ -19,17 +19,27 @@ export const AddAccountDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose
 
   const createSig = async () => {
     setIsLoading(true);
-    const addRes = await CreateMultisigAddress(name, threshold, abstractAddressList);
-    if (addRes.code === 200) {
-      messageApi.success('Success');
-      navigateTo('/overview');
-      AccountStore.loadUserData();
-      onClose();
-    } else if (addRes.code === 400) {
-      messageApi.error(addRes.data);
+
+    if (name.length === 0) {
+      messageApi.warning('Please input wallet name');
+    } else if (threshold < 1) {
+      messageApi.warning('The input value cannot be less than 1');
+    } else if (abstractAddressList.length < 1) {
+      messageApi.warning('Enter at least one address');
     } else {
-      messageApi.error('fail');
+      const addRes = await CreateMultisigAddress(name, threshold, abstractAddressList);
+      if (addRes.code === 200) {
+        messageApi.success('Success');
+        navigateTo('/overview');
+        AccountStore.loadUserData();
+        onClose();
+      } else if (addRes.code === 400) {
+        messageApi.error(addRes.data);
+      } else {
+        messageApi.error('fail');
+      }
     }
+
     setIsLoading(false);
   };
 

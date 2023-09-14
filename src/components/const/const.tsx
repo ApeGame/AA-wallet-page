@@ -1,4 +1,7 @@
 import { CopyToClipWidth } from '@/components/CopyToClip/CopyToClipWidth';
+import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
+import { CopyFilled } from '@ant-design/icons';
+import { CopyIcon } from '../CopyToClip/CopyIcon';
 
 export enum BlockchainNetworkId {
   ankrTest = 12077,
@@ -43,16 +46,22 @@ export const getBlockChainExplorerAddress = (chainId: BlockchainNetworkId) => Bl
 
 export const getTransactionScanLink = (chainId: BlockchainNetworkId, txhash: string) => {
   return (
-    <a target="_blank" href={`${getBlockChainExplorerAddress(chainId)}/tx/${txhash}`}>
-      <CopyToClipWidth address={txhash || ''} />
-    </a>
+    <div style={{ display: 'flex' }}>
+      <a target="_blank" href={`${getBlockChainExplorerAddress(chainId)}/tx/${txhash}`}>
+        {truncateWalletAddrLong(txhash)}
+      </a>
+      <CopyIcon address={txhash || ''} />
+    </div>
   );
 };
 
 export const getUserOperationScanLink = (chainId: BlockchainNetworkId, hash: string) => {
   return (
-    <a target="_blank" href={`${import.meta.env.VITE_OPERATION_SCAN_URL}/user_operation/${hash}?chainId=${chainId}`}>
-      <CopyToClipWidth address={hash || ''} />
-    </a>
+    <div style={{ display: 'flex' }}>
+      <a target="_blank" href={`${import.meta.env.VITE_OPERATION_SCAN_URL}/user_operation/${hash}?chainId=${chainId}`}>
+        {truncateWalletAddrLong(hash)}
+      </a>
+      <CopyIcon address={hash || ''} />
+    </div>
   );
 };
