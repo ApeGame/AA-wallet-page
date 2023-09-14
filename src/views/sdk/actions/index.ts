@@ -7,7 +7,7 @@ export const userOperation = function (params): Promise<ResponseType> {
     data: {
       to: params.address?params.address:undefined,
       value: params.value || '0x',
-      data: params.data,
+      data: params.data ==='0x'?undefined: params.data,
       paymaster: undefined,
     },
   });
