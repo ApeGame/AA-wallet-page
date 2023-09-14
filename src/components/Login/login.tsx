@@ -146,8 +146,10 @@ const LoginDialog = () => {
             <div>
               <Checkbox onChange={onChange1} checked={check1}></Checkbox>
               <span style={{ marginLeft: 10 }}>
-                By utilizing the smart contract services, users acknowledge and agree to be bound by Coya's Terms of
-                Use.
+                By utilizing the smart contract services, users acknowledge and agree to be bound by Coya's{' '}
+                <a target="_blank" href={'https://coya.biz/termsofuse'}>
+                  Terms of Use.
+                </a>{' '}
               </span>
             </div>
             <div>

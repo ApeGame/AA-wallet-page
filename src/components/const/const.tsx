@@ -1,6 +1,4 @@
-import { CopyToClipWidth } from '@/components/CopyToClip/CopyToClipWidth';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
-import { CopyFilled } from '@ant-design/icons';
 import { CopyIcon } from '../CopyToClip/CopyIcon';
 
 export enum BlockchainNetworkId {
