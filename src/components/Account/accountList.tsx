@@ -15,6 +15,7 @@ import { getCurrentNetworkWithStorage } from './hooks/chainConfig';
 import { removeUserInfo } from '@/utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import Identicon from 'identicon.js';
+import md5 from 'js-md5';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -113,24 +114,53 @@ const AccountListDialog = () => {
               {AccountStore.currentAccount.name && AccountStore.currentAccount.name[0]}
             </span>
           </div> */}
+
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
+              position: 'relative',
               cursor: 'pointer',
               width: 45,
               height: 45,
-              borderRadius: '50%',
             }}
             onClick={showModal}>
             {AccountStore.currentAccount.address && (
-              <img
-                width={'100%'}
-                height={'100%'}
-                src={`data:image/png;base64,${new Identicon(AccountStore.currentAccount.address, 45).toString()}`}
-              />
+              <div style={{ position: 'absolute' }}>
+                <img
+                  width={'100%'}
+                  height={'100%'}
+                  style={{ borderRadius: '100%' }}
+                  src={`data:image/png;base64,${new Identicon(AccountStore.currentAccount.address, {
+                    background: [0, 0, 0, 0],
+                    size: 45,
+                  }).toString()}`}
+                />
+              </div>
+            )}
+            {AccountStore.currentAccount.name && (
+              <div style={{ position: 'absolute' }}>
+                <img
+                  width={'100%'}
+                  height={'100%'}
+                  style={{ borderRadius: '100%' }}
+                  src={`data:image/png;base64,${new Identicon(md5(AccountStore.currentAccount.name), {
+                    background: [0, 0, 0, 0],
+                    size: 45,
+                  }).toString()}`}
+                />
+              </div>
+            )}
+            {AccountStore.currentAccount.name && (
+              <div style={{ position: 'absolute' }}>
+                <img
+                  width={'100%'}
+                  height={'100%'}
+                  style={{ borderRadius: '100%' }}
+                  src={`data:image/png;base64,${new Identicon(md5('salt1'), {
+                    background: [0, 0, 0, 0],
+                    size: 45,
+                  }).toString()}`}
+                />
+              </div>
             )}
           </div>
         </div>
@@ -196,11 +226,43 @@ const AccountListDialog = () => {
                         alignItems: 'center',
                       }}>
                       {row.address && (
-                        <img
-                          width={'100%'}
-                          height={'100%'}
-                          src={`data:image/png;base64,${new Identicon(row.address, 40).toString()}`}
-                        />
+                        <div style={{ position: 'absolute' }}>
+                          <img
+                            width={'100%'}
+                            height={'100%'}
+                            style={{ borderRadius: '100%' }}
+                            src={`data:image/png;base64,${new Identicon(md5(row.address), {
+                              background: [0, 0, 0, 0],
+                              size: 45,
+                            }).toString()}`}
+                          />
+                        </div>
+                      )}
+                      {row.name && (
+                        <div style={{ position: 'absolute' }}>
+                          <img
+                            width={'100%'}
+                            height={'100%'}
+                            style={{ borderRadius: '100%' }}
+                            src={`data:image/png;base64,${new Identicon(md5(row.name), {
+                              background: [0, 0, 0, 0],
+                              size: 45,
+                            }).toString()}`}
+                          />
+                        </div>
+                      )}
+                      {AccountStore.currentAccount.name && (
+                        <div style={{ position: 'absolute' }}>
+                          <img
+                            width={'100%'}
+                            height={'100%'}
+                            style={{ borderRadius: '100%' }}
+                            src={`data:image/png;base64,${new Identicon(md5('salt1'), {
+                              background: [0, 0, 0, 0],
+                              size: 45,
+                            }).toString()}`}
+                          />
+                        </div>
                       )}
                     </div>
                   </Col>
