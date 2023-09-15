@@ -4,8 +4,8 @@ import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { RequestGoogleLogin, RequestFBLogin } from '@/actions/Login/login';
-import { useFacebook } from 'react-facebook';
+import { RequestGoogleLogin } from '@/actions/Login/login';
+// import { useFacebook } from 'react-facebook';
 import { Button } from 'antd';
 import { setJWTToken, setRefreshToken, setUserInfo } from '@/utils/localStorage';
 import { RecoverAccountByEmailDialog } from '@/components/Account/recoverAccountByEmail';
@@ -15,7 +15,7 @@ import Cookies from 'universal-cookie';
 
 const LoginDialog = () => {
   const cookies = new Cookies();
-  const { isLoading, init } = useFacebook();
+  // const { isLoading, init } = useFacebook();
   const navigateTo = useNavigate();
   const [recoverAccountEmailFlag, setRecoverAccountEmailFlag] = useState(false);
   const handleRecoverAccountEmailClose = () => {
@@ -49,32 +49,32 @@ const LoginDialog = () => {
     }
   };
 
-  const handleClick = async () => {
-    console.log('login!', search.get('serverid') || '', search.get('playerid') || '');
-    const api = await init();
-    const response = await api?.login({ scope: 'email' });
-    console.log('FB', (response as any).authResponse.accessToken);
+  // const handleClick = async () => {
+  //   console.log('login!', search.get('serverid') || '', search.get('playerid') || '');
+  //   const api = await init();
+  //   const response = await api?.login({ scope: 'email' });
+  //   console.log('FB', (response as any).authResponse.accessToken);
 
-    if (response && response.status && response.status === 'connected') {
-      const res = await RequestFBLogin(
-        (response as any).authResponse.accessToken,
-        search.get('serverid') || '',
-        search.get('playerid') || ''
-      );
-      console.log('RequestFBLogin', res);
-      if (res.code === 200) {
-        setJWTToken(res.data.accessToken);
-        setRefreshToken(res.data.refreshToken);
-        // setAbstractAccount(res.data.abstract_account);
-        setUserInfo({
-          username: res.data.username,
-          abstractAccount: res.data.abstract_account,
-          multipleAccount: res.data.multiple_account,
-        });
-        navigateTo('/overview');
-      }
-    }
-  };
+  //   if (response && response.status && response.status === 'connected') {
+  //     const res = await RequestFBLogin(
+  //       (response as any).authResponse.accessToken,
+  //       search.get('serverid') || '',
+  //       search.get('playerid') || ''
+  //     );
+  //     console.log('RequestFBLogin', res);
+  //     if (res.code === 200) {
+  //       setJWTToken(res.data.accessToken);
+  //       setRefreshToken(res.data.refreshToken);
+  //       // setAbstractAccount(res.data.abstract_account);
+  //       setUserInfo({
+  //         username: res.data.username,
+  //         abstractAccount: res.data.abstract_account,
+  //         multipleAccount: res.data.multiple_account,
+  //       });
+  //       navigateTo('/overview');
+  //     }
+  //   }
+  // };
 
   const onChange1 = () => {
     setCheck1(!check1);
@@ -100,12 +100,9 @@ const LoginDialog = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            height: 510,
+            height: 400,
           }}>
-          <Space
-            direction="vertical"
-            size={'large'}
-            style={{ display: 'flex', flexDirection: 'column', marginTop: 15 }}>
+          <Space direction="vertical" size={'large'} style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
               <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
                 <GoogleLogin
@@ -121,14 +118,14 @@ const LoginDialog = () => {
               </GoogleOAuthProvider>
             </div>
 
-            <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
+            {/* <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
               <Button
                 style={{ width: 205.867, height: '38px', borderRadius: 20 }}
                 disabled={isLoading}
                 onClick={handleClick}>
                 Continue with Facebook
               </Button>
-            </div>
+            </div> */}
           </Space>
 
           <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
