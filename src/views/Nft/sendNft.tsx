@@ -40,7 +40,11 @@ const View = () => {
   const payment = () => {
     setIsLoading(true);
 
-    setSwitchPaymentFlag(true);
+    if (toAddress.trim().length === 0) {
+      messageApi.warning('Please input to address');
+    } else {
+      setSwitchPaymentFlag(true);
+    }
 
     setIsLoading(false);
   };

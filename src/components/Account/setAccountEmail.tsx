@@ -17,28 +17,40 @@ export const AddAccountEmailDialog = ({ isOpen, onClose }: { isOpen: boolean; on
 
   const sendCode = async () => {
     setIsSendLoading(true);
-    const res = await GetCode(emailAddress);
-    console.log('sendCode', res);
-    if (res.code === 200) {
-      messageApi.success('send code to your email');
+    if (emailAddress.trim().length === 0) {
+      messageApi.warning('Please input email');
     } else {
-      messageApi.error('send code to your email fail');
+      const res = await GetCode(emailAddress);
+      console.log('sendCode', res);
+      if (res.code === 200) {
+        messageApi.success('send code to your email');
+      } else {
+        messageApi.error(res.data);
+      }
     }
+
     setIsSendLoading(false);
   };
 
   const bindEmail = async () => {
     setIsLoading(true);
-    const res = await BindRecoverEmail(emailAddress, code);
-    console.log('BindRecoverEmail', res);
-    if (res.code === 200) {
-      messageApi.success('bind email success');
-      navigateTo('/overview');
-      AccountStore.loadUserData();
-      onClose();
+    if (emailAddress.trim().length === 0) {
+      messageApi.warning('Please input email');
+    } else if (code.trim().length === 0) {
+      messageApi.warning('Please input code');
     } else {
-      messageApi.error('bind email fail');
+      const res = await BindRecoverEmail(emailAddress, code);
+      console.log('BindRecoverEmail', res);
+      if (res.code === 200) {
+        messageApi.success('bind email success');
+        navigateTo('/overview');
+        AccountStore.loadUserData();
+        onClose();
+      } else {
+        messageApi.error(res.data);
+      }
     }
+
     setIsLoading(false);
   };
 

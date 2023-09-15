@@ -11,14 +11,20 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
   const updateNft = async () => {
     setIsLoading(true);
-    const updateRes = await UpdateNfts(AccountStore.currentAccount.address, tokenAddress, parseInt(tokenID));
-    console.log('import nft', updateRes);
-    if (updateRes.code === 200) {
-      messageApi.success('import success');
-      AccountStore.loadUserData();
-      onClose();
+    if (tokenAddress.length === 0) {
+      messageApi.warning('Please input token address');
+    } else if (tokenID.length === 0) {
+      messageApi.warning('Please input token id');
     } else {
-      messageApi.error('import fail');
+      const updateRes = await UpdateNfts(AccountStore.currentAccount.address, tokenAddress, parseInt(tokenID));
+      console.log('import nft', updateRes);
+      if (updateRes.code === 200) {
+        messageApi.success('import success');
+        AccountStore.loadUserData();
+        onClose();
+      } else {
+        messageApi.error(updateRes.data);
+      }
     }
     setIsLoading(false);
   };
@@ -68,7 +74,9 @@ export const ImportNft = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
           <Row style={{ marginTop: 20 }}>
             <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Button size="large">Cancel</Button>
+              <Button size="large" onClick={onClose}>
+                Cancel
+              </Button>
             </Col>
             <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Button

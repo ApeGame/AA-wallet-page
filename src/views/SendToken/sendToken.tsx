@@ -45,10 +45,10 @@ const View = () => {
 
   const payment = () => {
     setIsLoading(true);
-    if (toAmount) {
+    if (toAmount && toAddress.trim().length) {
       setSwitchPaymentFlag(true);
     } else {
-      messageApi.warning('Please input amount');
+      messageApi.warning('Please input amount and to address');
     }
 
     setIsLoading(false);
@@ -206,21 +206,26 @@ const View = () => {
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>
               <Col span={24} style={{ textAlign: 'left' }}>
                 {search.get('tokenAddress')
-                  ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].name
+                  ? AccountStore.currentAccount.erc20AccountMap &&
+                    AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].name
                   : getCurrentNetworkWithStorage().symbol}
               </Col>
               <Col span={24} style={{ textAlign: 'left' }}>
+                {console.log('AccountStore.currentAccount.nativeBalance', AccountStore.currentAccount.nativeBalance)}
                 Balance:
-                {search.get('tokenAddress')
+                {search.get('tokenAddress') &&
+                AccountStore.currentAccount.erc20AccountMap &&
+                AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || '']
                   ? AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''] &&
                     formatWeiToEthComplete(
                       AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].balance
                     ) +
                       ' ' +
                       AccountStore.currentAccount.erc20AccountMap[search.get('tokenAddress') || ''].symbol
-                  : formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance) +
-                    ' ' +
-                    getCurrentNetworkWithStorage().symbol}
+                  : AccountStore.currentAccount.nativeBalance &&
+                    formatWeiToEthComplete(AccountStore.currentAccount.nativeBalance) +
+                      ' ' +
+                      getCurrentNetworkWithStorage().symbol}
               </Col>
             </Space>
           </Row>

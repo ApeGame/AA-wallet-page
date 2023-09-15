@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
 import { CopyFilled } from '@ant-design/icons';
 import { Tooltip } from 'antd';
 
@@ -8,7 +7,7 @@ interface ICopyToClipProps {
   address: string;
 }
 
-export const CopyToClipWidth = ({ address }: ICopyToClipProps) => {
+export const CopyIcon = ({ address }: ICopyToClipProps) => {
   const [isCopy, setCopy] = useState<boolean>(false);
 
   useEffect(() => {
@@ -21,14 +20,11 @@ export const CopyToClipWidth = ({ address }: ICopyToClipProps) => {
 
   return (
     <div style={{ cursor: 'pointer' }}>
-      <h4>
-        {truncateWalletAddrLong(address)}
-        <CopyToClipboard text={address} onCopy={() => () => setCopy(true)}>
-          <Tooltip title={isCopy ? 'copied' : 'copy to clipboard'} arrow>
-            <CopyFilled style={{ color: '#0048F4' }} />
-          </Tooltip>
-        </CopyToClipboard>
-      </h4>
+      <CopyToClipboard text={address} onCopy={() => () => setCopy(true)}>
+        <Tooltip title={isCopy ? 'copied' : 'copy to clipboard'} arrow placement="right">
+          <CopyFilled style={{ paddingLeft: '1rem', color: '#0048F4' }} />
+        </Tooltip>
+      </CopyToClipboard>
     </div>
   );
 };
