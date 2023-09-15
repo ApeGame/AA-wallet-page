@@ -14,6 +14,7 @@ import { getUserRecoverEmail, setCurrentAddress } from '@/utils/localStorage';
 import { getCurrentNetworkWithStorage } from './hooks/chainConfig';
 import { removeUserInfo } from '@/utils/localStorage';
 import { useNavigate } from 'react-router-dom';
+import Identicon from 'identicon.js';
 
 import '@/assets/styles/accountStyle/style.scss';
 
@@ -95,7 +96,7 @@ const AccountListDialog = () => {
               <DownOutlined />
             </span>
           </Button> */}
-          <div
+          {/* <div
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -111,6 +112,26 @@ const AccountListDialog = () => {
             <span style={{ fontSize: '25px', fontWeight: 'bold', color: '#9D9D9D' }}>
               {AccountStore.currentAccount.name && AccountStore.currentAccount.name[0]}
             </span>
+          </div> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              cursor: 'pointer',
+              width: 45,
+              height: 45,
+              borderRadius: '50%',
+            }}
+            onClick={showModal}>
+            {AccountStore.currentAccount.address && (
+              <img
+                width={'100%'}
+                height={'100%'}
+                src={`data:image/png;base64,${new Identicon(AccountStore.currentAccount.address, 45).toString()}`}
+              />
+            )}
           </div>
         </div>
       ) : (
@@ -151,7 +172,7 @@ const AccountListDialog = () => {
                 style={{ marginTop: 20, marginBottom: 20 }}>
                 <Row>
                   <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div
+                    {/* <div
                       style={{
                         width: 35,
                         height: 35,
@@ -164,6 +185,23 @@ const AccountListDialog = () => {
                         fontWeight: 'bold',
                       }}>
                       {row.name && row.name[0]}
+                    </div> */}
+                    <div
+                      style={{
+                        width: 35,
+                        height: 35,
+                        borderRadius: '30%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      {row.address && (
+                        <img
+                          width={'100%'}
+                          height={'100%'}
+                          src={`data:image/png;base64,${new Identicon(row.address, 40).toString()}`}
+                        />
+                      )}
                     </div>
                   </Col>
                   <Col span={18}>
