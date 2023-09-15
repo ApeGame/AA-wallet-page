@@ -137,7 +137,7 @@ const LoginDialog = () => {
           <Space
             direction="vertical"
             size={'large'}
-            style={{ display: 'flex', flexDirection: 'column', marginTop: 15 }}>
+            style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}>
             <div>
               <Checkbox onChange={onChange1} checked={check1}></Checkbox>
               <span style={{ marginLeft: 10 }}>
