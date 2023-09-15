@@ -233,7 +233,7 @@ const AccountListDialog = () => {
                             style={{ borderRadius: '100%' }}
                             src={`data:image/png;base64,${new Identicon(md5(row.address), {
                               background: [0, 0, 0, 0],
-                              size: 45,
+                              size: 35,
                             }).toString()}`}
                           />
                         </div>
@@ -246,7 +246,7 @@ const AccountListDialog = () => {
                             style={{ borderRadius: '100%' }}
                             src={`data:image/png;base64,${new Identicon(md5(row.name), {
                               background: [0, 0, 0, 0],
-                              size: 45,
+                              size: 35,
                             }).toString()}`}
                           />
                         </div>
@@ -259,7 +259,7 @@ const AccountListDialog = () => {
                             style={{ borderRadius: '100%' }}
                             src={`data:image/png;base64,${new Identicon(md5('salt1'), {
                               background: [0, 0, 0, 0],
-                              size: 45,
+                              size: 35,
                             }).toString()}`}
                           />
                         </div>
