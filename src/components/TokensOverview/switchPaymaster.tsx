@@ -139,7 +139,7 @@ const SwitchPaymasterDialog = ({
                     onClick={() => {
                       setPaymentIndex(index);
                     }}>
-                    {row.isNative ? <span>{'Native Payment'}</span> : <span>{'Erc20 Paymaster'}</span>}
+                    {row.isNative ? <span>{'Native Payment'}</span> : <span>{'Erc20 Payment'}</span>}
                   </div>
                 </Col>
               ))}
