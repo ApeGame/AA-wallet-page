@@ -58,7 +58,7 @@ const Comp = () => {
         </Row>
         <div style={{ height: 365, overflowY: 'auto', color: '#000000' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {activityType === 'all' && ActivityStore.allActivity.length === 0 && <span>No date</span>}
+            {activityType === 'all' && ActivityStore.allActivity.length === 0 && <></>}
             {activityType === 'all' &&
               ActivityStore.allActivity &&
               ActivityStore.allActivity.map((row, index) => <Activity activityRecord={row} key={index} />)}
