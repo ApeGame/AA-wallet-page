@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, Space } from 'antd';
+import { Modal, Space, message } from 'antd';
 import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,10 @@ import { Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
 
 const LoginDialog = () => {
+  ('');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const cookies = new Cookies();
+  const [messageApi, contextHolder] = message.useMessage();
   // const { isLoading, init } = useFacebook();
   const navigateTo = useNavigate();
   const [recoverAccountEmailFlag, setRecoverAccountEmailFlag] = useState(false);
@@ -46,6 +49,8 @@ const LoginDialog = () => {
         multipleAccount: res.data.multiple_account,
       });
       navigateTo('/overview');
+    } else {
+      messageApi.error(res.data);
     }
   };
 
@@ -93,6 +98,7 @@ const LoginDialog = () => {
 
   return (
     <>
+      {contextHolder}
       <Modal centered title="Quick Login" open={true} width={410} footer={[]}>
         <div
           style={{
