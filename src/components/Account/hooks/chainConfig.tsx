@@ -1,6 +1,6 @@
 import { BlockchainNetworkId, getNativeTokenSymbol } from '@/components/const/const';
 import coqIcon from '@/assets/img/ankr.svg';
-import apeIcon from '@/assets/img/ankr.svg';
+// import apeIcon from '@/assets/img/ankr.svg';
 import baseIcon from '@/assets/img/base.svg';
 import lineaIcon from '@/assets/img/linea.svg';
 import { NetworkConfig } from '@/model/network';
