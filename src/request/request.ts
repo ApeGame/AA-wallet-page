@@ -79,7 +79,7 @@ export const UrlByNetwork = (): string => {
     if (import.meta.env.MODE === 'dev') {
       return `/${BlockchainNetworkId.ankrTest}`;
     } else if (import.meta.env.MODE === 'production') {
-      return `/${BlockchainNetworkId.basMainnet}`;
+      return `/${BlockchainNetworkId.lineaMainnet}`;
     } else {
       return `/${BlockchainNetworkId.ankrTest}`;
     }

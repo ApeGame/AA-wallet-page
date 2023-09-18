@@ -1,6 +1,6 @@
 import { BlockchainNetworkId, getNativeTokenSymbol } from '@/components/const/const';
 import coqIcon from '@/assets/img/ankr.svg';
-import apeIcon from '@/assets/img/ankr.svg';
+// import apeIcon from '@/assets/img/ankr.svg';
 import baseIcon from '@/assets/img/base.svg';
 import lineaIcon from '@/assets/img/linea.svg';
 import { NetworkConfig } from '@/model/network';
@@ -40,18 +40,18 @@ export const getNetworkList = (): NetworkConfig[] => {
     ];
   } else if (baseEnv === 'production') {
     return [
-      {
-        icon: <img style={{ height: '100%', width: '100%' }} src={apeIcon} alt="" />,
-        name: 'Ape Chain',
-        symbol: getNativeTokenSymbol(BlockchainNetworkId.basMainnet),
-        networkId: BlockchainNetworkId.basMainnet,
-      },
-      {
-        icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
-        name: 'Base Mainnet',
-        symbol: getNativeTokenSymbol(BlockchainNetworkId.baseMainnet),
-        networkId: BlockchainNetworkId.baseMainnet,
-      },
+      // {
+      //   icon: <img style={{ height: '100%', width: '100%' }} src={apeIcon} alt="" />,
+      //   name: 'Ape Chain',
+      //   symbol: getNativeTokenSymbol(BlockchainNetworkId.basMainnet),
+      //   networkId: BlockchainNetworkId.basMainnet,
+      // },
+      // {
+      //   icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
+      //   name: 'Base Mainnet',
+      //   symbol: getNativeTokenSymbol(BlockchainNetworkId.baseMainnet),
+      //   networkId: BlockchainNetworkId.baseMainnet,
+      // },
       {
         icon: <img style={{ height: '100%', width: '100%' }} src={lineaIcon} alt="" />,
         name: 'Linea Mainnet',
