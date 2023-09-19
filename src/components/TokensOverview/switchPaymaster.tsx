@@ -59,7 +59,7 @@ const SwitchPaymasterDialog = ({
           setTimeout(() => navigateTo('/overview'), 700);
           messageApi.success('Complete');
         } else {
-          messageApi.error(sendRes.data);
+          messageApi.error(sendRes.data.ErrorMessage ? sendRes.data.ErrorMessage : sendRes.data);
         }
       } else if (erc20Address && !erc721Address) {
         console.log('erc20 Transfer');
@@ -77,7 +77,7 @@ const SwitchPaymasterDialog = ({
           setTimeout(() => navigateTo('/overview'), 700);
           messageApi.success('Complete');
         } else {
-          messageApi.error(sendRes.data);
+          messageApi.error(sendRes.data.ErrorMessage ? sendRes.data.ErrorMessage : sendRes.data);
         }
       } else if (!erc20Address && erc721Address) {
         console.log('erc721 Transfer');
@@ -107,7 +107,7 @@ const SwitchPaymasterDialog = ({
           setTimeout(() => navigateTo('/overview'), 700);
           messageApi.success('Complete');
         } else {
-          messageApi.error(sendRes.data);
+          messageApi.error(sendRes.data.ErrorMessage ? sendRes.data.ErrorMessage : sendRes.data);
         }
       }
     }
