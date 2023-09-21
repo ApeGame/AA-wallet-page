@@ -45,7 +45,7 @@ const LoginDialog = () => {
       if (search.get('serverid') && search.get('playerid')) {
         console.log('game login success');
         setGameLoginResDisplayFlag(true);
-        setGameLoginRes('Login successful, please return to the game');
+        setGameLoginRes('Login successful, please return to the game manually');
       } else {
         setJWTToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
@@ -176,7 +176,7 @@ const LoginDialog = () => {
                 <div>
                   <Checkbox onChange={onChange2} checked={check2}></Checkbox>
                   <span style={{ marginLeft: 10 }}>
-                    The smart contract service is furnished by Coya Innovation Holdings Limited BVI. AAA neither
+                    The smart contract service is furnished by Coya Innovation Holdings Limited BVI. Meta Apes neither
                     guarantees nor assumes any legal liability for this service.
                   </span>
                 </div>
