@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, Space } from 'antd';
+import { Modal, Space, message } from 'antd';
 import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,9 @@ import { Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
 
 const LoginDialog = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const cookies = new Cookies();
+  const [messageApi, contextHolder] = message.useMessage();
   // const { isLoading, init } = useFacebook();
   const navigateTo = useNavigate();
   const [recoverAccountEmailFlag, setRecoverAccountEmailFlag] = useState(false);
@@ -24,6 +26,9 @@ const LoginDialog = () => {
 
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
+
+  const [gameLoginResDisplayFlag, setGameLoginResDisplayFlag] = useState(false);
+  const [gameLoginRes, setGameLoginRes] = useState('');
 
   const [search] = useSearchParams();
 
@@ -36,16 +41,30 @@ const LoginDialog = () => {
       search.get('playerid') || ''
     );
     console.log('RequestGoogleLogin', res);
-    if (res.data.accessToken) {
-      setJWTToken(res.data.accessToken);
-      setRefreshToken(res.data.refreshToken);
-      // setAbstractAccount(res.data.abstract_account);
-      setUserInfo({
-        username: res.data.username,
-        abstractAccount: res.data.abstract_account,
-        multipleAccount: res.data.multiple_account,
-      });
-      navigateTo('/overview');
+    if (res.code === 200) {
+      if (search.get('serverid') && search.get('playerid')) {
+        console.log('game login success');
+        setGameLoginResDisplayFlag(true);
+        setGameLoginRes('Login successful, please return to the game manually');
+      } else {
+        setJWTToken(res.data.accessToken);
+        setRefreshToken(res.data.refreshToken);
+        // setAbstractAccount(res.data.abstract_account);
+        setUserInfo({
+          username: res.data.username,
+          abstractAccount: res.data.abstract_account,
+          multipleAccount: res.data.multiple_account,
+        });
+        navigateTo('/overview');
+      }
+    } else {
+      if (search.get('serverid') && search.get('playerid')) {
+        console.log('game login fail');
+        setGameLoginResDisplayFlag(true);
+        setGameLoginRes('Login Fail, ' + res.data);
+      } else {
+        messageApi.error(res.data);
+      }
     }
   };
 
@@ -93,6 +112,7 @@ const LoginDialog = () => {
 
   return (
     <>
+      {contextHolder}
       <Modal centered title="Quick Login" open={true} width={410} footer={[]}>
         <div
           style={{
@@ -102,23 +122,27 @@ const LoginDialog = () => {
             flexDirection: 'column',
             height: 400,
           }}>
-          <Space direction="vertical" size={'large'} style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
-              <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
-                <GoogleLogin
-                  onSuccess={(credentialResponse) => {
-                    success(credentialResponse);
-                  }}
-                  onError={() => {
-                    console.log('Login Failed');
-                  }}
-                  size="large"
-                  shape="circle"
-                />
-              </GoogleOAuthProvider>
-            </div>
+          {gameLoginResDisplayFlag ? (
+            <span style={{ fontSize: 20, fontWeight: 'bold' }}>{gameLoginRes}</span>
+          ) : (
+            <>
+              <Space direction="vertical" size={'large'} style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
+                  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        success(credentialResponse);
+                      }}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                      size="large"
+                      shape="circle"
+                    />
+                  </GoogleOAuthProvider>
+                </div>
 
-            {/* <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
+                {/* <div style={check1 && check2 ? {} : { pointerEvents: 'none' }}>
               <Button
                 style={{ width: 205.867, height: '38px', borderRadius: 20 }}
                 disabled={isLoading}
@@ -126,45 +150,49 @@ const LoginDialog = () => {
                 Continue with Facebook
               </Button>
             </div> */}
-          </Space>
+              </Space>
 
-          <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
+              <RecoverAccountByEmailDialog isOpen={recoverAccountEmailFlag} onClose={handleRecoverAccountEmailClose} />
 
-          {!(check1 && check2) && (
-            <span style={{ marginTop: 25, fontSize: 10, color: 'red' }}>Please check the boxes before proceeding</span>
+              {!(check1 && check2) && (
+                <span style={{ marginTop: 25, fontSize: 10, color: 'red' }}>
+                  Please check the boxes before proceeding
+                </span>
+              )}
+
+              <Space
+                direction="vertical"
+                size={'large'}
+                style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}>
+                <div>
+                  <Checkbox onChange={onChange1} checked={check1}></Checkbox>
+                  <span style={{ marginLeft: 10 }}>
+                    By utilizing the smart contract services, users acknowledge and agree to be bound by Coya's{' '}
+                    <a target="_blank" href={'https://coya.biz/termsofuse'}>
+                      Terms of Use.
+                    </a>{' '}
+                  </span>
+                </div>
+                <div>
+                  <Checkbox onChange={onChange2} checked={check2}></Checkbox>
+                  <span style={{ marginLeft: 10 }}>
+                    The smart contract service is furnished by Coya Innovation Holdings Limited BVI. Meta Apes neither
+                    guarantees nor assumes any legal liability for this service.
+                  </span>
+                </div>
+              </Space>
+
+              <div style={{ marginTop: 30 }}>
+                <Button
+                  type="link"
+                  onClick={() => {
+                    setRecoverAccountEmailFlag(true);
+                  }}>
+                  Recover your account by email
+                </Button>
+              </div>
+            </>
           )}
-
-          <Space
-            direction="vertical"
-            size={'large'}
-            style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}>
-            <div>
-              <Checkbox onChange={onChange1} checked={check1}></Checkbox>
-              <span style={{ marginLeft: 10 }}>
-                By utilizing the smart contract services, users acknowledge and agree to be bound by Coya's{' '}
-                <a target="_blank" href={'https://coya.biz/termsofuse'}>
-                  Terms of Use.
-                </a>{' '}
-              </span>
-            </div>
-            <div>
-              <Checkbox onChange={onChange2} checked={check2}></Checkbox>
-              <span style={{ marginLeft: 10 }}>
-                The smart contract service is furnished by Coya Innovation Holdings Limited BVI. AAA neither guarantees
-                nor assumes any legal liability for this service.
-              </span>
-            </div>
-          </Space>
-
-          <div style={{ marginTop: 30 }}>
-            <Button
-              type="link"
-              onClick={() => {
-                setRecoverAccountEmailFlag(true);
-              }}>
-              Recover your account by email
-            </Button>
-          </div>
         </div>
       </Modal>
     </>
