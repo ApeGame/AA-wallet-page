@@ -45,7 +45,7 @@ const LoginDialog = () => {
       if (search.get('serverid') && search.get('playerid')) {
         console.log('game login success');
         setGameLoginResDisplayFlag(true);
-        setGameLoginRes('Login successful, please return to the game manually');
+        setGameLoginRes('Login successful, please return to the game manually.');
       } else {
         setJWTToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
