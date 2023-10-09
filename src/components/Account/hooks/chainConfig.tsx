@@ -46,12 +46,12 @@ export const getNetworkList = (): NetworkConfig[] => {
       //   symbol: getNativeTokenSymbol(BlockchainNetworkId.basMainnet),
       //   networkId: BlockchainNetworkId.basMainnet,
       // },
-      // {
-      //   icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
-      //   name: 'Base Mainnet',
-      //   symbol: getNativeTokenSymbol(BlockchainNetworkId.baseMainnet),
-      //   networkId: BlockchainNetworkId.baseMainnet,
-      // },
+      {
+        icon: <img style={{ height: '100%', width: '100%' }} src={baseIcon} alt="" />,
+        name: 'Base Mainnet',
+        symbol: getNativeTokenSymbol(BlockchainNetworkId.baseMainnet),
+        networkId: BlockchainNetworkId.baseMainnet,
+      },
       {
         icon: <img style={{ height: '100%', width: '100%' }} src={lineaIcon} alt="" />,
         name: 'Linea Mainnet',
