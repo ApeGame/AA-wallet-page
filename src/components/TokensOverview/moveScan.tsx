@@ -8,6 +8,10 @@ export const moveToBlockScan = (hash: string) => {
     return getTransactionScanLink(BlockchainNetworkId.lineaTestnet, hash);
   } else if (getCurrentNetwork() === 'Coq Testnet') {
     return getTransactionScanLink(BlockchainNetworkId.ankrTest, hash);
+  } else if (getCurrentNetwork() === 'Base Mainnet') {
+    return getTransactionScanLink(BlockchainNetworkId.baseMainnet, hash);
+  } else if (getCurrentNetwork() === 'Linea Mainnet') {
+    return getTransactionScanLink(BlockchainNetworkId.lineaMainnet, hash);
   }
 };
 
@@ -18,5 +22,9 @@ export const moveToUserOperationScan = (hash: string) => {
     return getUserOperationScanLink(BlockchainNetworkId.lineaTestnet, hash);
   } else if (getCurrentNetwork() === 'Coq Testnet') {
     return getUserOperationScanLink(BlockchainNetworkId.ankrTest, hash);
+  } else if (getCurrentNetwork() === 'Base Mainnet') {
+    return getUserOperationScanLink(BlockchainNetworkId.baseMainnet, hash);
+  } else if (getCurrentNetwork() === 'Linea Mainnet') {
+    return getUserOperationScanLink(BlockchainNetworkId.lineaMainnet, hash);
   }
 };
