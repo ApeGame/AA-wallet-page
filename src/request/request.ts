@@ -5,6 +5,7 @@ import { RefreshAccessToken } from '@/actions/Login/login';
 import { getCurrentNetwork } from '@/utils/localStorage';
 import { getNetworkByName } from '@/components/Account/hooks/chainConfig';
 import { BlockchainNetworkId } from '@/components/const/const';
+import { GenerateApeAgent } from '@/utils/requestUtils';
 
 export interface ResponseType<T = any> {
   code: number;
@@ -16,6 +17,7 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     platform: 'web',
+    apeagent: GenerateApeAgent(),
   },
 });
 
