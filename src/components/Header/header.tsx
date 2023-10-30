@@ -53,10 +53,12 @@ const ContentHeader = () => {
                 <div style={{ height: 30, width: 30, display: 'flex', alignItems: 'center', paddingLeft: 5 }}>
                   {getCurrentNetworkWithStorage().icon}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>{getCurrentNetworkWithStorage().name}</div>
+                <div style={{ display: 'flex', alignItems: 'center', width: 90 }}>
+                  {getCurrentNetworkWithStorage().name}
+                </div>
               </Space>
             </div>
-            <div style={{ paddingLeft: 15, paddingRight: 10 }}>
+            <div style={{ paddingLeft: 10, paddingRight: 10 }}>
               <DownOutlined />
             </div>
           </div>

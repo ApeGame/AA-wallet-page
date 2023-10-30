@@ -3,6 +3,7 @@ import { getRefreshToken, setRefreshToken, setJWTToken } from '@/utils/localStor
 import axios from 'axios';
 import { request, ResponseType, UrlByNetwork } from '@/request/request';
 import { removeUserInfo } from '@/utils/localStorage';
+import { GenerateApeAgent } from '@/utils/requestUtils';
 
 export const RefreshAccessToken = async () => {
   const token = getRefreshToken() ?? '';
@@ -14,6 +15,7 @@ export const RefreshAccessToken = async () => {
     headers: {
       platform: 'web',
       token: token,
+      apeagent: GenerateApeAgent(),
     },
   }).then(
     (response) => {
