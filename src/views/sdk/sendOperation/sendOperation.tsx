@@ -97,7 +97,14 @@ const View = () => {
 
   return (
     <div className="sdkRoot">
-      <LoadingOutlined style={{ color: 'black', fontSize: 30 }} />
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ color: 'black' }}>
+          <h1>AA wallet</h1>
+        </div>
+        <div style={{ marginTop: 30 }}>
+          <LoadingOutlined style={{ color: 'black', fontSize: 30, display: 'flex', justifyContent: 'center' }} />
+        </div>
+      </div>
     </div>
   );
 };

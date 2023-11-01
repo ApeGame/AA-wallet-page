@@ -7,6 +7,13 @@ import { useEffect } from 'react';
 import { RequestGoogleLogin } from '@/actions/Login/login';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
+const contentStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center',
+  marginTop: 30,
+};
+
 const View = () => {
   const [search] = useSearchParams();
 
@@ -52,18 +59,23 @@ const View = () => {
   }, []);
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
-      <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          success(credentialResponse);
-        }}
-        onError={() => {
-          console.log('Login Failed');
-        }}
-        size="large"
-        shape="circle"
-      />
-    </GoogleOAuthProvider>
+    <div style={{ marginTop: 30 }}>
+      <h1 style={{ color: 'black' }}>AA wallet</h1>
+      <div style={contentStyle}>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              success(credentialResponse);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            size="large"
+            shape="circle"
+          />
+        </GoogleOAuthProvider>
+      </div>
+    </div>
   );
 };
 
