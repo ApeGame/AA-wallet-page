@@ -1,6 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState } from 'react';
-import { CheckCircleOutlined, PlusOutlined, EditOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+  CheckCircleOutlined,
+  PlusOutlined,
+  EditOutlined,
+  LogoutOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import { AccountStore } from '@/store/account';
 import { Button, Modal, Col, Row } from 'antd';
 import { truncateWalletAddrLong } from '@/utils/truncateWalletAddr';
@@ -327,7 +333,7 @@ const AccountListDialog = () => {
             </div>
           ))}
         </div>
-        <div style={{ height: 100, marginTop: 10, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ height: 130, marginTop: 10, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
           {!getUserRecoverEmail() ? (
             <span>
               <Button
@@ -353,6 +359,16 @@ const AccountListDialog = () => {
               Add Multisig Wallet Account
             </Button>
             <AddAccountDialog isOpen={addAccountFlag} onClose={handleAddAccountClose} />
+          </span>
+          <span>
+            <Button
+              type="link"
+              onClick={() => {
+                window.open('https://docs.coya.biz/', '_blank');
+              }}>
+              <QuestionCircleOutlined style={{ color: '#1677ff' }} />
+              Support
+            </Button>
           </span>
           <span>
             <Button
